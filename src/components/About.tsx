@@ -1,228 +1,198 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import { MapPin, Layers, Server, CheckCircle2, GraduationCap, ArrowRight } from "lucide-react";
+import {
+  MapPin,
+  ShieldCheck,
+  CheckCircle2,
+  Sparkles,
+  Layers,
+  GraduationCap,
+  Zap,
+  Target,
+  Flame,
+} from "lucide-react";
+
+const PILLARS = [
+  {
+    title: "GROWTH",
+    description: "Driven by technical curiosity, from JVM bytecode & concurrency to distributed system resilience.",
+    color: "#a78bfa",
+  },
+  {
+    title: "FOCUS",
+    description: "Deep engineering discipline on memory efficiency, sub-50ms query paths, and idempotent operations.",
+    color: "#00d9ff",
+  },
+  {
+    title: "CRAFT",
+    description: "Contract-first API design, normalized schemas, and zero unverified dependencies in production.",
+    color: "#f59e0b",
+  },
+];
 
 export default function About() {
-  const focusAreas = [
-    {
-      name: "Full-Stack Development",
-      icon: Layers,
-      description: "End-to-end web applications with React, Next.js, and Spring Boot REST APIs.",
-    },
-    {
-      name: "Microservices Architecture",
-      icon: Server,
-      description: "Decoupled domain services, stateless JWT gateway routing, and distributed data layers.",
-    },
-  ];
-
-  const engineeringPrinciples = [
-    {
-      number: "01",
-      title: "Backend First",
-      description: "Design reliable APIs, resilient data models, and deterministic business logic before painting pixels.",
-    },
-    {
-      number: "02",
-      title: "Scalable Architecture",
-      description: "Build systems structured with clean boundaries that can evolve effortlessly from monoliths to microservices.",
-    },
-    {
-      number: "03",
-      title: "Clean Code",
-      description: "Focus on maintainability, separation of concerns, and strict typing between services and clients.",
-    },
-    {
-      number: "04",
-      title: "Real Products",
-      description: "Build robust, production-tested software designed to solve concrete business and community problems.",
-    },
-  ];
-
   return (
-    <section id="about" className="py-20 bg-white border-b border-zinc-200/80">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="about" className="py-24 sm:py-28 px-4 sm:px-6 lg:px-8 border-b border-white/5 relative">
+      <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="mb-12">
-          <span className="text-xs font-mono uppercase tracking-wider text-zinc-500">
-            01 — Engineering Philosophy & Background
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 mt-1">
-            About Me & Engineering Approach
+          <div className="text-xs font-mono uppercase tracking-[0.25em] text-[#00a6f4] dark:text-[#00d9ff] mb-2 font-medium">
+            04 / IDENTITY &amp; PHILOSOPHY
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+            About Me
           </h2>
-          <p className="mt-3 text-lg sm:text-xl font-medium text-zinc-800 tracking-tight">
-            &ldquo;I don&apos;t just build interfaces. I build systems.&rdquo;
+          <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-2xl mt-2 leading-relaxed">
+            Who I am, where I build from, and the engineering principles that guide my work.
           </p>
         </div>
 
-        {/* 2-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Left Column: Narrative, Focus Areas & Principles */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="space-y-4 text-base sm:text-lg text-zinc-600 leading-relaxed">
-              <p>
-                I am <span className="font-semibold text-zinc-950">Bun Raksa</span>, a Backend /
-                Full-Stack Developer based in Phnom Penh, Cambodia.
-              </p>
-              <p>
-                I specialize in architecting resilient backend services, RESTful APIs, relational
-                database schemas, authentication gateways, and high-performance web products.
-              </p>
-              <p>
-                My core backend engine is built with <span className="font-semibold text-zinc-950">Java</span> and{" "}
-                <span className="font-semibold text-zinc-950">Spring Boot</span>, complemented by full-stack delivery
-                with <span className="font-semibold text-zinc-950">React</span>,{" "}
-                <span className="font-semibold text-zinc-950">Next.js</span>, and modern containerized infrastructure.
-              </p>
+        {/* Bento Grid (ayushcmd style) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+          {/* Bento Card 1: Location & Coordinates with Cyber Radar Pulse */}
+          <div className="rounded-2xl p-6 relative overflow-hidden bg-white dark:bg-[#0c1018] border border-slate-200 dark:border-white/10 flex flex-col justify-between min-h-[220px] shadow-sm dark:shadow-lg">
+            {/* Ambient Cyan Radial Glow */}
+            <div className="absolute inset-0 pointer-events-none bg-radial-[ellipse_at_70%_60%,rgba(0,217,255,0.08)_0%,transparent_65%]" />
+
+            {/* Top Coordinates Header */}
+            <div className="relative z-10 flex items-center justify-between text-xs font-mono text-slate-500 dark:text-zinc-400">
+              <div className="flex items-center gap-1.5 text-[#00d9ff]">
+                <MapPin className="w-3.5 h-3.5" />
+                <span>LOCATION</span>
+              </div>
+              <span className="text-[10px] tracking-wider text-zinc-500">GMT+7 · INDOCHINA TIME</span>
             </div>
 
-            {/* Currently Focused On (ONLY Full-Stack & Microservices Architecture) */}
-            <div className="pt-6 border-t border-zinc-100">
-              <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-500 mb-4">
-                Currently Focused On
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {focusAreas.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <div
-                      key={item.name}
-                      className="p-4 rounded-xl border border-zinc-200/90 bg-zinc-50/50 hover:bg-zinc-50 hover:border-zinc-300 transition-all flex flex-col justify-between"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-900 shrink-0 shadow-2xs">
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <span className="text-sm font-bold text-zinc-950">{item.name}</span>
-                      </div>
-                      <p className="mt-2.5 text-xs text-zinc-600 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  );
-                })}
+            {/* Main City Display */}
+            <div className="relative z-10 my-4">
+              <div className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+                PHNOM PENH
+              </div>
+              <div className="text-xs font-mono text-[#00a6f4] dark:text-[#00d9ff]/80 mt-1">
+                11.5564° N, 104.9282° E · CAMBODIA
               </div>
             </div>
 
-            {/* Engineering Principles */}
-            <div className="pt-6 border-t border-zinc-100">
-              <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-500 mb-4">
-                How I Think As An Engineer
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {engineeringPrinciples.map((principle) => (
-                  <div
-                    key={principle.number}
-                    className="p-4 rounded-xl border border-zinc-200/80 bg-white hover:border-zinc-300 transition-all"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-zinc-400">
-                        {principle.number} —
-                      </span>
-                      <h4 className="text-sm font-bold text-zinc-950">{principle.title}</h4>
-                    </div>
-                    <p className="mt-2 text-xs text-zinc-600 leading-relaxed">
-                      {principle.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            {/* Active Status */}
+            <div className="relative z-10 pt-3 border-t border-slate-200 dark:border-white/8 flex items-center justify-between text-xs font-mono text-slate-600 dark:text-zinc-400">
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#10b981] dark:bg-[#4ade80] neon-dot" />
+                <span>Base of Operations &amp; Remote</span>
+              </span>
+              <span className="text-[#00a6f4] dark:text-[#00d9ff] font-semibold">Active</span>
             </div>
           </div>
 
-          {/* Right Column: Developer Profile Card with Photo */}
-          <div className="lg:col-span-5">
-            <div className="rounded-2xl border border-zinc-200/90 bg-white overflow-hidden shadow-xs">
-              {/* Photo Banner / Portrait */}
-              <div className="relative w-full aspect-4/5 overflow-hidden bg-zinc-100 group">
+          {/* Bento Card 2: Identity & Core Narrative */}
+          <div className="rounded-2xl p-6 relative overflow-hidden bg-white dark:bg-[#0c1018] border border-slate-200 dark:border-white/10 flex flex-col justify-between min-h-[220px] shadow-sm dark:shadow-lg">
+            <div className="relative z-10">
+              <div className="text-xs font-mono text-[#8b5cf6] dark:text-[#a78bfa] tracking-wider uppercase mb-2.5 font-semibold">
+                / ENGINEERING IDENTITY
+              </div>
+              <p className="text-sm text-slate-600 dark:text-zinc-300 leading-relaxed">
+                I am Bun Raksa — a Backend and Full-Stack Developer specializing in enterprise Java, Spring Boot,
+                and relational database systems. I bridge rigorous system architecture with modern client interfaces,
+                focusing on clean code, automated test pipelines, and high-availability APIs.
+              </p>
+            </div>
+
+            <div className="relative z-10 pt-4 border-t border-slate-200 dark:border-white/8 text-xs font-mono italic text-slate-500 dark:text-zinc-400">
+              &quot;Where architectural precision meets modern web performance.&quot;
+            </div>
+          </div>
+        </div>
+
+        {/* Bento Card 3: Academic Foundations (RUPP & ISTAD) */}
+        <div className="mb-5 p-6 rounded-2xl bg-white dark:bg-[#0c1018] border border-slate-200 dark:border-white/10 relative overflow-hidden shadow-sm dark:shadow-lg">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/8 pb-4 mb-4">
+            <div className="flex items-center gap-2.5">
+              <GraduationCap className="w-5 h-5 text-[#00a6f4] dark:text-[#00d9ff]" />
+              <span className="text-xs font-mono uppercase tracking-wider text-slate-900 dark:text-white font-semibold">
+                Academic &amp; Specialized Milestones
+              </span>
+            </div>
+            <span className="text-[11px] font-mono text-[#00a6f4] dark:text-[#00d9ff] px-2.5 py-0.5 rounded-full bg-[#00a6f4]/10 dark:bg-[#00d9ff]/10 border border-[#00a6f4]/25 dark:border-[#00d9ff]/25">
+              Dual Track Verified
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/8 flex items-start gap-3.5">
+              <div className="relative w-12 h-12 sm:w-13 sm:h-13 shrink-0 flex items-center justify-center">
                 <Image
-                  src="/profile.jpg"
-                  alt="Bun Raksa — Backend & Full-Stack Developer at ISTAD"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 420px"
-                  className="object-cover object-top group-hover:scale-[1.02] transition-transform duration-500"
+                  src="/logos/rupp-logo.png"
+                  alt="RUPP Logo"
+                  width={256}
+                  height={256}
+                  unoptimized
                   priority
+                  className="w-full h-full object-contain filter drop-shadow-sm select-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/20 to-transparent" />
-                <div className="absolute bottom-0 inset-x-0 p-5 text-white flex items-end justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold tracking-tight">Bun Raksa</h3>
-                    <p className="text-xs text-zinc-300 font-mono">ISTAD • Phnom Penh, Cambodia</p>
-                  </div>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/90 text-white text-[11px] font-medium backdrop-blur-xs shadow-xs">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                    <span>Open to Work</span>
-                  </span>
-                </div>
               </div>
+              <div className="flex-1 min-w-0">
+                <span className="font-mono text-[#00a6f4] dark:text-[#00d9ff] font-bold block text-sm">
+                  Royal University of Phnom Penh (RUPP)
+                </span>
+                <span className="text-slate-800 dark:text-zinc-300 font-medium mt-0.5 block">
+                  Bachelor of Computer Science and Engineering
+                </span>
+                <p className="text-slate-600 dark:text-zinc-400 text-[11px] mt-1 leading-relaxed">
+                  Foundational computer science, algorithms, relational database theory, and operating system principles.
+                </p>
+              </div>
+            </div>
 
-              {/* Profile Details */}
-              <div className="p-6 space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-zinc-100">
-                  <span className="text-xs font-mono font-medium uppercase text-zinc-500">
-                    Developer Profile
-                  </span>
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-700">
-                    ID: BR-2006
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div>
-                    <span className="text-xs font-mono uppercase text-zinc-400">Role</span>
-                    <p className="font-semibold text-zinc-950 text-sm mt-0.5">
-                      Backend Developer
-                    </p>
-                  </div>
-                  <div>
-                    <span className="text-xs font-mono uppercase text-zinc-400">Education</span>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-zinc-100/80">
-                        <Image src="/logos/istad-logo.png" alt="ISTAD" width={15} height={15} className="object-contain" />
-                        <span className="font-semibold text-zinc-900 text-xs">ISTAD</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-zinc-100/80">
-                        <Image src="/logos/rupp-logo.png" alt="RUPP" width={15} height={15} className="object-contain" />
-                        <span className="font-semibold text-zinc-900 text-xs">RUPP</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <span className="text-xs font-mono uppercase text-zinc-400">Location</span>
-                  <div className="flex items-center gap-1.5 mt-0.5 text-sm">
-                    <MapPin className="w-3.5 h-3.5 text-zinc-600" />
-                    <span className="font-medium text-zinc-800">Phnom Penh, Cambodia</span>
-                  </div>
-                </div>
-
-                <div>
-                  <span className="text-xs font-mono uppercase text-zinc-400">Key Technologies</span>
-                  <div className="mt-1.5 flex flex-wrap gap-1.5">
-                    {["Java", "Spring Boot", "PostgreSQL", "React", "Docker", "Redis"].map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800 font-mono text-xs font-medium border border-zinc-200/60"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Terminal Code Snippet Accent */}
-                <div className="rounded-lg bg-zinc-950 p-3 text-[11px] font-mono text-zinc-300">
-                  <div className="text-zinc-500">// Bun Raksa profile</div>
-                  <div>const dev = &#123;</div>
-                  <div className="pl-4 text-zinc-400">name: <span className="text-zinc-200">&apos;Bun Raksa&apos;</span>,</div>
-                  <div className="pl-4 text-zinc-400">focus: <span className="text-zinc-200">&apos;Backend & Scalable Systems&apos;</span>,</div>
-                  <div className="pl-4 text-zinc-400">status: <span className="text-emerald-400">&apos;Ready to Build&apos;</span></div>
-                  <div>&#125;;</div>
-                </div>
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/8 flex items-start gap-3.5">
+              <div className="relative w-12 h-12 sm:w-13 sm:h-13 shrink-0 flex items-center justify-center">
+                <Image
+                  src="/logos/istad-logo.png"
+                  alt="ISTAD Logo"
+                  width={256}
+                  height={256}
+                  unoptimized
+                  priority
+                  className="w-full h-full object-contain filter drop-shadow-sm select-none"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <span className="font-mono text-[#8b5cf6] dark:text-[#a78bfa] font-bold block text-sm">
+                  ISTAD Institute
+                </span>
+                <span className="text-slate-800 dark:text-zinc-300 font-medium mt-0.5 block">
+                  IT Expert 3rd Generation (Basic Course)
+                </span>
+                <p className="text-slate-600 dark:text-zinc-400 text-[11px] mt-1 leading-relaxed">
+                  Hands-on microservices development, Spring Security RBAC, JPA optimization, and container orchestration.
+                </p>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Bento Row: 3 Pillars (Growth, Focus, Craft - ayushcmd signature) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {PILLARS.map((pillar) => (
+            <div
+              key={pillar.title}
+              className="rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-1"
+              style={{
+                background: `${pillar.color}0a`,
+                borderColor: `${pillar.color}25`,
+              }}
+            >
+              <div
+                className="text-xs font-mono font-bold tracking-widest mb-2"
+                style={{ color: pillar.color }}
+              >
+                {pillar.title}
+              </div>
+              <p className="text-xs text-slate-600 dark:text-zinc-300 leading-relaxed font-sans">
+                {pillar.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

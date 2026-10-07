@@ -59,7 +59,7 @@ const TIMELINE_DATA: TimelineItem[] = [
     id: "samrong-ponley",
     institution: "Samrong Ponley High School",
     role: "High School Diploma",
-    period: "2018 – 2024",
+    period: "2018 — 2024",
     location: "Cambodia",
     badge: "Graduated",
     type: "academic",
@@ -74,96 +74,95 @@ const TIMELINE_DATA: TimelineItem[] = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-20 bg-zinc-50/60 border-b border-zinc-200/80">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <section id="experience" className="py-24 sm:py-28 px-4 sm:px-6 lg:px-8 border-b border-white/5 relative">
+      <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <div className="mb-12">
-          <span className="text-xs font-mono uppercase tracking-wider text-zinc-500">
-            04 — Experience & Learning
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 mt-1">
-            Education Timeline
+          <div className="text-xs font-mono uppercase tracking-[0.25em] text-[#00d9ff] mb-2 font-medium">
+            05 / ACADEMIC &amp; WORK
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+            Experience &amp; Education
           </h2>
-          <p className="text-sm sm:text-base text-zinc-600 max-w-2xl mt-2 leading-relaxed">
-            Formal computer science foundations at RUPP, intensive enterprise software engineering training at ISTAD,
-            and secondary academic background.
+          <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mt-2 leading-relaxed">
+            Formal computer science foundations at RUPP combined with intensive enterprise software engineering training at ISTAD.
           </p>
         </div>
 
         {/* Timeline Sequence */}
-        <div className="relative pl-6 sm:pl-8 border-l-2 border-zinc-200 space-y-10">
+        <div className="relative pl-6 sm:pl-8 border-l border-white/10 space-y-10">
           {TIMELINE_DATA.map((item) => (
             <div key={item.id} className="relative group">
-              {/* Timeline Bullet Node */}
-              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-zinc-950 group-hover:scale-125 transition-transform shadow-xs" />
+              {/* Timeline Bullet Node with Cyan Glow */}
+              <div className="absolute -left-[31px] sm:-left-[39px] top-2 w-4 h-4 rounded-full bg-[#07090e] border-2 border-[#00d9ff] group-hover:scale-125 transition-transform shadow-[0_0_12px_rgba(0,217,255,0.6)]" />
 
-              {/* Timeline Card */}
-              <div className="rounded-2xl border border-zinc-200/90 bg-white p-6 sm:p-7 shadow-xs hover:border-zinc-300 hover:shadow-md transition-all">
-                {/* Header Row with Logo (BORDERLESS LOGO) */}
+              {/* Timeline Card in Dark Glass Style */}
+              <div className="rounded-2xl border border-white/10 bg-[#0c1018]/90 p-6 sm:p-7 shadow-xl hover:border-[#00d9ff]/40 hover:shadow-[0_0_30px_rgba(0,217,255,0.1)] transition-all">
+                {/* Header Row */}
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
                   <div className="flex items-start gap-3.5">
-                    {/* Institution Logo (Borderless) or Icon */}
+                    {/* Institution Logo (Borderless) */}
                     {item.logo ? (
-                      <div className="relative w-12 h-12 shrink-0 flex items-center justify-center">
+                      <div className="relative w-11 h-11 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center">
                         <Image
                           src={item.logo}
                           alt={item.institution}
-                          width={48}
-                          height={48}
-                          className="object-contain drop-shadow-2xs"
-                          style={{ width: "auto", height: "auto" }}
+                          width={96}
+                          height={96}
+                          unoptimized
+                          className="w-full h-full object-contain"
                         />
                       </div>
                     ) : item.type === "academic" ? (
-                      <div className="w-12 h-12 rounded-xl bg-zinc-100 text-zinc-700 flex items-center justify-center shrink-0">
-                        <GraduationCap className="w-6 h-6 text-zinc-700" />
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/5 border border-white/10 text-[#00d9ff] flex items-center justify-center shrink-0">
+                        <GraduationCap className="w-5 h-5 text-[#00d9ff]" />
                       </div>
                     ) : (
-                      <div className="w-12 h-12 rounded-xl bg-zinc-950 text-white flex items-center justify-center font-mono font-bold text-sm shrink-0">
-                        <Code className="w-5 h-5 text-zinc-300" />
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center font-mono font-bold text-sm shrink-0">
+                        <Code className="w-5 h-5 text-[#00d9ff]" />
                       </div>
                     )}
 
                     <div>
-                      <h3 className="text-lg sm:text-xl font-bold text-zinc-950 leading-tight">
+                      <h3 className="text-base sm:text-lg font-bold text-white leading-snug">
                         {item.institution}
                       </h3>
-                      <p className="text-sm font-semibold text-zinc-700 mt-1">
+                      <p className="text-sm font-medium text-zinc-300 mt-0.5">
                         {item.role}
                       </p>
+                      <div className="flex items-center gap-1.5 text-xs text-zinc-400 mt-2 font-sans">
+                        <MapPin className="w-3.5 h-3.5 text-[#00d9ff] shrink-0" />
+                        <span>{item.location}</span>
+                      </div>
                     </div>
                   </div>
 
+                  {/* Right Header Badges */}
                   <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto shrink-0">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100 text-zinc-800 text-xs font-mono font-medium">
-                      <Calendar className="w-3.5 h-3.5 text-zinc-500" />
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300 text-xs font-mono font-medium">
+                      <Calendar className="w-3.5 h-3.5 text-[#00d9ff]" />
                       <span>{item.period}</span>
                     </span>
-                    <span className="px-2 py-0.5 rounded-md bg-zinc-50 border border-zinc-200 text-zinc-600 text-[11px] font-mono">
+                    <span className="px-3 py-1 rounded-md bg-[#00d9ff]/10 border border-[#00d9ff]/25 text-[#00d9ff] text-xs font-mono font-medium">
                       {item.badge}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4 sm:ml-[62px]">
-                  <MapPin className="w-3.5 h-3.5 text-zinc-400" />
-                  <span>{item.location}</span>
-                </div>
-
                 {/* Summary narrative */}
-                <p className="text-sm text-zinc-600 leading-relaxed mb-4 sm:ml-[62px]">
+                <p className="text-sm text-zinc-300 leading-relaxed mb-4">
                   {item.summary}
                 </p>
 
                 {/* Bullet highlights */}
-                <div className="pt-4 border-t border-zinc-100 sm:ml-[62px]">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 block mb-2.5">
-                    Key Competencies & Milestones:
+                <div className="pt-4 border-t border-white/8">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#00d9ff]/80 block mb-2.5 font-semibold">
+                    Key Competencies &amp; Milestones:
                   </span>
                   <ul className="space-y-2">
                     {item.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-700">
-                        <Check className="w-4 h-4 text-zinc-950 shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-300">
+                        <Check className="w-4 h-4 text-[#00d9ff] shrink-0 mt-0.5" />
                         <span>{h}</span>
                       </li>
                     ))}

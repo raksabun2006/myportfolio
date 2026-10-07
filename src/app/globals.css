@@ -1,41 +1,232 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #09090b;
-    --muted: #71717a;
-    --border: #e4e4e7;
-    --card: #ffffff;
-    --accent: #18181b;
+    --bg: #f8fafc;
+    --bg-card: rgba(255, 255, 255, 0.9);
+    --border: rgba(15, 23, 42, 0.08);
+    --border-hover: rgba(0, 180, 216, 0.35);
+    --cyan: #00b4d8;
+    --cyan-muted: rgba(0, 180, 216, 0.1);
+    --purple: #8b5cf6;
+    --purple-muted: rgba(139, 92, 246, 0.1);
+    --amber: #f59e0b;
+    --amber-muted: rgba(245, 158, 11, 0.1);
+    --emerald: #10b981;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+  }
+
+  .dark {
+    --bg: #07090e;
+    --bg-card: rgba(14, 19, 27, 0.75);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(0, 217, 255, 0.35);
+    --cyan: #00d9ff;
+    --cyan-muted: rgba(0, 217, 255, 0.12);
+    --purple: #a78bfa;
+    --purple-muted: rgba(167, 139, 250, 0.12);
+    --amber: #f59e0b;
+    --amber-muted: rgba(245, 158, 11, 0.12);
+    --emerald: #4ade80;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.72);
+    --text-muted: rgba(255, 255, 255, 0.42);
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #ffffff;
-    color: #09090b;
+  }
+
+  html.light {
+    color-scheme: light;
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  html.dark {
+    color-scheme: dark;
+    background-color: #07090e;
+    color: #f4f4f5;
   }
 
   body {
-    background-color: #ffffff;
-    color: #09090b;
     min-height: 100vh;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Custom subtle scrollbar */
+  nav, main, section, footer, article {
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #fafafa;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #d4d4d8;
-    border-radius: 4px;
+    background: #94a3b8;
+    border-radius: 99px;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: #1f2937;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1aa;
+    background: #00d9ff;
   }
 }
+
+/* ==========================================================================
+   Ayushcmd-style Cyber Animations & 3D Flip Card Utilities
+   ========================================================================== */
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+}
+
+.neon-dot {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes techCardFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3.5px);
+  }
+}
+
+@keyframes techIconBreathe {
+  0%, 100% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-1.5px) scale(1.03) rotate(-0.75deg);
+  }
+  66% {
+    transform: translateY(1.2px) scale(0.985) rotate(0.75deg);
+  }
+}
+
+@keyframes techGridFlowH {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes techGridFlowV {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.6;
+  }
+  75% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes cyberLaserScan {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes borderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
