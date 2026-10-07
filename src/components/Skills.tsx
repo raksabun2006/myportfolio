@@ -14,9 +14,6 @@ import {
   MicroservicesIcon,
 } from "./Icons";
 import {
-  CheckCircle2,
-  Cpu,
-  ShieldCheck,
   Lightbulb,
   ClipboardList,
   Code2,
@@ -213,36 +210,36 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative py-24 sm:py-28 px-4 sm:px-6 lg:px-8 border-b border-white/5 overflow-hidden"
+      className="relative py-10 sm:py-24 px-3 sm:px-6 lg:px-8 border-b border-white/5 overflow-hidden"
       aria-label="Core Technical Stack and Tooling"
     >
       <div className="relative max-w-6xl mx-auto">
-        {/* Section Header with EXPERTISE (Exact match to ayushcmd screenshot) */}
-        <div className="text-center pt-2 sm:pt-4 mb-2 sm:mb-4">
-          <span className="text-xs sm:text-sm font-sans font-semibold tracking-[0.3em] text-[#00a6f4] dark:text-[#00d9ff] uppercase">
+        {/* Section Header with EXPERTISE */}
+        <div className="text-center pt-1 sm:pt-4 mb-2 sm:mb-4">
+          <span className="text-[11px] sm:text-sm font-sans font-semibold tracking-[0.25em] sm:tracking-[0.3em] text-[#00a6f4] dark:text-[#00d9ff] uppercase">
             EXPERTISE
           </span>
         </div>
 
-        {/* 3D Interactive World Globe (Exact ayushcmd world style) */}
-        <div className="mb-14">
+        {/* 3D Interactive World Globe */}
+        <div className="mb-8 sm:mb-14">
           <TechSphere />
         </div>
 
         {/* Filter Tabs & Engineering Matrix Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pt-8 border-t border-slate-200 dark:border-white/10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pt-6 sm:pt-8 border-t border-slate-200 dark:border-white/10">
           <div>
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#00a6f4] dark:text-[#00d9ff] font-semibold">
+            <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#00a6f4] dark:text-[#00d9ff] font-semibold">
               ENGINEERING FORGE
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
+            <h3 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
               Verified Production Tools
             </h3>
           </div>
 
           {/* Filter Tabs */}
           <div
-            className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-xs self-start sm:self-auto"
+            className="flex flex-wrap items-center gap-1 sm:gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-xs self-start sm:self-auto max-w-full"
             role="tablist"
           >
             {CATEGORIES.map((cat) => {
@@ -259,7 +256,7 @@ export default function Skills() {
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`relative px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                  className={`relative px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 sm:gap-2 ${
                     isSelected
                       ? "bg-white dark:bg-[#00d9ff]/15 text-[#00a6f4] dark:text-[#00d9ff] border border-slate-300 dark:border-[#00d9ff]/35 shadow-xs font-semibold"
                       : "text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/5 border border-transparent"
@@ -267,7 +264,7 @@ export default function Skills() {
                 >
                   <span>{cat.label}</span>
                   <span
-                    className={`text-[10px] font-mono px-1.5 rounded-md ${
+                    className={`text-[9px] sm:text-[10px] font-mono px-1 sm:px-1.5 rounded-md ${
                       isSelected ? "bg-[#00a6f4]/15 dark:bg-[#00d9ff]/20 text-[#00a6f4] dark:text-[#00d9ff]" : "text-slate-400 dark:text-zinc-500"
                     }`}
                   >

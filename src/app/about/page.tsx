@@ -138,12 +138,12 @@ export default function PersonaPage() {
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm font-medium text-[#8b5cf6] dark:text-[#a78bfa] mt-0.5">
-                  IT Expert 3rd Generation (Basic Course)
+                  IT Expert 3rd Generation
                 </p>
                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-white/8 text-xs font-mono text-slate-500 dark:text-zinc-400">
                   <span>Spring Boot 3 · JPA · Keycloak · Docker · CI/CD</span>
                   <span className="px-2 py-0.5 rounded-md bg-[#8b5cf6]/10 text-[#8b5cf6] dark:text-[#a78bfa] text-[10px]">
-                    Basic Course Certified
+                    Certified
                   </span>
                 </div>
               </div>

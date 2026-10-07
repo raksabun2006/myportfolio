@@ -3,7 +3,6 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import TechSphere from "@/components/TechSphere";
 import Skills from "@/components/Skills";
 
 export default function SkillsPage() {
@@ -26,7 +25,7 @@ export default function SkillsPage() {
 
       <Navbar />
 
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20 relative z-10 animate-fade-in">
+      <main className="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-16 relative z-10 animate-fade-in">
         <Skills />
       </main>
 

@@ -161,7 +161,7 @@ export default function About() {
                   ISTAD Institute
                 </span>
                 <span className="text-slate-800 dark:text-zinc-300 font-medium mt-0.5 block">
-                  IT Expert 3rd Generation (Basic Course)
+                  IT Expert 3rd Generation
                 </span>
                 <p className="text-slate-600 dark:text-zinc-400 text-[11px] mt-1 leading-relaxed">
                   Hands-on microservices development, Spring Security RBAC, JPA optimization, and container orchestration.

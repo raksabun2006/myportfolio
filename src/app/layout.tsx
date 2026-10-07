@@ -84,7 +84,21 @@ export const metadata: Metadata = {
   },
 };
 
+import Script from "next/script";
 import { ThemeProvider } from "@/context/ThemeContext";
+
+const themeInitScript = `
+  try {
+    var theme = localStorage.getItem('portfolio_theme');
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    }
+  } catch (e) {}
+`;
 
 export default function RootLayout({
   children,
@@ -98,21 +112,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} scroll-smooth dark`}
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const theme = localStorage.getItem('portfolio_theme');
-                if (theme === 'light') {
-                  document.documentElement.classList.add('light');
-                  document.documentElement.classList.remove('dark');
-                } else {
-                  document.documentElement.classList.add('dark');
-                  document.documentElement.classList.remove('light');
-                }
-              } catch (e) {}
-            `,
-          }}
+        <Script
+          id="theme-initializer"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
         />
       </head>
       <body className="min-h-screen bg-[#f8fafc] text-slate-900 dark:bg-[#07090e] dark:text-zinc-100 font-sans antialiased transition-colors duration-300">

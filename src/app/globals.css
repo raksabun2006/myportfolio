@@ -230,3 +230,192 @@
   animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* ==========================================================================
+   Engineering Aesthetic Hero Animations
+   ========================================================================== */
+
+@keyframes gridDriftSlow {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 48px 48px;
+  }
+}
+
+.animate-grid-drift {
+  animation: gridDriftSlow 36s linear infinite;
+}
+
+/* Independent Badge Float Animations with Asynchronous Timing */
+@keyframes floatBadge1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(0.4deg);
+  }
+}
+
+@keyframes floatBadge2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(-0.5deg);
+  }
+}
+
+@keyframes floatBadge3 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.3deg);
+  }
+}
+
+@keyframes floatBadge4 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-0.4deg);
+  }
+}
+
+@keyframes floatBadge5 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(0.3deg);
+  }
+}
+
+.animate-float-badge-1 {
+  animation: floatBadge1 6.2s ease-in-out infinite;
+}
+
+.animate-float-badge-2 {
+  animation: floatBadge2 7.6s ease-in-out 1.2s infinite;
+}
+
+.animate-float-badge-3 {
+  animation: floatBadge3 5.8s ease-in-out 2.1s infinite;
+}
+
+.animate-float-badge-4 {
+  animation: floatBadge4 6.9s ease-in-out 0.8s infinite;
+}
+
+.animate-float-badge-5 {
+  animation: floatBadge5 8.2s ease-in-out 1.6s infinite;
+}
+
+/* Selected Badges Soft Pulsing Glow */
+@keyframes badgePulsingGlow {
+  0%, 100% {
+    box-shadow: 0 4px 16px -2px rgba(14, 165, 233, 0.12), 0 0 0 1px rgba(14, 165, 233, 0.2);
+  }
+  50% {
+    box-shadow: 0 10px 24px -2px rgba(14, 165, 233, 0.32), 0 0 0 1.5px rgba(14, 165, 233, 0.45);
+  }
+}
+
+.animate-badge-glow {
+  animation: badgePulsingGlow 3.5s ease-in-out infinite;
+}
+
+/* Profile Card Breathing */
+@keyframes profileCardBreathe {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-card-breathe {
+  animation: profileCardBreathe 7.5s ease-in-out infinite;
+}
+
+/* Subtle Technical Circles Rotation */
+@keyframes techRotateSlow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-tech-rotate-slow {
+  animation: techRotateSlow 80s linear infinite;
+}
+
+/* Minimal Scroll Indicator Dot Animation */
+@keyframes scrollDotMove {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-dot {
+  animation: scrollDotMove 1.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* Background Ambient Floating Particles */
+@keyframes particleFloat1 {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(16px, -22px);
+  }
+}
+
+@keyframes particleFloat2 {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-18px, 18px);
+  }
+}
+
+@keyframes particleFloat3 {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(14px, 14px);
+  }
+}
+
+.animate-particle-1 {
+  animation: particleFloat1 12s ease-in-out infinite;
+}
+
+.animate-particle-2 {
+  animation: particleFloat2 15s ease-in-out 2s infinite;
+}
+
+.animate-particle-3 {
+  animation: particleFloat3 18s ease-in-out 4s infinite;
+}
+
+
