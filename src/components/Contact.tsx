@@ -7,7 +7,7 @@ import { GithubIcon, LinkedinIcon, TwitterIcon } from "@/components/Icons";
 const FAQS = [
   {
     q: "What is your primary engineering stack?",
-    a: "My core engine is Java 21 & Spring Boot 3 for microservices, REST APIs, and enterprise business logic, paired with PostgreSQL and Redis. On the frontend, I build responsive client portals with React, Next.js, and TypeScript.",
+    a: "My core engine is Java & Spring Boot  for microservices, REST APIs, and enterprise business logic, paired with PostgreSQL and Redis. On the frontend, I build responsive client portals with React, Next.js, and TypeScript.",
   },
   {
     q: "What roles are you looking for?",
@@ -15,7 +15,7 @@ const FAQS = [
   },
   {
     q: "How can we collaborate on a project?",
-    a: "Send me a message using the form below or email me directly at bunraksa94@gmail.com. I usually respond within 24 hours.",
+    a: "Send me a message using the form below or email me directly at raksabun2006@gmail.com. I usually respond within 24 hours.",
   },
 ];
 
@@ -67,7 +67,7 @@ export default function Contact() {
 
               <div className="space-y-3">
                 <a
-                  href="mailto:bunraksa94@gmail.com"
+                  href="mailto:raksabun2006@gmail.com"
                   className="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/[0.02] hover:bg-[#00a6f4]/10 dark:hover:bg-[#00d9ff]/10 hover:border-[#00a6f4]/40 dark:hover:border-[#00d9ff]/40 transition-all group"
                 >
                   <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-[#00a6f4] dark:text-[#00d9ff]">
@@ -76,7 +76,7 @@ export default function Contact() {
                   <div className="flex flex-col min-w-0">
                     <span className="text-[10px] font-mono uppercase text-slate-400 dark:text-zinc-500">Email</span>
                     <span className="text-xs font-medium text-slate-900 dark:text-white truncate">
-                      bunraksa94@gmail.com
+                      raksabun2006@gmail.com
                     </span>
                   </div>
                   <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-zinc-500 ml-auto group-hover:text-[#00a6f4] dark:group-hover:text-[#00d9ff] transition-colors" />
@@ -226,9 +226,8 @@ export default function Contact() {
                     {faq.q}
                   </span>
                   <ChevronDown
-                    className={`w-4 h-4 text-slate-400 dark:text-zinc-400 transition-transform duration-200 shrink-0 ${
-                      openFaq === i ? "rotate-180 text-[#00a6f4] dark:text-[#00d9ff]" : ""
-                    }`}
+                    className={`w-4 h-4 text-slate-400 dark:text-zinc-400 transition-transform duration-200 shrink-0 ${openFaq === i ? "rotate-180 text-[#00a6f4] dark:text-[#00d9ff]" : ""
+                      }`}
                   />
                 </button>
                 {openFaq === i && (

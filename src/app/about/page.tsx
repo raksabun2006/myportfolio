@@ -143,7 +143,7 @@ export default function PersonaPage() {
                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-white/8 text-xs font-mono text-slate-500 dark:text-zinc-400">
                   <span>Spring Framework · JPA · Keycloak · Docker · CI/CD and Microservices Archeticture</span>
                   <span className="px-2 py-0.5 rounded-md bg-[#8b5cf6]/10 text-[#8b5cf6] dark:text-[#a78bfa] text-[10px]">
-                    Basic Course Certified
+
                   </span>
                 </div>
               </div>
