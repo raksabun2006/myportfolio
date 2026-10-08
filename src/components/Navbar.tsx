@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Menu, X, Sun, Moon, Bot } from "lucide-react";
+import { Home, Menu, X, Bot } from "lucide-react";
+import { SunIcon, MoonIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
 
 const NAV_ITEMS = [
@@ -18,8 +19,10 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -113,19 +116,19 @@ export default function Navbar() {
             onClick={toggleTheme}
             aria-label="Toggle theme mode"
             className={`group inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider transition-all shadow-xs cursor-pointer ${
-              theme === "light"
+              mounted && theme === "light"
                 ? "bg-slate-200/95 hover:bg-white text-slate-800 border border-white/50 shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
                 : "bg-white/10 hover:bg-white/20 text-white border border-white/15"
             }`}
           >
-            {theme === "light" ? (
+            {mounted && theme === "light" ? (
               <>
-                <Sun className="w-3.5 h-3.5 text-amber-500" />
+                <SunIcon className="w-3.5 h-3.5 text-amber-500" />
                 <span className="text-[11px] text-slate-800">LIGHT</span>
               </>
             ) : (
               <>
-                <Moon className="w-3.5 h-3.5 text-[#00d9ff]" />
+                <MoonIcon className="w-3.5 h-3.5 text-[#00d9ff]" />
                 <span className="text-[11px] text-zinc-100">DARK</span>
               </>
             )}
@@ -140,10 +143,10 @@ export default function Navbar() {
             className="p-1.5 rounded-xl text-zinc-300 hover:text-white hover:bg-white/10 transition-colors"
             aria-label="Toggle theme"
           >
-            {theme === "light" ? (
-              <Sun className="w-4 h-4 text-amber-400" />
+            {mounted && theme === "light" ? (
+              <SunIcon className="w-4 h-4 text-amber-400" />
             ) : (
-              <Moon className="w-4 h-4 text-[#00d9ff]" />
+              <MoonIcon className="w-4 h-4 text-[#00d9ff]" />
             )}
           </button>
           <button
@@ -193,8 +196,8 @@ export default function Navbar() {
               onClick={toggleTheme}
               className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/10 text-[11px] font-mono text-slate-800 dark:text-white flex items-center gap-1.5 border border-slate-200 dark:border-white/10"
             >
-              {theme === "light" ? <Sun className="w-3 h-3 text-amber-500" /> : <Moon className="w-3 h-3 text-[#00d9ff]" />}
-              <span>{theme.toUpperCase()}</span>
+              {mounted && theme === "light" ? <SunIcon className="w-3 h-3 text-amber-500" /> : <MoonIcon className="w-3 h-3 text-[#00d9ff]" />}
+              <span>{(mounted ? theme : "DARK").toUpperCase()}</span>
             </button>
           </div>
         </div>
