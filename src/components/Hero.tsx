@@ -205,11 +205,11 @@ export default function Hero() {
             <div className="relative p-2 sm:p-2.5 rounded-3xl sm:rounded-[28px] bg-white/80 dark:bg-[#0c1018]/80 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-[0_20px_50px_rgba(15,23,42,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               <div className="relative aspect-[4/5] w-full rounded-2xl sm:rounded-[22px] overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200/60 dark:border-white/10">
                 <Image
-                  src="/bun-raksa.jpg"
+                  src="/profile.JPEG"
                   alt="Bun Raksa (ប៊ុន រក្សា) - Backend & Full-Stack Developer in Phnom Penh, Cambodia"
                   fill
                   priority
-                  sizes="(max-width: 640px) 270px, (max-width: 768px) 300px, 325px"
+                  unoptimized
                   className="object-cover object-[center_18%] transition-transform duration-700 hover:scale-102"
                 />
 
