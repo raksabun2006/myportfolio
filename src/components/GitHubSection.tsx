@@ -46,8 +46,8 @@ export default function GitHubSection() {
   ];
 
   return (
-    <section className="py-24 sm:py-28 px-4 sm:px-6 lg:px-8 border-b border-white/5 relative">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-6 sm:py-8 relative">
+      <div className="w-full mx-auto">
         {/* Section Header */}
         <div className="mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>

@@ -19,7 +19,7 @@ const FAQS = [
   },
 ];
 
-export default function Contact() {
+export default function Contact({ isStandalone = false }: { isStandalone?: boolean }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,7 +40,12 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 sm:py-28 px-4 sm:px-6 lg:px-8 border-b border-slate-200 dark:border-white/5 relative scroll-mt-24">
+    <section
+      id="contact"
+      className={`px-4 sm:px-6 lg:px-8 relative scroll-mt-24 ${
+        isStandalone ? "pt-2 sm:pt-4 pb-16 sm:pb-20" : "py-20 sm:py-24 border-b border-slate-200 dark:border-white/5"
+      }`}
+    >
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Section Header */}
         <div>

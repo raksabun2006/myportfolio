@@ -22,7 +22,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-[78vh] sm:min-h-[82vh] flex items-center justify-center pt-2 sm:pt-6 pb-12 sm:pb-14 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative min-h-[calc(100vh-7rem)] sm:min-h-[82vh] flex items-center justify-center pt-4 sm:pt-8 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* Background Engineering Atmosphere (Subtle refined grid, soft radial glows & concentric rings) */}
       <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden" aria-hidden="true">
@@ -56,7 +56,7 @@ export default function Hero() {
         <div className="absolute bottom-1/4 left-[38%] w-1 h-1 rounded-full bg-blue-400/25 blur-[0.5px] animate-particle-3" />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+      <div className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
         {/* Left Column: Personal Brand & Typography */}
         <div className="lg:col-span-7 flex flex-col gap-2.5 sm:gap-3 text-center lg:text-left items-center lg:items-start">
           {/* Refined Role Status Badge */}

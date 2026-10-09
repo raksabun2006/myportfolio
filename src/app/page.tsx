@@ -44,12 +44,12 @@ export default function Home() {
 
       <Navbar />
 
-      <main className="flex-1 w-full relative z-10 pt-20 sm:pt-24 space-y-20 sm:space-y-28 animate-fade-in">
+      <main className="flex-1 w-full relative z-10 pt-24 sm:pt-28 md:pt-32 space-y-20 sm:space-y-28 animate-fade-in">
         {/* 01. Hero Section (Old Clean Style with Live System Visual & 3D Photo Toggle) */}
         <Hero />
 
         {/* 02. Clean Highlights Portal Section (Routes Gateways) */}
-        <section id="portal" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+        <section id="portal" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
           <div className="text-center sm:text-left mb-10">
             <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#00a6f4] dark:text-[#00d9ff] font-semibold">
               EXPLORATION PORTAL
@@ -170,7 +170,7 @@ export default function Home() {
         </section>
 
         {/* 03. Selected Works Spotlight (Preview) */}
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
               <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#00a6f4] dark:text-[#00d9ff] font-semibold">

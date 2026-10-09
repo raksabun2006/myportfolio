@@ -12,7 +12,7 @@ const INTEREST_ICONS: Record<string, React.ElementType> = {
 export default function TechnicalInterests() {
   return (
     <section className="py-20 bg-white border-b border-zinc-200/80">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="mb-12">
           <span className="text-xs font-mono uppercase tracking-wider text-zinc-500">

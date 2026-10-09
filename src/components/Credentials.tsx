@@ -2,24 +2,20 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Shield,
   ChevronLeft,
   ChevronRight,
-  ExternalLink,
   Copy,
   Check,
-  Eye,
-  X,
-  Maximize2,
-  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import { credentialsData, CredentialItem } from "@/data/credentials";
 
 export default function Credentials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const currentCert = credentialsData[currentIndex];
 
@@ -39,24 +35,23 @@ export default function Credentials() {
     }, 2000);
   };
 
-  // Keyboard navigation
+  // Keyboard navigation for carousel
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isModalOpen) return;
       if (e.key === "ArrowLeft") handlePrev();
       if (e.key === "ArrowRight") handleNext();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen]);
+  }, []);
 
   return (
     <section
       id="credentials"
-      className="py-24 sm:py-28 px-4 sm:px-6 lg:px-8 border-b border-white/5 relative selection:bg-[#00d9ff] selection:text-[#07090e]"
+      className="pt-2 sm:pt-4 pb-12 sm:pb-16 relative selection:bg-[#00d9ff] selection:text-[#07090e]"
     >
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header (Matching ayushcmd.me) */}
+      <div className="w-full mx-auto">
+        {/* Section Header */}
         <div className="flex items-end justify-between gap-4 mb-8">
           <div>
             <span className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-[0.2em] text-[#00a6f4] dark:text-[#00d9ff] uppercase block mb-1">
@@ -66,7 +61,7 @@ export default function Credentials() {
               My Credentials
             </h2>
             <p className="text-xs sm:text-sm font-mono text-slate-500 dark:text-zinc-400 mt-2">
-              {credentialsData.length} certificates · scroll to explore
+              {credentialsData.length} certificates · click to view full details
             </p>
           </div>
 
@@ -78,17 +73,18 @@ export default function Credentials() {
           </div>
         </div>
 
-        {/* Featured Credential Horizontal Bento Card (Supports Dark & Light Mode) */}
+        {/* Featured Credential Horizontal Bento Card */}
         <div
           key={currentCert.id}
           className="relative rounded-3xl bg-white/90 dark:bg-[#0c1017]/95 border border-slate-200 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl p-6 sm:p-8 lg:p-10 transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20 animate-fade-in"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Realistic Certificate Sheet Presentation */}
+            {/* Left Column: Certificate Sheet (Links directly to detail page) */}
             <div className="lg:col-span-6 w-full flex items-center justify-center">
-              <div
-                onClick={() => setIsModalOpen(true)}
-                className="group/sheet relative w-full aspect-[1.414/1] max-w-lg bg-white rounded-2xl p-2.5 sm:p-3 shadow-xl dark:shadow-2xl border border-slate-200 dark:border-white/20 cursor-pointer overflow-hidden transition-all duration-300 hover:scale-[1.015] hover:shadow-[0_16px_40px_rgba(0,217,255,0.18)]"
+              <Link
+                href={`/credentials/${currentCert.id}`}
+                className="group/sheet relative w-full aspect-[1.414/1] max-w-lg bg-white rounded-2xl p-2.5 sm:p-3 shadow-xl dark:shadow-2xl border border-slate-200 dark:border-white/20 cursor-pointer overflow-hidden transition-all duration-300 hover:scale-[1.015] hover:border-cyan-400/50 hover:shadow-[0_16px_40px_rgba(0,217,255,0.18)] block"
+                title={`View ${currentCert.title} Details`}
               >
                 {/* Certificate Inner Image */}
                 <div className="relative w-full h-full rounded-xl overflow-hidden bg-zinc-50 border border-zinc-200/80">
@@ -102,14 +98,14 @@ export default function Credentials() {
                   />
                 </div>
 
-                {/* Hover Quick Zoom Overlay */}
-                <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px] opacity-0 group-hover/sheet:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-2xl">
+                {/* Hover Details Overlay */}
+                <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px] opacity-0 group-hover/sheet:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-2xl">
                   <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-zinc-900 font-mono text-xs font-bold shadow-xl">
-                    <Maximize2 className="w-3.5 h-3.5 text-[#00a6f4] dark:text-[#00d9ff]" />
-                    <span>Click to Expand</span>
+                    <span>View Page Detail</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-cyan-500" />
                   </span>
                 </div>
-              </div>
+              </Link>
             </div>
 
             {/* Right Column: Detailed Credential Information */}
@@ -117,7 +113,7 @@ export default function Credentials() {
               <div>
                 {/* Pill Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {currentCert.tags.map((tag, idx) => (
+                  {currentCert.tags.slice(0, 5).map((tag, idx) => (
                     <span
                       key={idx}
                       className="px-3.5 py-1 rounded-full text-xs font-sans text-slate-700 dark:text-zinc-300 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 transition-colors"
@@ -125,11 +121,21 @@ export default function Credentials() {
                       {tag}
                     </span>
                   ))}
+                  {currentCert.tags.length > 5 && (
+                    <span className="px-2.5 py-1 rounded-full text-xs font-mono text-slate-500 dark:text-zinc-400 bg-slate-100/60 dark:bg-white/5">
+                      +{currentCert.tags.length - 5} more
+                    </span>
+                  )}
                 </div>
 
-                {/* Title */}
+                {/* Title (Clickable link to detail page) */}
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-3 font-sans">
-                  {currentCert.title}
+                  <Link
+                    href={`/credentials/${currentCert.id}`}
+                    className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
+                  >
+                    {currentCert.title}
+                  </Link>
                 </h3>
 
                 {/* Issuer & Date */}
@@ -149,7 +155,7 @@ export default function Credentials() {
                 </p>
               </div>
 
-              {/* Bottom Action & Verification Bar */}
+              {/* Bottom Action Bar */}
               <div className="pt-6 border-t border-slate-200 dark:border-white/8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 {/* Credential ID with Copy Action */}
                 {currentCert.credentialId ? (
@@ -178,21 +184,20 @@ export default function Credentials() {
                   </div>
                 )}
 
-                {/* Green/Cyan Rounded-Full Verify Certificate CTA Button */}
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(true)}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm font-medium transition-all shadow-[0_0_16px_rgba(16,185,129,0.12)] hover:shadow-[0_0_24px_rgba(16,185,129,0.25)] shrink-0 cursor-pointer"
+                {/* Primary CTA: View Page Detail */}
+                <Link
+                  href={`/credentials/${currentCert.id}`}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 text-xs sm:text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-2xs cursor-pointer shrink-0"
                 >
-                  <ExternalLink className="w-4 h-4" />
-                  <span>Verify Certificate</span>
-                </button>
+                  <span>View Page Detail</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Carousel Slide Navigation Controls (High Contrast for Both Themes) */}
+        {/* Carousel Slide Navigation Controls */}
         <div className="flex items-center justify-between mt-6 px-1">
           {/* Dot Indicators */}
           <div className="flex items-center gap-2">
@@ -232,8 +237,8 @@ export default function Credentials() {
           </div>
         </div>
 
-        {/* Mini Preview Strip (Clickable thumbnails to quickly switch with high contrast) */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 pt-8 border-t border-slate-200 dark:border-white/10">
+        {/* Compact Quick Switcher Strip below main card */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
           {credentialsData.map((cert, index) => {
             const isSelected = currentIndex === index;
             return (
@@ -241,15 +246,15 @@ export default function Credentials() {
                 key={cert.id}
                 type="button"
                 onClick={() => setCurrentIndex(index)}
-                className={`group p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer ${
+                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer ${
                   isSelected
-                    ? "border-[#00a6f4] dark:border-[#00d9ff]/50 bg-[#00a6f4]/10 dark:bg-[#00d9ff]/10 shadow-md dark:shadow-[0_0_20px_rgba(0,217,255,0.12)]"
-                    : "border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-slate-50 dark:hover:bg-white/[0.05] hover:border-slate-300 dark:hover:border-white/20 shadow-xs"
+                    ? "border-cyan-500/50 bg-white dark:bg-[#0c1017] shadow-sm dark:shadow-md ring-1 ring-cyan-500/30"
+                    : "border-slate-200/80 dark:border-white/8 bg-slate-50/60 dark:bg-white/[0.02] hover:bg-white dark:hover:bg-white/5"
                 }`}
               >
-                <div className="flex items-center justify-between mb-1.5 text-[10px] font-mono">
-                  <span className="text-slate-400 dark:text-zinc-500 font-bold">0{index + 1}</span>
-                  <span className={isSelected ? "text-[#00a6f4] dark:text-[#00d9ff] font-semibold" : "text-slate-500 dark:text-zinc-400"}>
+                <div className="flex items-center justify-between text-[10px] font-mono mb-1 text-slate-400 dark:text-zinc-500">
+                  <span>0{index + 1}</span>
+                  <span className="uppercase text-[9px] px-1.5 py-0.2 rounded bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-zinc-300">
                     {cert.category}
                   </span>
                 </div>
@@ -264,89 +269,6 @@ export default function Credentials() {
           })}
         </div>
       </div>
-
-      {/* Fullscreen Certificate Inspection Lightbox */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-fade-in"
-          onClick={() => setIsModalOpen(false)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="relative w-full max-w-4xl max-h-[92vh] rounded-3xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#0c1018] shadow-2xl flex flex-col overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              boxShadow: "0 24px 60px rgba(0, 0, 0, 0.75), 0 0 50px rgba(0, 217, 255, 0.15)",
-            }}
-          >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#07090e]/80">
-              <div>
-                <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight">
-                  {currentCert.title}
-                </h4>
-                <p className="text-xs font-mono text-slate-500 dark:text-zinc-400 mt-0.5">
-                  {currentCert.issuerName}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <a
-                  href={currentCert.pdfUrl || currentCert.image}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-[#00a6f4] dark:hover:border-[#00d9ff]/40 text-xs font-mono text-slate-800 dark:text-zinc-200 transition-colors"
-                >
-                  <span>Open Full PDF / Image</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#00a6f4] dark:text-[#00d9ff]" />
-                </a>
-
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="p-2 rounded-full text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
-                  aria-label="Close dialog"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Modal Image Viewer */}
-            <div className="relative flex-1 p-4 sm:p-6 overflow-auto flex items-center justify-center bg-slate-100 dark:bg-black/70 min-h-[360px]">
-              <div className="relative w-full max-w-3xl aspect-[1.414/1] rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl bg-white">
-                <Image
-                  src={currentCert.image}
-                  alt={currentCert.title}
-                  fill
-                  unoptimized
-                  className="object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="px-6 py-3.5 border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#07090e]/80 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-slate-600 dark:text-zinc-400">
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
-                <span className="text-slate-800 dark:text-zinc-200">Official Authenticated Record</span>
-                <span className="text-slate-400 dark:text-zinc-600">•</span>
-                <span>{currentCert.issueDate}</span>
-              </div>
-
-              {currentCert.credentialId && (
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-500 dark:text-zinc-400">ID:</span>
-                  <span className="text-slate-800 dark:text-zinc-200 select-all font-mono">
-                    {currentCert.credentialId}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

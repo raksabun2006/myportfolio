@@ -11,7 +11,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-slate-100/70 dark:bg-[#07090e] border-t border-slate-200 dark:border-white/8 py-10 px-4 sm:px-6 lg:px-8 relative z-20 transition-colors duration-300">
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div className="max-w-5xl mx-auto space-y-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Left: Brand Identity & Pulsating Dot */}
           <button
