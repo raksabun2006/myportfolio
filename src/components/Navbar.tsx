@@ -81,13 +81,13 @@ export default function Navbar() {
     <>
       {/* Subtle top gradient blur mask so scrolled content doesn't abruptly clip above the floating capsule */}
       <div
-        className="fixed top-0 inset-x-0 h-14 sm:h-16 pointer-events-none z-40 bg-gradient-to-b from-[#f8fafc]/90 via-[#f8fafc]/40 to-transparent dark:from-[#080d19]/90 dark:via-[#080d19]/40 dark:to-transparent backdrop-blur-[2px]"
+        className="fixed top-0 inset-x-0 h-16 sm:h-20 pointer-events-none z-40 bg-gradient-to-b from-[#f8fafc]/90 via-[#f8fafc]/40 to-transparent dark:from-[#080d19]/90 dark:via-[#080d19]/40 dark:to-transparent backdrop-blur-[2px]"
         aria-hidden="true"
       />
 
       <div className="fixed top-3 sm:top-5 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-5xl">
         <nav
-          className={`flex items-center justify-between rounded-[20px] px-4 sm:px-6 md:px-8 transition-all duration-300 ease-out h-[54px] sm:h-[62px] ${
+          className={`flex items-center justify-between rounded-[22px] sm:rounded-[24px] px-5 sm:px-7 md:px-8 transition-all duration-300 ease-out h-[64px] sm:h-[72px] ${
             scrolled
               ? "bg-[#0b1222]/96 dark:bg-[#080d18]/95 shadow-[0_12px_36px_rgba(0,0,0,0.28)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.55)]"
               : "bg-[#0f172a]/92 dark:bg-[#0b101d]/90 shadow-[0_8px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_12px_34px_rgba(0,0,0,0.45)]"
