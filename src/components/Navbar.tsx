@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Menu, X, Bot } from "lucide-react";
+import { Home, Menu, X } from "lucide-react";
 import { SunIcon, MoonIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -14,15 +14,16 @@ const NAV_ITEMS = [
   { name: "About", href: "/about", match: ["/about", "/persona"] },
 ];
 
+const emptySubscribe = () => () => {};
+
 export default function Navbar() {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   useEffect(() => {
-    setMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -30,7 +31,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isItemActive = (item: typeof NAV_ITEMS[0]) => {
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const isItemActive = (item: (typeof NAV_ITEMS)[0]) => {
     if (item.match) {
       return item.match.some((m) => pathname === m || pathname.startsWith(m + "/"));
     }
@@ -38,124 +48,103 @@ export default function Navbar() {
   };
 
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-4xl">
+    <div className="fixed top-4 sm:top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-5xl">
       <nav
-        className="flex items-center justify-between rounded-2xl px-5 sm:px-6 transition-all duration-300"
+        className={`flex items-center justify-between rounded-[20px] px-6 sm:px-7 md:px-8 transition-all duration-300 ${
+          scrolled
+            ? "bg-[#0b1222]/96 dark:bg-[#080d18]/95 shadow-[0_12px_36px_rgba(0,0,0,0.28)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.55)]"
+            : "bg-[#0f172a]/92 dark:bg-[#0b101d]/90 shadow-[0_8px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_12px_34px_rgba(0,0,0,0.45)]"
+        } border border-slate-700/50 dark:border-white/[0.08] backdrop-blur-xl`}
         style={{
-          height: "58px",
-          background: scrolled ? "rgba(22, 28, 40, 0.96)" : "rgba(30, 38, 52, 0.92)",
-          border: "1px solid rgba(255, 255, 255, 0.14)",
-          backdropFilter: "blur(24px) saturate(190%)",
-          WebkitBackdropFilter: "blur(24px) saturate(190%)",
-          boxShadow: "0 10px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12)",
+          height: "72px",
         }}
         aria-label="Main Navigation"
       >
-        {/* Left: Brand Identity (Clean Home icon + Script logo, NO border, exact Image 2) */}
+        {/* Left: Brand Identity */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 group transition-opacity hover:opacity-85 select-none"
+          className="flex items-center gap-2.5 group select-none py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-lg"
+          aria-label="bunraksa.site homepage"
         >
-          <Home className="w-4 h-4 text-[#00d9ff] transition-transform group-hover:scale-110" />
-          <span
-            className="font-sans italic font-bold text-sm tracking-tight text-[#00d9ff]"
-            style={{
-              textShadow: "0 0 12px rgba(0, 217, 255, 0.45)",
-            }}
-          >
-            bunraksa.site
+          <Home className="w-[18px] h-[18px] text-cyan-400 group-hover:text-cyan-300 transition-colors duration-200 shrink-0" />
+          <span className="font-sans font-semibold text-[15px] sm:text-base tracking-tight text-slate-100 group-hover:text-white transition-colors duration-200">
+            bunraksa<span className="text-cyan-400 font-semibold">.site</span>
           </span>
         </Link>
 
-        {/* Center: Route Navigation Links (Clean typography & active pill, Image 2 style) */}
-        <div className="hidden md:flex items-center gap-1.5 lg:gap-2">
+        {/* Center: Navigation Links */}
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {NAV_ITEMS.map((item) => {
             const active = isItemActive(item);
 
             return (
-              <div key={item.name} className="relative flex flex-col items-center">
+              <div key={item.name} className="relative flex items-center justify-center">
                 <Link
                   href={item.href}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs tracking-wide transition-all ${
-                    active
-                      ? "border border-white/40 bg-white/10 text-white font-medium shadow-xs"
-                      : "text-slate-300 hover:text-white hover:bg-white/5 border border-transparent font-normal"
+                  className={`text-sm font-medium transition-colors duration-200 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-md ${
+                    active ? "text-white" : "text-slate-300 hover:text-white"
                   }`}
+                  aria-current={active ? "page" : undefined}
                 >
                   {item.name}
                 </Link>
 
-                {/* Hanging Cyan Glowing Indicator Dot directly below active item */}
+                {/* Subtle Cyan Underline Indicator */}
                 {active && (
-                  <div
-                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center justify-center w-3 h-2 rounded-b-md bg-[#161c28] border-b border-x border-white/30"
+                  <span
+                    className="absolute -bottom-2 left-0 right-0 h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.7)]"
                     aria-hidden="true"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00d9ff] shadow-[0_0_8px_#00d9ff]" />
-                  </div>
+                  />
                 )}
               </div>
             );
           })}
         </div>
 
-        {/* Right: Bot Status & LIGHT / DARK Mode Switcher Pill */}
-        <div className="hidden sm:flex items-center gap-3">
-          <div
-            title="System Active"
-            className="w-7 h-7 rounded-full flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
-          >
-            <Bot className="w-4 h-4" />
-          </div>
-
-          <div className="h-4 w-[1px] bg-white/15" />
-
-          {/* Theme Pill Toggle Button */}
+        {/* Right: Theme Mode Switcher */}
+        <div className="hidden sm:flex items-center">
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label="Toggle theme mode"
-            className={`group inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider transition-all shadow-xs cursor-pointer ${
-              mounted && theme === "light"
-                ? "bg-slate-200/95 hover:bg-white text-slate-800 border border-white/50 shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
-                : "bg-white/10 hover:bg-white/20 text-white border border-white/15"
-            }`}
+            aria-label={mounted && theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 border border-slate-700/60 dark:border-white/10 bg-slate-800/60 hover:bg-slate-800/90 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] text-slate-200 hover:text-white cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 shadow-xs"
           >
             {mounted && theme === "light" ? (
               <>
-                <SunIcon className="w-3.5 h-3.5 text-amber-500" />
-                <span className="text-[11px] text-slate-800">LIGHT</span>
+                <SunIcon className="w-3.5 h-3.5 text-amber-400 transition-transform duration-200 group-hover:rotate-45" />
+                <span className="text-[12px] font-medium text-slate-200 tracking-wide">Light</span>
               </>
             ) : (
               <>
-                <MoonIcon className="w-3.5 h-3.5 text-[#00d9ff]" />
-                <span className="text-[11px] text-zinc-100">DARK</span>
+                <MoonIcon className="w-3.5 h-3.5 text-cyan-400 transition-transform duration-200 group-hover:-rotate-12" />
+                <span className="text-[12px] font-medium text-slate-200 tracking-wide">Dark</span>
               </>
             )}
           </button>
         </div>
 
-        {/* Mobile Hamburger Toggle & Theme Toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        {/* Mobile Hamburger & Theme Toggle Controls */}
+        <div className="flex md:hidden items-center gap-1.5">
           <button
             type="button"
             onClick={toggleTheme}
-            className="p-1.5 rounded-xl text-zinc-300 hover:text-white hover:bg-white/10 transition-colors"
-            aria-label="Toggle theme"
+            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 cursor-pointer"
+            aria-label={mounted && theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
           >
             {mounted && theme === "light" ? (
               <SunIcon className="w-4 h-4 text-amber-400" />
             ) : (
-              <MoonIcon className="w-4 h-4 text-[#00d9ff]" />
+              <MoonIcon className="w-4 h-4 text-cyan-400" />
             )}
           </button>
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="p-1.5 rounded-xl text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 cursor-pointer"
             aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-5 h-5 text-[#00a6f4] dark:text-[#00d9ff]" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-cyan-400" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </nav>
@@ -163,12 +152,9 @@ export default function Navbar() {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div
-          className="md:hidden mt-2 p-3.5 rounded-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#161c26]/95 backdrop-blur-2xl shadow-2xl flex flex-col gap-1.5"
+          className="md:hidden mt-2 p-3.5 rounded-[20px] border border-slate-700/60 dark:border-white/10 bg-[#0f172a]/95 dark:bg-[#0b101d]/95 backdrop-blur-2xl shadow-2xl flex flex-col gap-1.5 animate-fade-in"
           style={{
-            boxShadow:
-              theme === "light"
-                ? "0 16px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05)"
-                : "0 16px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08)",
+            boxShadow: "0 16px 40px rgba(0, 0, 0, 0.45)",
           }}
         >
           {NAV_ITEMS.map((item) => {
@@ -179,25 +165,37 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-medium flex items-center justify-between transition-colors ${active
-                    ? "bg-[#00a6f4]/15 dark:bg-[#00d9ff]/15 text-[#00a6f4] dark:text-[#00d9ff] font-semibold border border-[#00a6f4]/30 dark:border-[#00d9ff]/30"
-                    : "text-slate-700 dark:text-zinc-200 hover:text-slate-950 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
-                  }`}
+                className={`px-4 py-2.5 rounded-xl text-sm font-medium flex items-center justify-between transition-colors duration-200 ${
+                  active
+                    ? "bg-cyan-500/15 text-cyan-400 font-semibold border border-cyan-500/30"
+                    : "text-slate-300 hover:text-white hover:bg-white/5"
+                }`}
+                aria-current={active ? "page" : undefined}
               >
                 <span>{item.name}</span>
-                {active && <span className="w-1.5 h-1.5 rounded-full bg-[#00a6f4] dark:bg-[#00d9ff]" />}
+                {active && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]" />}
               </Link>
             );
           })}
-          <div className="pt-2 mt-1 border-t border-slate-200 dark:border-white/10 flex items-center justify-between">
-            <span className="text-[11px] font-mono text-slate-500 dark:text-zinc-400">Theme</span>
+
+          <div className="pt-2.5 mt-1 border-t border-slate-700/50 dark:border-white/10 flex items-center justify-between px-2">
+            <span className="text-xs font-mono text-slate-400">Appearance</span>
             <button
               type="button"
               onClick={toggleTheme}
-              className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/10 text-[11px] font-mono text-slate-800 dark:text-white flex items-center gap-1.5 border border-slate-200 dark:border-white/10"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-800 dark:bg-white/10 dark:hover:bg-white/15 text-xs font-medium text-slate-200 border border-slate-700/60 dark:border-white/10 cursor-pointer transition-colors"
             >
-              {mounted && theme === "light" ? <SunIcon className="w-3 h-3 text-amber-500" /> : <MoonIcon className="w-3 h-3 text-[#00d9ff]" />}
-              <span>{(mounted ? theme : "DARK").toUpperCase()}</span>
+              {mounted && theme === "light" ? (
+                <>
+                  <SunIcon className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Light</span>
+                </>
+              ) : (
+                <>
+                  <MoonIcon className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Dark</span>
+                </>
+              )}
             </button>
           </div>
         </div>
