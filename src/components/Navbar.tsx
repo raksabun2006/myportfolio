@@ -23,13 +23,20 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
+  // Passive scroll listener for navbar background state
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Ensure smooth scroll to top whenever pathname changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
 
   // Close mobile menu on Escape key
   useEffect(() => {
@@ -47,10 +54,33 @@ export default function Navbar() {
     return pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/"));
   };
 
+  const handleBrandClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setMobileMenuOpen(false);
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    match?: string[]
+  ) => {
+    setMobileMenuOpen(false);
+    const isCurrent =
+      pathname === href || (match && match.some((m) => pathname === m || pathname.startsWith(m + "/")));
+
+    if (isCurrent) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="fixed top-4 sm:top-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-5xl">
       <nav
-        className={`flex items-center justify-between rounded-[20px] px-6 sm:px-7 md:px-8 transition-all duration-300 ${
+        className={`flex items-center justify-between rounded-[20px] px-6 sm:px-7 md:px-8 transition-all duration-300 ease-out ${
           scrolled
             ? "bg-[#0b1222]/96 dark:bg-[#080d18]/95 shadow-[0_12px_36px_rgba(0,0,0,0.28)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.55)]"
             : "bg-[#0f172a]/92 dark:bg-[#0b101d]/90 shadow-[0_8px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_12px_34px_rgba(0,0,0,0.45)]"
@@ -63,7 +93,8 @@ export default function Navbar() {
         {/* Left: Brand Identity */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 group select-none py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-lg"
+          onClick={handleBrandClick}
+          className="flex items-center gap-2.5 group select-none py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-lg transition-transform duration-200 active:scale-95"
           aria-label="bunraksa.site homepage"
         >
           <Home className="w-[18px] h-[18px] text-cyan-400 group-hover:text-cyan-300 transition-colors duration-200 shrink-0" />
@@ -73,7 +104,7 @@ export default function Navbar() {
         </Link>
 
         {/* Center: Navigation Links */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8">
+        <div className="hidden md:flex items-center gap-4 lg:gap-6">
           {NAV_ITEMS.map((item) => {
             const active = isItemActive(item);
 
@@ -81,21 +112,26 @@ export default function Navbar() {
               <div key={item.name} className="relative flex items-center justify-center">
                 <Link
                   href={item.href}
-                  className={`text-sm font-medium transition-colors duration-200 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-md ${
-                    active ? "text-white" : "text-slate-300 hover:text-white"
+                  onClick={(e) => handleNavClick(e, item.href, item.match)}
+                  className={`relative text-sm font-medium transition-all duration-200 py-1.5 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 ${
+                    active
+                      ? "text-white"
+                      : "text-slate-300 hover:text-white hover:bg-white/[0.05]"
                   }`}
                   aria-current={active ? "page" : undefined}
                 >
                   {item.name}
-                </Link>
 
-                {/* Subtle Cyan Underline Indicator */}
-                {active && (
+                  {/* Smooth scaling and fading cyan active underline */}
                   <span
-                    className="absolute -bottom-2 left-0 right-0 h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.7)]"
+                    className={`absolute bottom-0 left-3 right-3 h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.7)] transition-all duration-300 ease-out origin-center ${
+                      active
+                        ? "opacity-100 scale-x-100"
+                        : "opacity-0 scale-x-0 pointer-events-none"
+                    }`}
                     aria-hidden="true"
                   />
-                )}
+                </Link>
               </div>
             );
           })}
@@ -107,7 +143,7 @@ export default function Navbar() {
             type="button"
             onClick={toggleTheme}
             aria-label={mounted && theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 border border-slate-700/60 dark:border-white/10 bg-slate-800/60 hover:bg-slate-800/90 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] text-slate-200 hover:text-white cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 shadow-xs"
+            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 border border-slate-700/60 dark:border-white/10 bg-slate-800/60 hover:bg-slate-800/90 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] text-slate-200 hover:text-white cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 shadow-xs active:scale-95"
           >
             {mounted && theme === "light" ? (
               <>
@@ -128,7 +164,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 cursor-pointer"
+            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 cursor-pointer active:scale-95"
             aria-label={mounted && theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
           >
             {mounted && theme === "light" ? (
@@ -140,7 +176,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 cursor-pointer"
+            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 cursor-pointer active:scale-95"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -164,7 +200,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, item.href, item.match)}
                 className={`px-4 py-2.5 rounded-xl text-sm font-medium flex items-center justify-between transition-colors duration-200 ${
                   active
                     ? "bg-cyan-500/15 text-cyan-400 font-semibold border border-cyan-500/30"
@@ -183,7 +219,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-800 dark:bg-white/10 dark:hover:bg-white/15 text-xs font-medium text-slate-200 border border-slate-700/60 dark:border-white/10 cursor-pointer transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-800 dark:bg-white/10 dark:hover:bg-white/15 text-xs font-medium text-slate-200 border border-slate-700/60 dark:border-white/10 cursor-pointer transition-colors active:scale-95"
             >
               {mounted && theme === "light" ? (
                 <>
