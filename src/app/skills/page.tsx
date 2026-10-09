@@ -1,9 +1,23 @@
-"use client";
-
 import React from "react";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Skills from "@/components/Skills";
+
+export const metadata: Metadata = {
+  title: "Skills & Technical Stack",
+  description:
+    "Technical competencies of Bun Raksa: Java 21, Spring Boot, React, Next.js, PostgreSQL, Docker, Redis, REST APIs, and microservices architecture.",
+  alternates: {
+    canonical: "https://bunraksa.site/skills",
+  },
+  openGraph: {
+    title: "Skills & Technical Stack | Bun Raksa",
+    description:
+      "Technical competencies of Bun Raksa: Java 21, Spring Boot, React, Next.js, PostgreSQL, Docker, Redis, REST APIs, and microservices architecture.",
+    url: "https://bunraksa.site/skills",
+  },
+};
 
 export default function SkillsPage() {
   return (
@@ -27,13 +41,13 @@ export default function SkillsPage() {
       <Navbar />
 
       <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-20 relative z-10 animate-fade-in">
-        {/* Page Header (Consistent with /projects and /about) */}
+        {/* Page Header */}
         <div className="text-center sm:text-left mb-10 sm:mb-12">
           <span className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-[0.25em] text-[#00a6f4] dark:text-[#00d9ff] uppercase block mb-2">
             TECHNICAL ARCHITECTURE
           </span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white font-sans">
-            Skills &amp; Technologies
+            Skills &amp; Technologies <span className="sr-only">— Java, Spring Boot, React &amp; PostgreSQL Backend Engineering</span>
           </h1>
           <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-2xl mt-3 leading-relaxed">
             Production-tested backend systems, distributed architectures, resilient relational schemas, and modern full-stack development tooling.

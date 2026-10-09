@@ -28,17 +28,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${credential.title} | Bun Raksa Credentials`,
+    title: `${credential.title} - Verified Credential`,
     description: credential.description,
+    alternates: {
+      canonical: `https://bunraksa.site/credentials/${id}`,
+    },
     openGraph: {
-      title: `${credential.title} - Verified Credential`,
+      title: `${credential.title} - Verified Credential | Bun Raksa`,
       description: credential.description,
+      url: `https://bunraksa.site/credentials/${id}`,
+      type: "article",
       images: [
         {
           url: credential.image,
-          alt: credential.title,
+          alt: `${credential.title} - Certified by ${credential.issuerName}`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${credential.title} - Verified Credential | Bun Raksa`,
+      description: credential.description,
+      images: [credential.image],
     },
   };
 }

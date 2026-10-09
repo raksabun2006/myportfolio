@@ -30,7 +30,7 @@ export const projects: Project[] = [
     role: "Full-Stack Developer",
     category: "Online Store + POS",
     shortDescription:
-      "A full-stack online store and POS platform designed for modern retail management.",
+      "A full-stack online store and point-of-sale (POS) system engineered with React, Spring Boot, PostgreSQL, and Redis, featuring inventory management, barcode scanning, and Bakong KHQR dynamic payment integration.",
     image: "/projects/mart-system.png",
     technologies: [
       "React",
@@ -89,7 +89,7 @@ export const projects: Project[] = [
     role: "Team Project",
     category: "Developer Community / Bug Bounty Platform",
     shortDescription:
-      "A collaborative software development platform built with a team to solve real-world developer problems.",
+      "A collaborative developer and vulnerability triage platform built with a team using Next.js and Spring Boot. Personally engineered the Organization Service APIs and User Profile subsystem.",
     contributionHighlight: "Organization Service APIs and User Profile features",
     image: "/projects/devsolve.png",
     technologies: [
@@ -149,7 +149,7 @@ export const projects: Project[] = [
     role: "Full-Stack Developer",
     category: "Service Marketplace",
     shortDescription:
-      "A Khmer-focused service marketplace connecting customers with local service providers.",
+      "A two-sided service marketplace connecting Cambodian customers with verified local service providers, built with Next.js, React, Spring Boot, PostgreSQL, and JWT role-based security.",
     image: "/projects/khmer-service.png",
     technologies: [
       "Next.js",
@@ -209,7 +209,7 @@ export const projects: Project[] = [
     role: "Backend Developer",
     category: "Academic ERP & Records",
     shortDescription:
-      "A Spring Boot-based school management system designed to manage students, grades, enrollment, and school information.",
+      "An academic ERP and school management backend system engineered with Java, Spring Boot, PostgreSQL, and Hibernate for student record lifecycles, enrollment concurrency, and grade calculation.",
     image: "/projects/educore.jpg",
     technologies: [
       "Java",

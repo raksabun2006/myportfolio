@@ -2,17 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import {
-  MapPin,
-  ShieldCheck,
-  CheckCircle2,
-  Sparkles,
-  Layers,
-  GraduationCap,
-  Zap,
-  Target,
-  Flame,
-} from "lucide-react";
+import { MapPin, GraduationCap } from "lucide-react";
 
 const PILLARS = [
   {
@@ -123,10 +113,9 @@ export default function About() {
               <div className="relative w-12 h-12 sm:w-13 sm:h-13 shrink-0 flex items-center justify-center">
                 <Image
                   src="/logos/rupp-logo.png"
-                  alt="RUPP Logo"
+                  alt="Royal University of Phnom Penh (RUPP) Computer Science & Engineering Logo"
                   width={256}
                   height={256}
-                  unoptimized
                   priority
                   className="w-full h-full object-contain filter drop-shadow-sm select-none"
                 />
@@ -148,10 +137,9 @@ export default function About() {
               <div className="relative w-12 h-12 sm:w-13 sm:h-13 shrink-0 flex items-center justify-center">
                 <Image
                   src="/logos/istad-logo.png"
-                  alt="ISTAD Logo"
+                  alt="Institute of Science and Technology Advanced Development (ISTAD) Logo"
                   width={256}
                   height={256}
-                  unoptimized
                   priority
                   className="w-full h-full object-contain filter drop-shadow-sm select-none"
                 />

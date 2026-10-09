@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { ArrowUp, Activity } from "lucide-react";
 import { GithubIcon } from "@/components/Icons";
 
@@ -56,7 +57,29 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-4 border-t border-slate-200/80 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono text-slate-500 dark:text-zinc-500">
+        {/* Internal Navigation Links for Search Engines & Recruiter Discovery */}
+        <div className="pt-2 border-t border-slate-200/60 dark:border-white/5 flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2 text-xs font-mono">
+          <Link href="/" className="text-slate-600 dark:text-zinc-400 hover:text-[#00a6f4] dark:hover:text-[#00d9ff] transition-colors">
+            Home
+          </Link>
+          <Link href="/projects" className="text-slate-600 dark:text-zinc-400 hover:text-[#00a6f4] dark:hover:text-[#00d9ff] transition-colors">
+            Selected Works
+          </Link>
+          <Link href="/skills" className="text-slate-600 dark:text-zinc-400 hover:text-[#00a6f4] dark:hover:text-[#00d9ff] transition-colors">
+            Architecture Stack
+          </Link>
+          <Link href="/about" className="text-slate-600 dark:text-zinc-400 hover:text-[#00a6f4] dark:hover:text-[#00d9ff] transition-colors">
+            Persona &amp; Bio
+          </Link>
+          <Link href="/credentials" className="text-slate-600 dark:text-zinc-400 hover:text-[#00a6f4] dark:hover:text-[#00d9ff] transition-colors">
+            Credentials
+          </Link>
+          <Link href="/contact" className="text-slate-600 dark:text-zinc-400 hover:text-[#00a6f4] dark:hover:text-[#00d9ff] transition-colors">
+            Get in Touch
+          </Link>
+        </div>
+
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono text-slate-500 dark:text-zinc-500">
           <div>
             <span>Engineered with Next.js 16, React 19 &amp; Tailwind CSS</span>
           </div>

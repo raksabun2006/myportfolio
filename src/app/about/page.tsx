@@ -1,15 +1,28 @@
-"use client";
-
 import React from "react";
-import Link from "next/link";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
 import GitHubSection from "@/components/GitHubSection";
-import { GraduationCap, ExternalLink, MapPin, Building2, Calendar, Award } from "lucide-react";
+import { MapPin, Building2 } from "lucide-react";
 
-export default function PersonaPage() {
+export const metadata: Metadata = {
+  title: "About Me & Engineering Persona",
+  description:
+    "Learn about Bun Raksa, a CS student at RUPP and ISTAD graduate specializing in Java, Spring Boot, PostgreSQL, and distributed systems in Phnom Penh, Cambodia.",
+  alternates: {
+    canonical: "https://bunraksa.site/about",
+  },
+  openGraph: {
+    title: "About Bun Raksa | Backend & Full-Stack Developer",
+    description:
+      "Learn about Bun Raksa, a CS student at RUPP and ISTAD graduate specializing in Java, Spring Boot, PostgreSQL, and distributed systems in Phnom Penh, Cambodia.",
+    url: "https://bunraksa.site/about",
+  },
+};
+
+export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 dark:bg-[#07090e] dark:text-zinc-100 flex flex-col font-sans selection:bg-[#00d9ff] selection:text-[#07090e] relative overflow-x-hidden transition-colors duration-300">
       {/* Background Grid */}
@@ -30,13 +43,13 @@ export default function PersonaPage() {
       <Navbar />
 
       <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-20 relative z-10 animate-fade-in">
-        {/* Page Header (Exact match to ayushcmd.me/about) */}
+        {/* Page Header */}
         <div className="text-center sm:text-left mb-12">
           <span className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-[0.25em] text-[#00a6f4] dark:text-[#00d9ff] uppercase block mb-2">
             WHO I AM
           </span>
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-slate-900 dark:text-white font-sans">
-            Persona
+            Persona &amp; Bio <span className="sr-only">— Bun Raksa Backend Developer Cambodia</span>
           </h1>
         </div>
 
@@ -84,10 +97,9 @@ export default function PersonaPage() {
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center">
                 <Image
                   src="/logos/rupp-logo.png"
-                  alt="Royal University of Phnom Penh Logo"
+                  alt="Royal University of Phnom Penh (RUPP) Computer Science & Engineering Logo"
                   width={256}
                   height={256}
-                  unoptimized
                   priority
                   className="w-full h-full object-contain filter drop-shadow-sm select-none"
                 />
@@ -119,10 +131,9 @@ export default function PersonaPage() {
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center">
                 <Image
                   src="/logos/istad-logo.png"
-                  alt="ISTAD Institute Logo"
+                  alt="Institute of Science and Technology Advanced Development (ISTAD) Logo"
                   width={256}
                   height={256}
-                  unoptimized
                   priority
                   className="w-full h-full object-contain filter drop-shadow-sm select-none"
                 />

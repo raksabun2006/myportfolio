@@ -66,9 +66,9 @@ export default function ProjectCard({
         >
           <Image
             src={project.image}
-            alt={project.title}
+            alt={`${project.title} - ${project.category} - Software project by Bun Raksa`}
             fill
-            unoptimized
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={priority}
             className="object-cover object-top group-hover/img:scale-105 transition-transform duration-500 ease-out"
           />

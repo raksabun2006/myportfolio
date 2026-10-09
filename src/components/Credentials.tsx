@@ -11,7 +11,7 @@ import {
   Check,
   ArrowRight,
 } from "lucide-react";
-import { credentialsData, CredentialItem } from "@/data/credentials";
+import { credentialsData } from "@/data/credentials";
 
 export default function Credentials() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -57,9 +57,9 @@ export default function Credentials() {
             <span className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-[0.2em] text-[#00a6f4] dark:text-[#00d9ff] uppercase block mb-1">
               ACHIEVEMENTS
             </span>
-            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white font-sans">
-              My Credentials
-            </h2>
+            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white font-sans">
+              Verified Credentials &amp; Certifications
+            </h1>
             <p className="text-xs sm:text-sm font-mono text-slate-500 dark:text-zinc-400 mt-2">
               {credentialsData.length} certificates · click to view full details
             </p>

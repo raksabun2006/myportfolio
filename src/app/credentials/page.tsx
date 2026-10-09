@@ -1,9 +1,23 @@
-"use client";
-
 import React from "react";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Credentials from "@/components/Credentials";
+
+export const metadata: Metadata = {
+  title: "Verified Credentials & Certifications",
+  description:
+    "Official software engineering and networking certifications earned by Bun Raksa from ISTAD, Cisco Networking Academy, and ETEC Center.",
+  alternates: {
+    canonical: "https://bunraksa.site/credentials",
+  },
+  openGraph: {
+    title: "Verified Credentials & Certifications | Bun Raksa",
+    description:
+      "Official software engineering and networking certifications earned by Bun Raksa from ISTAD, Cisco Networking Academy, and ETEC Center.",
+    url: "https://bunraksa.site/credentials",
+  },
+};
 
 export default function CredentialsPage() {
   return (

@@ -1,18 +1,14 @@
-"use client";
-
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { projects } from "@/data/projects";
-import { credentialsData } from "@/data/credentials";
 import {
   ArrowRight,
   ShieldCheck,
-  Layers,
-  Sparkles,
   GitBranch,
   ExternalLink,
   Code2,
@@ -20,9 +16,19 @@ import {
   GraduationCap,
 } from "lucide-react";
 
+export const metadata: Metadata = {
+  title: {
+    absolute: "Bun Raksa | Backend & Full-Stack Developer in Cambodia",
+  },
+  description:
+    "Explore Bun Raksa's developer portfolio featuring Java, Spring Boot, React, REST APIs, PostgreSQL, and full-stack projects. Based in Phnom Penh, Cambodia.",
+  alternates: {
+    canonical: "https://bunraksa.site",
+  },
+};
+
 export default function Home() {
   const featuredProjects = projects.slice(0, 2);
-  const featuredCredentials = credentialsData.slice(0, 2);
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 dark:bg-[#07090e] dark:text-zinc-100 flex flex-col font-sans selection:bg-[#00d9ff] selection:text-[#07090e] relative overflow-x-hidden transition-colors duration-300">

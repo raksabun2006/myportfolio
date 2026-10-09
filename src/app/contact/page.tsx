@@ -1,9 +1,23 @@
-"use client";
-
 import React from "react";
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Contact & Engineering Inquiries",
+  description:
+    "Get in touch with Bun Raksa for Java Spring Boot backend engineering, full-stack development roles, internships, or collaboration in Phnom Penh, Cambodia.",
+  alternates: {
+    canonical: "https://bunraksa.site/contact",
+  },
+  openGraph: {
+    title: "Contact Bun Raksa | Hire Backend & Full-Stack Developer",
+    description:
+      "Get in touch with Bun Raksa for Java Spring Boot backend engineering, full-stack development roles, internships, or collaboration in Phnom Penh, Cambodia.",
+    url: "https://bunraksa.site/contact",
+  },
+};
 
 export default function ContactPage() {
   return (

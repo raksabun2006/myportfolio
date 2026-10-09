@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Terminal, Activity, Server, Database, Play, CheckCircle2, Zap } from "lucide-react";
+import { Terminal, Play, CheckCircle2, Zap } from "lucide-react";
 
 interface LogEntry {
   id: string;

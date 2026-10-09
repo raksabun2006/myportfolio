@@ -1,6 +1,6 @@
 import React from "react";
 import { technicalInterests } from "@/data/interests";
-import { Server, Network, Cloud, Laptop, ArrowUpRight } from "lucide-react";
+import { Server, Network, Cloud, Laptop } from "lucide-react";
 
 const INTEREST_ICONS: Record<string, React.ElementType> = {
   "backend-systems": Server,

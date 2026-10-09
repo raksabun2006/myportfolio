@@ -18,25 +18,45 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+import Script from "next/script";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { PersonJsonLd } from "@/components/StructuredData";
+
 export const metadata: Metadata = {
-  title: "Bun Raksa | Backend / Full-Stack Developer",
+  metadataBase: new URL("https://bunraksa.site"),
+  title: {
+    default: "Bun Raksa | Backend & Full-Stack Developer in Cambodia",
+    template: "%s | Bun Raksa",
+  },
   description:
-    "Portfolio of Bun Raksa, a Backend / Full-Stack Developer specializing in Java, Spring Boot, PostgreSQL, React, Microservices, and DevOps.",
+    "Explore Bun Raksa's developer portfolio featuring Java, Spring Boot, React, REST APIs, PostgreSQL, and full-stack projects. Based in Phnom Penh, Cambodia.",
   keywords: [
     "Bun Raksa",
-    "Backend Developer",
-    "Full-Stack Developer",
+    "Bun Raksa developer",
+    "Bun Raksa portfolio",
+    "Backend Developer Cambodia",
+    "Junior Backend Developer Phnom Penh",
+    "Java Spring Boot Developer Cambodia",
+    "Full-Stack Developer Cambodia",
+    "React and Spring Boot Developer",
+    "Java Backend Developer Portfolio",
     "Java",
     "Spring Boot",
     "PostgreSQL",
     "React",
+    "Next.js",
     "Microservices",
-    "DevOps",
+    "REST APIs",
+    "Docker",
     "Phnom Penh Cambodia",
+    "ប៊ុន រក្សា",
   ],
   authors: [{ name: "Bun Raksa", url: "https://github.com/raksabun2006" }],
   creator: "Bun Raksa",
-  metadataBase: new URL("https://bunraksa.dev"),
+  publisher: "Bun Raksa",
+  alternates: {
+    canonical: "https://bunraksa.site",
+  },
   icons: {
     icon: [
       { url: "/icon.png", type: "image/png" },
@@ -48,10 +68,10 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Bun Raksa | Backend / Full-Stack Developer",
+    title: "Bun Raksa | Backend & Full-Stack Developer in Cambodia",
     description:
-      "Portfolio of Bun Raksa, a Backend / Full-Stack Developer specializing in Java, Spring Boot, PostgreSQL, React, Microservices, and DevOps.",
-    url: "https://bunraksa.dev",
+      "Explore Bun Raksa's developer portfolio featuring Java, Spring Boot, React, REST APIs, PostgreSQL, and full-stack projects. Based in Phnom Penh, Cambodia.",
+    url: "https://bunraksa.site",
     siteName: "Bun Raksa Portfolio",
     locale: "en_US",
     type: "website",
@@ -60,15 +80,15 @@ export const metadata: Metadata = {
         url: "/projects/mart-system.png",
         width: 1200,
         height: 630,
-        alt: "Bun Raksa - Backend / Full-Stack Developer Portfolio",
+        alt: "Bun Raksa - Backend & Full-Stack Developer Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bun Raksa | Backend / Full-Stack Developer",
+    title: "Bun Raksa | Backend & Full-Stack Developer in Cambodia",
     description:
-      "Portfolio of Bun Raksa, a Backend / Full-Stack Developer specializing in Java, Spring Boot, PostgreSQL, React, Microservices, and DevOps.",
+      "Explore Bun Raksa's developer portfolio featuring Java, Spring Boot, React, REST APIs, PostgreSQL, and full-stack projects. Based in Phnom Penh, Cambodia.",
     images: ["/projects/mart-system.png"],
   },
   robots: {
@@ -83,9 +103,6 @@ export const metadata: Metadata = {
     },
   },
 };
-
-import Script from "next/script";
-import { ThemeProvider } from "@/context/ThemeContext";
 
 const themeInitScript = `
   try {
@@ -117,6 +134,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
         />
+        <PersonJsonLd />
       </head>
       <body className="min-h-screen bg-[#f8fafc] text-slate-900 dark:bg-[#07090e] dark:text-zinc-100 font-sans antialiased transition-colors duration-300">
         <ThemeProvider>

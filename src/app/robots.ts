@@ -6,6 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://bunraksa.dev/sitemap.xml",
+    sitemap: "https://bunraksa.site/sitemap.xml",
+    host: "https://bunraksa.site",
   };
 }

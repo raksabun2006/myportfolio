@@ -75,11 +75,12 @@ export default function Hero() {
             <span className="bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 dark:from-cyan-400 dark:via-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
               Raksa
             </span>
+            <span className="sr-only"> — Backend &amp; Full-Stack Developer in Cambodia</span>
           </h1>
 
           {/* Proportional Subtitle Statement */}
           <p className="text-[13.5px] sm:text-[15px] md:text-base text-slate-600 dark:text-slate-300 max-w-md sm:max-w-lg leading-normal sm:leading-relaxed font-normal">
-            Building modern web applications, scalable backend systems, and production-ready APIs.
+            Backend &amp; Full-Stack Developer based in Phnom Penh, Cambodia. Specializing in Java, Spring Boot, React, and PostgreSQL to engineer high-throughput systems, clean architectures, and production-ready APIs.
           </p>
 
           {/* Technology Stack with Subtle Blue Dot Separators */}
@@ -204,11 +205,11 @@ export default function Hero() {
             <div className="relative p-2 sm:p-2.5 rounded-3xl sm:rounded-[28px] bg-white/80 dark:bg-[#0c1018]/80 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-[0_20px_50px_rgba(15,23,42,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               <div className="relative aspect-[4/5] w-full rounded-2xl sm:rounded-[22px] overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200/60 dark:border-white/10">
                 <Image
-                  src="/profile.JPEG"
-                  alt="Bun Raksa - Full-Stack Developer"
+                  src="/bun-raksa.jpg"
+                  alt="Bun Raksa (ប៊ុន រក្សា) - Backend & Full-Stack Developer in Phnom Penh, Cambodia"
                   fill
                   priority
-                  unoptimized
+                  sizes="(max-width: 640px) 270px, (max-width: 768px) 300px, 325px"
                   className="object-cover object-[center_18%] transition-transform duration-700 hover:scale-102"
                 />
 

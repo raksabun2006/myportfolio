@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Mail, Send, CheckCircle2, ArrowUpRight, ChevronDown } from "lucide-react";
-import { GithubIcon, LinkedinIcon, TwitterIcon } from "@/components/Icons";
+import { GithubIcon, LinkedinIcon } from "@/components/Icons";
 
 const FAQS = [
   {
