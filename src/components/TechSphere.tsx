@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback, useSyncExternalStore } from "react";
 import {
   JavaIcon,
   SpringIcon,
@@ -20,19 +20,19 @@ import {
   TailwindIcon,
 } from "./Icons";
 import { useTheme } from "@/context/ThemeContext";
+import { Play, Pause, RotateCcw } from "lucide-react";
 
-interface SkillItem {
+export interface SkillItem {
   id: string;
   name: string;
   icon: React.ComponentType<{ className?: string }>;
   color: string;
   category: string;
-  orbitRadius?: number; // 1.0 for sphere surface, 1.2-1.28 for outer orbital envelope
+  orbitRadius?: number;
 }
 
-// Bun Raksa's 100% Real, Verified Engineering Skills
-const REAL_SKILLS: SkillItem[] = [
-  // Core Surface Nodes (Primary Enterprise & Full-Stack Engine)
+export const REAL_SKILLS: SkillItem[] = [
+  // Primary Core Surface Nodes (Enterprise Core)
   { id: "java", name: "Java 21", icon: JavaIcon, color: "#f87171", category: "Backend", orbitRadius: 1.0 },
   { id: "spring", name: "Spring Boot 3", icon: SpringIcon, color: "#4ade80", category: "Backend", orbitRadius: 1.0 },
   { id: "postgres", name: "PostgreSQL", icon: PostgresIcon, color: "#60a5fa", category: "Database", orbitRadius: 1.0 },
@@ -48,7 +48,7 @@ const REAL_SKILLS: SkillItem[] = [
   { id: "git", name: "Git", icon: GitIcon, color: "#f97316", category: "VCS", orbitRadius: 1.0 },
   { id: "cicd", name: "CI / CD", icon: DockerIcon, color: "#10b981", category: "DevOps", orbitRadius: 1.02 },
 
-  // Outer Satellite Envelope Nodes
+  // Outer Satellite Nodes
   { id: "tailwind", name: "Tailwind CSS", icon: TailwindIcon, color: "#38bdf8", category: "Styling", orbitRadius: 1.22 },
   { id: "linux", name: "Linux / Cloud", icon: MicroservicesIcon, color: "#f59e0b", category: "DevOps", orbitRadius: 1.25 },
   { id: "sysdesign", name: "System Design", icon: RestApiIcon, color: "#a78bfa", category: "Architecture", orbitRadius: 1.22 },
@@ -58,6 +58,22 @@ const REAL_SKILLS: SkillItem[] = [
   { id: "ccna", name: "CCNA Networks", icon: RestApiIcon, color: "#38bdf8", category: "Network", orbitRadius: 1.24 },
 ];
 
+const INITIAL_ROTATION = { x: 0.22, y: 0.38 };
+
+const subscribeReducedMotion = (callback: () => void) => {
+  if (typeof window === "undefined") return () => {};
+  const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+};
+
+const getReducedMotionSnapshot = () => {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+};
+
+const getReducedMotionServerSnapshot = () => false;
+
 export default function TechSphere() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
@@ -65,37 +81,48 @@ export default function TechSphere() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Responsive dimensions state
+  // Responsive sizing configuration
   const [dimensions, setDimensions] = useState(() => {
     if (typeof window === "undefined") {
-      return { size: 580, radius: 190, perspective: 520, isMobile: false };
+      return { size: 540, radius: 180, perspective: 520, isMobile: false, isSmallMobile: false };
     }
     const w = window.innerWidth;
-    if (w < 400) return { size: 320, radius: 96, perspective: 340, isMobile: true };
-    if (w < 640) return { size: 360, radius: 112, perspective: 380, isMobile: true };
-    if (w < 1024) return { size: 480, radius: 155, perspective: 460, isMobile: false };
-    return { size: 600, radius: 195, perspective: 540, isMobile: false };
+    if (w < 360) return { size: 260, radius: 82, perspective: 310, isMobile: true, isSmallMobile: true };
+    if (w < 440) return { size: 300, radius: 98, perspective: 350, isMobile: true, isSmallMobile: true };
+    if (w < 640) return { size: 340, radius: 112, perspective: 400, isMobile: true, isSmallMobile: false };
+    if (w < 1024) return { size: 450, radius: 150, perspective: 480, isMobile: false, isSmallMobile: false };
+    return { size: 560, radius: 185, perspective: 540, isMobile: false, isSmallMobile: false };
   });
 
-  // Axial tilt matching Earth's tilt (~23.5°)
-  const [rotation, setRotation] = useState({ x: 0.22, y: 0.38 });
+  const [rotation, setRotation] = useState(INITIAL_ROTATION);
   const [isDragging, setIsDragging] = useState(false);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
 
   const lastPos = useRef({ x: 0, y: 0 });
-  const velocity = useRef({ x: 0, y: 0.0024 });
+  const touchStartPos = useRef({ x: 0, y: 0 });
+  const isHorizontalTouch = useRef<boolean | null>(null);
+  const velocity = useRef({ x: 0, y: 0.0022 });
 
+  // Handle window resizing cleanly
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
-      if (w < 400) {
-        setDimensions({ size: 320, radius: 96, perspective: 340, isMobile: true });
+      if (w < 360) {
+        setDimensions({ size: 260, radius: 82, perspective: 310, isMobile: true, isSmallMobile: true });
+      } else if (w < 440) {
+        setDimensions({ size: 300, radius: 98, perspective: 350, isMobile: true, isSmallMobile: true });
       } else if (w < 640) {
-        setDimensions({ size: 360, radius: 112, perspective: 380, isMobile: true });
+        setDimensions({ size: 340, radius: 112, perspective: 400, isMobile: true, isSmallMobile: false });
       } else if (w < 1024) {
-        setDimensions({ size: 480, radius: 155, perspective: 460, isMobile: false });
+        setDimensions({ size: 450, radius: 150, perspective: 480, isMobile: false, isSmallMobile: false });
       } else {
-        setDimensions({ size: 600, radius: 195, perspective: 540, isMobile: false });
+        setDimensions({ size: 560, radius: 185, perspective: 540, isMobile: false, isSmallMobile: false });
       }
     };
 
@@ -103,7 +130,7 @@ export default function TechSphere() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const { size, radius: baseRadius, perspective, isMobile } = dimensions;
+  const { size, radius: baseRadius, perspective, isMobile, isSmallMobile } = dimensions;
 
   // Fibonacci Spiral Lattice 3D coordinates based on dynamic baseRadius
   const nodes = useMemo(() => {
@@ -115,8 +142,8 @@ export default function TechSphere() {
       const radiusAtY = Math.sqrt(Math.max(0, 1 - yNorm * yNorm));
       const theta = i * goldenRatio * Math.PI * 2;
 
-      // Outer satellite nodes have slightly reduced orbit expansion on mobile to prevent overflow
-      const expansion = isMobile ? 1 + ((skill.orbitRadius || 1.0) - 1) * 0.75 : skill.orbitRadius || 1.0;
+      // Restrain satellite radius expansion on mobile devices to prevent chip edge clipping
+      const expansion = isMobile ? 1 + ((skill.orbitRadius || 1.0) - 1) * 0.6 : skill.orbitRadius || 1.0;
       const r = baseRadius * expansion;
 
       const xNorm = Math.cos(theta) * radiusAtY;
@@ -131,15 +158,15 @@ export default function TechSphere() {
     });
   }, [baseRadius, isMobile]);
 
-  // Deterministic micro-particles (pure, zero Math.random render warnings)
+  // Deterministic star dust particles
   const particles = useMemo(() => {
-    const count = 28;
+    const count = isMobile ? 16 : 28;
     const pts = [];
     for (let i = 0; i < count; i++) {
       const p1 = Math.abs(Math.sin((i + 1) * 12.9898)) % 1;
       const p2 = Math.abs(Math.sin((i + 1) * 78.233)) % 1;
       const p3 = Math.abs(Math.sin((i + 1) * 45.164)) % 1;
-      const rFactor = 1.12 + p1 * 0.45;
+      const rFactor = 1.1 + p1 * 0.35;
       const theta = p2 * Math.PI * 2;
       const phi = (p3 - 0.5) * Math.PI;
 
@@ -147,22 +174,24 @@ export default function TechSphere() {
         rFactor,
         theta,
         phi,
-        size: p1 * 1.5 + 0.8,
-        alpha: p2 * 0.35 + 0.15,
+        size: p1 * 1.4 + 0.7,
+        alpha: p2 * 0.35 + 0.12,
       });
     }
     return pts;
-  }, []);
+  }, [isMobile]);
 
-  // Auto-spin loop
+  // Auto-spin animation loop
   useEffect(() => {
+    if (reducedMotion || isPaused) return;
+
     let animId: number;
 
     const tick = () => {
       if (!isDragging) {
-        const speed = hoveredSkill ? 0.2 : 1;
+        const speed = hoveredSkill ? 0.25 : 1;
         setRotation((prev) => ({
-          x: Math.max(-0.65, Math.min(0.65, prev.x + velocity.current.x * speed)),
+          x: Math.max(-0.6, Math.min(0.6, prev.x + velocity.current.x * speed)),
           y: prev.y + velocity.current.y * speed,
         }));
       }
@@ -171,7 +200,7 @@ export default function TechSphere() {
 
     animId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animId);
-  }, [isDragging, hoveredSkill]);
+  }, [isDragging, hoveredSkill, isPaused, reducedMotion]);
 
   // Canvas render: 3D wireframe globe matching current responsive size and radius
   useEffect(() => {
@@ -214,29 +243,29 @@ export default function TechSphere() {
       };
     };
 
-    // Ambient radial glow
+    // Subtle ambient radial core glow
     const centerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
-    centerGrad.addColorStop(0, isDark ? "rgba(0, 217, 255, 0.20)" : "rgba(0, 180, 216, 0.16)");
-    centerGrad.addColorStop(0.5, isDark ? "rgba(0, 217, 255, 0.05)" : "rgba(0, 180, 216, 0.04)");
+    centerGrad.addColorStop(0, isDark ? "rgba(0, 217, 255, 0.16)" : "rgba(0, 180, 216, 0.12)");
+    centerGrad.addColorStop(0.6, isDark ? "rgba(0, 217, 255, 0.04)" : "rgba(0, 180, 216, 0.03)");
     centerGrad.addColorStop(1, "rgba(0, 217, 255, 0)");
     ctx.fillStyle = centerGrad;
     ctx.beginPath();
     ctx.arc(cx, cy, R, 0, Math.PI * 2);
     ctx.fill();
 
-    // Outer silhouette ring
-    ctx.strokeStyle = isDark ? "rgba(0, 217, 255, 0.32)" : "rgba(0, 166, 244, 0.38)";
-    ctx.lineWidth = isMobile ? 1 : 1.25;
+    // Outer silhouette border
+    ctx.strokeStyle = isDark ? "rgba(0, 217, 255, 0.28)" : "rgba(0, 166, 244, 0.32)";
+    ctx.lineWidth = isMobile ? 1 : 1.2;
     ctx.beginPath();
     ctx.arc(cx, cy, R, 0, Math.PI * 2);
     ctx.stroke();
 
-    const frontColor = isDark ? "rgba(0, 217, 255, 0.44)" : "rgba(0, 166, 244, 0.48)";
-    const backColor = isDark ? "rgba(0, 217, 255, 0.10)" : "rgba(0, 166, 244, 0.12)";
+    const frontColor = isDark ? "rgba(0, 217, 255, 0.38)" : "rgba(0, 166, 244, 0.42)";
+    const backColor = isDark ? "rgba(0, 217, 255, 0.08)" : "rgba(0, 166, 244, 0.10)";
 
     // Latitude parallels
-    const latitudes = isMobile ? [-60, -35, 0, 35, 60] : [-68, -50, -32, -15, 0, 15, 32, 50, 68];
-    const latSteps = isMobile ? 40 : 56;
+    const latitudes = isMobile ? [-50, -25, 0, 25, 50] : [-64, -45, -25, 0, 25, 45, 64];
+    const latSteps = isMobile ? 32 : 48;
 
     latitudes.forEach((latDeg) => {
       const latRad = (latDeg * Math.PI) / 180;
@@ -252,7 +281,7 @@ export default function TechSphere() {
 
         const isFront = p1.z > 0 || p2.z > 0;
         ctx.strokeStyle = isFront ? frontColor : backColor;
-        ctx.lineWidth = isFront ? 1.05 : 0.6;
+        ctx.lineWidth = isFront ? 0.95 : 0.55;
 
         ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
@@ -263,9 +292,9 @@ export default function TechSphere() {
 
     // Longitude meridians
     const meridians = isMobile
-      ? [0, 45, 90, 135, 180, 225, 270, 315]
-      : [0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5, 180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5];
-    const lonSteps = isMobile ? 36 : 48;
+      ? [0, 60, 120, 180, 240, 300]
+      : [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
+    const lonSteps = isMobile ? 30 : 42;
 
     meridians.forEach((lonDeg) => {
       const lonRad = (lonDeg * Math.PI) / 180;
@@ -287,7 +316,7 @@ export default function TechSphere() {
 
         const isFront = p1.z > 0 || p2.z > 0;
         ctx.strokeStyle = isFront ? frontColor : backColor;
-        ctx.lineWidth = isFront ? 1.05 : 0.6;
+        ctx.lineWidth = isFront ? 0.95 : 0.55;
 
         ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
@@ -296,25 +325,7 @@ export default function TechSphere() {
       }
     });
 
-    // Poles
-    const northPole = project(0, -R, 0);
-    const southPole = project(0, R, 0);
-
-    [northPole, southPole].forEach((pole) => {
-      const isFront = pole.z > 0;
-      ctx.fillStyle = isFront
-        ? isDark
-          ? "#00d9ff"
-          : "#00a6f4"
-        : isDark
-        ? "rgba(0, 217, 255, 0.3)"
-        : "rgba(0, 166, 244, 0.3)";
-      ctx.beginPath();
-      ctx.arc(pole.x, pole.y, isFront ? 3 : 1.5, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // Micro-particles
+    // Subtle star dust particles
     particles.forEach((pt) => {
       const r = R * pt.rFactor;
       const x0 = r * Math.cos(pt.phi) * Math.sin(pt.theta);
@@ -324,10 +335,10 @@ export default function TechSphere() {
       const proj = project(x0, y0, z0);
       const isFront = proj.z > 0;
       ctx.fillStyle = isDark
-        ? `rgba(0, 217, 255, ${isFront ? pt.alpha : pt.alpha * 0.4})`
-        : `rgba(0, 166, 244, ${isFront ? pt.alpha * 0.9 : pt.alpha * 0.35})`;
+        ? `rgba(0, 217, 255, ${isFront ? pt.alpha : pt.alpha * 0.35})`
+        : `rgba(0, 166, 244, ${isFront ? pt.alpha * 0.85 : pt.alpha * 0.3})`;
       ctx.beginPath();
-      ctx.arc(proj.x, proj.y, pt.size * (isFront ? 1.0 : 0.7), 0, Math.PI * 2);
+      ctx.arc(proj.x, proj.y, pt.size * (isFront ? 1.0 : 0.65), 0, Math.PI * 2);
       ctx.fill();
     });
   }, [rotation, isDark, particles, size, baseRadius, perspective, isMobile]);
@@ -344,40 +355,69 @@ export default function TechSphere() {
     const deltaY = (e.clientY - lastPos.current.y) * 0.005;
 
     setRotation((prev) => ({
-      x: Math.max(-0.65, Math.min(0.65, prev.x - deltaY)),
+      x: Math.max(-0.6, Math.min(0.6, prev.x - deltaY)),
       y: prev.y + deltaX,
     }));
 
-    velocity.current = { x: -deltaY * 0.1, y: deltaX * 0.1 };
+    velocity.current = { x: -deltaY * 0.08, y: deltaX * 0.08 };
     lastPos.current = { x: e.clientX, y: e.clientY };
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    velocity.current = { x: 0, y: 0.0024 };
+    velocity.current = { x: 0, y: 0.0022 };
+    isHorizontalTouch.current = null;
   };
 
-  // Touch handlers for mobile
+  // Mobile Touch handlers with non-blocking vertical scroll protection
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length === 1) {
-      setIsDragging(true);
+      touchStartPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       lastPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      isHorizontalTouch.current = null;
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || e.touches.length !== 1) return;
-    const deltaX = (e.touches[0].clientX - lastPos.current.x) * 0.006;
-    const deltaY = (e.touches[0].clientY - lastPos.current.y) * 0.006;
+    if (e.touches.length !== 1) return;
 
-    setRotation((prev) => ({
-      x: Math.max(-0.65, Math.min(0.65, prev.x - deltaY)),
-      y: prev.y + deltaX,
-    }));
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const diffX = currentX - touchStartPos.current.x;
+    const diffY = currentY - touchStartPos.current.y;
 
-    velocity.current = { x: -deltaY * 0.1, y: deltaX * 0.1 };
-    lastPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    // Detect gesture intention: if moving primarily vertically, allow native page scrolling!
+    if (isHorizontalTouch.current === null) {
+      if (Math.abs(diffX) > 8 || Math.abs(diffY) > 8) {
+        isHorizontalTouch.current = Math.abs(diffX) > Math.abs(diffY);
+        if (isHorizontalTouch.current) {
+          setIsDragging(true);
+        }
+      }
+    }
+
+    if (isHorizontalTouch.current) {
+      const deltaX = (currentX - lastPos.current.x) * 0.006;
+      const deltaY = (currentY - lastPos.current.y) * 0.006;
+
+      setRotation((prev) => ({
+        x: Math.max(-0.6, Math.min(0.6, prev.x - deltaY)),
+        y: prev.y + deltaX,
+      }));
+
+      velocity.current = { x: -deltaY * 0.08, y: deltaX * 0.08 };
+      lastPos.current = { x: currentX, y: currentY };
+    }
   };
+
+  const resetRotation = useCallback(() => {
+    setRotation(INITIAL_ROTATION);
+    velocity.current = { x: 0, y: 0.0022 };
+  }, []);
+
+  const togglePause = useCallback(() => {
+    setIsPaused((prev) => !prev);
+  }, []);
 
   // Projected 3D positions of technology chips on the globe
   const projectedChips = useMemo(() => {
@@ -398,17 +438,17 @@ export default function TechSphere() {
       const k = perspective / (perspective - z2);
       const screenX = x2 * k;
       const screenY = y2 * k;
-      const baseScale = isMobile ? 0.8 : 1.0;
-      const scale = Math.max(0.65 * baseScale, Math.min(1.2 * baseScale, k * baseScale));
+      const baseScale = isSmallMobile ? 0.72 : isMobile ? 0.82 : 1.0;
+      const scale = Math.max(0.6 * baseScale, Math.min(1.18 * baseScale, k * baseScale));
 
-      const isFront = z2 > -15;
+      const isFront = z2 > -10;
 
-      // Smoother fading for mobile to keep the stage uncluttered
+      // Opacity curve optimized for mobile readability
       let opacity = 1;
       if (isMobile) {
         opacity = isFront
-          ? Math.min(1, Math.max(0.7, (z2 + baseRadius) / (2 * baseRadius) * 0.5 + 0.5))
-          : Math.max(0.12, 0.25 - Math.abs(z2) / (baseRadius * 3.5));
+          ? Math.min(1, Math.max(0.75, (z2 + baseRadius) / (2 * baseRadius) * 0.5 + 0.5))
+          : Math.max(0.15, 0.3 - Math.abs(z2) / (baseRadius * 3.5));
       } else {
         opacity = isFront
           ? Math.min(1, Math.max(0.85, (z2 + baseRadius) / (2 * baseRadius) * 0.45 + 0.55))
@@ -427,7 +467,7 @@ export default function TechSphere() {
         isFront,
       };
     });
-  }, [nodes, rotation, perspective, baseRadius, isMobile]);
+  }, [nodes, rotation, perspective, baseRadius, isMobile, isSmallMobile]);
 
   return (
     <div className="relative w-full flex flex-col items-center select-none py-2 overflow-hidden">
@@ -441,44 +481,24 @@ export default function TechSphere() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleMouseUp}
+        onTouchCancel={handleMouseUp}
         style={{
           width: `${size}px`,
           height: `${size}px`,
           maxWidth: "100%",
-          touchAction: "none",
+          touchAction: "pan-y", // Critical: Allows vertical page scrolling on touch devices!
         }}
         className="relative aspect-square flex items-center justify-center cursor-grab active:cursor-grabbing mx-auto"
-        aria-label="3D Interactive Technology Sphere - Drag to rotate"
+        aria-label="3D Interactive Technology Sphere - Drag horizontally to rotate"
       >
-        {/* Canvas rendering the authentic 3D wireframe World Globe */}
+        {/* Canvas rendering 3D wireframe World Globe */}
         <canvas
           ref={canvasRef}
           style={{ width: `${size}px`, height: `${size}px` }}
           className="absolute inset-0 w-full h-full pointer-events-none"
         />
 
-        {/* Concentric Radar Target Pulse + Specular Glass Bubble (Cleanly hidden on mobile to avoid overlap) */}
-        <div className="hidden sm:flex absolute sm:top-10 sm:left-10 lg:top-14 lg:left-14 items-center gap-3 pointer-events-none z-20">
-          <div className="relative w-9 h-9 flex items-center justify-center">
-            <div className="absolute inset-0 rounded-full border border-[#00a6f4]/40 dark:border-[#00d9ff]/35 animate-ping opacity-60" />
-            <div className="absolute w-5 h-5 rounded-full border border-[#00a6f4]/70 dark:border-[#00d9ff]/60" />
-            <div className="w-2 h-2 rounded-full bg-[#00a6f4] dark:bg-[#00d9ff] shadow-[0_0_8px_#00a6f4] dark:shadow-[0_0_8px_#00d9ff]" />
-          </div>
-
-          <div
-            className="w-10 h-10 lg:w-12 lg:h-12 rounded-full border border-white/40 dark:border-white/30 backdrop-blur-md shadow-lg"
-            style={{
-              background: isDark
-                ? "radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.28) 0%, rgba(0, 217, 255, 0.10) 45%, rgba(15, 23, 42, 0.65) 100%)"
-                : "radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.85) 0%, rgba(0, 180, 216, 0.16) 45%, rgba(255, 255, 255, 0.45) 100%)",
-              boxShadow: "inset 0 1px 3px rgba(255,255,255,0.7), 0 8px 24px rgba(0,180,216,0.2)",
-            }}
-          >
-            <div className="absolute top-1.5 left-2 w-3 h-1.5 rounded-full bg-white/80 filter blur-[0.6px] -rotate-30" />
-          </div>
-        </div>
-
-        {/* 3D Orbiting Technology Badges (100% responsive, zero clipping) */}
+        {/* 3D Orbiting Technology Badges */}
         {projectedChips.map((chip) => {
           const Icon = chip.icon;
           const isHovered = hoveredSkill === chip.id;
@@ -488,32 +508,33 @@ export default function TechSphere() {
               key={chip.id}
               onMouseEnter={() => setHoveredSkill(chip.id)}
               onMouseLeave={() => setHoveredSkill(null)}
-              className="absolute transition-all duration-75 select-none will-change-transform"
+              className="absolute select-none will-change-transform"
               style={{
                 transform: `translate3d(${chip.screenX}px, ${chip.screenY}px, 0px) scale(${
-                  isHovered ? chip.scale * 1.2 : chip.scale
+                  isHovered ? chip.scale * 1.15 : chip.scale
                 })`,
                 opacity: isHovered ? 1 : chip.opacity,
                 zIndex: isHovered ? 99999 : chip.zIndex,
-                filter: chip.isFront ? "none" : "blur(1.1px)",
+                filter: chip.isFront ? "none" : "blur(0.8px)",
                 cursor: chip.isFront ? "pointer" : "default",
+                pointerEvents: chip.isFront ? "auto" : "none",
               }}
             >
               {/* Responsive capsule pill style: compact on mobile, spacious on desktop */}
               <div
-                className={`group flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full border transition-all duration-200 ${
+                className={`group flex items-center gap-1.5 sm:gap-2 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full border transition-all duration-200 ${
                   isHovered
-                    ? "bg-[#0b1019] text-white border-[#00d9ff] shadow-[0_0_20px_rgba(0,217,255,0.75)] scale-105"
+                    ? "bg-[#0b1019] text-white border-[#00d9ff] shadow-[0_0_16px_rgba(0,217,255,0.7)] scale-105"
                     : chip.isFront
-                    ? "bg-[#101726]/95 dark:bg-[#0c121e]/95 text-white border-white/20 dark:border-white/15 shadow-[0_4px_16px_rgba(0,0,0,0.35)] backdrop-blur-md hover:border-[#00d9ff]/70"
-                    : "bg-[#0f172a]/45 text-zinc-300 border-white/10 backdrop-blur-xs"
+                    ? "bg-[#101726]/95 dark:bg-[#0c121e]/95 text-white border-white/20 dark:border-white/15 shadow-[0_4px_14px_rgba(0,0,0,0.35)] backdrop-blur-md hover:border-[#00d9ff]/70"
+                    : "bg-[#0f172a]/50 text-zinc-300 border-white/10 backdrop-blur-xs"
                 }`}
               >
                 <div
                   className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center shrink-0"
                   style={{ color: chip.color }}
                 >
-                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:scale-115" />
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:scale-110" />
                 </div>
                 <span className="text-[10px] sm:text-xs font-sans font-semibold tracking-tight text-white whitespace-nowrap">
                   {chip.name}
@@ -524,24 +545,35 @@ export default function TechSphere() {
         })}
       </div>
 
-      {/* Drag to rotate hint */}
-      <div className="flex items-center gap-2 mt-4 text-xs font-mono text-slate-400 dark:text-zinc-500 select-none">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="13"
-          height="13"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-[#00a6f4] dark:text-[#00d9ff] animate-spin"
-          style={{ animationDuration: "12s" }}
+      {/* Sphere Controls & Touch Hint Bar */}
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-3 text-xs font-mono text-slate-500 dark:text-zinc-400 select-none">
+        {/* Drag to rotate hint */}
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[11px]">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-pulse" />
+          <span>Drag horizontally to rotate</span>
+        </div>
+
+        {/* Pause / Play Toggle */}
+        <button
+          type="button"
+          onClick={togglePause}
+          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-[11px] text-slate-600 dark:text-zinc-300 transition-colors cursor-pointer"
+          aria-label={isPaused ? "Resume rotation" : "Pause rotation"}
         >
-          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
-        </svg>
-        <span className="tracking-wider">Drag to rotate</span>
+          {isPaused ? <Play className="w-3 h-3 text-cyan-400" /> : <Pause className="w-3 h-3" />}
+          <span>{isPaused ? "Play" : "Pause"}</span>
+        </button>
+
+        {/* Reset View */}
+        <button
+          type="button"
+          onClick={resetRotation}
+          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-[11px] text-slate-600 dark:text-zinc-300 transition-colors cursor-pointer"
+          aria-label="Reset rotation angle"
+        >
+          <RotateCcw className="w-3 h-3 text-cyan-400" />
+          <span>Reset</span>
+        </button>
       </div>
     </div>
   );

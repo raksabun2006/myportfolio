@@ -20,10 +20,13 @@ import {
   Search,
   FlaskConical,
   Rocket,
+  CheckCircle2,
+  Terminal,
 } from "lucide-react";
 import TechSphere from "./TechSphere";
+import { skillCategories } from "@/data/skills";
 
-interface TechItem {
+export interface TechItem {
   id: string;
   name: string;
   category: "backend" | "data" | "frontend" | "devops";
@@ -32,13 +35,9 @@ interface TechItem {
   description: string;
   productionUse: string;
   badge: string;
-  cardDur: string;
-  cardDelay: string;
-  iconDur: string;
-  iconDelay: string;
 }
 
-const ENGINEERING_STACK: TechItem[] = [
+export const ENGINEERING_STACK: TechItem[] = [
   {
     id: "java",
     name: "Java",
@@ -48,10 +47,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Enterprise OOP, multithreading, memory management, and clean domain design.",
     productionUse: "Primary language for Mart System, DevSolve & EduCoreKH backends.",
     badge: "Java 21 LTS",
-    cardDur: "4.8s",
-    cardDelay: "0.0s",
-    iconDur: "3.5s",
-    iconDelay: "0.15s",
   },
   {
     id: "spring-boot",
@@ -62,10 +57,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Production RESTful microservices, Spring Security RBAC, Spring Data JPA, and transactional logic.",
     productionUse: "Core engine for all production APIs and authorization filters.",
     badge: "Spring Boot 3.4",
-    cardDur: "5.4s",
-    cardDelay: "0.85s",
-    iconDur: "4.1s",
-    iconDelay: "0.7s",
   },
   {
     id: "react",
@@ -76,10 +67,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Component-driven user interfaces, custom hooks, responsive layout composition, and API state handling.",
     productionUse: "Powering POS cashier UI and customer shopping portals.",
     badge: "React 19 / 18",
-    cardDur: "4.5s",
-    cardDelay: "1.6s",
-    iconDur: "3.7s",
-    iconDelay: "1.1s",
   },
   {
     id: "typescript",
@@ -90,10 +77,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Strict typing for API DTOs, interfaces, predictable state, and refactoring safety across frontend apps.",
     productionUse: "Ensuring end-to-end contract alignment between frontend & backend.",
     badge: "Strict Mode",
-    cardDur: "5.1s",
-    cardDelay: "0.4s",
-    iconDur: "4.3s",
-    iconDelay: "0.5s",
   },
   {
     id: "postgresql",
@@ -104,10 +87,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Normalized relational schemas, ACID transaction guarantees, indexing strategies, and JPA persistence.",
     productionUse: "Reliable storage for orders, inventory, user accounts, and audit trails.",
     badge: "PostgreSQL 16",
-    cardDur: "4.7s",
-    cardDelay: "2.1s",
-    iconDur: "3.9s",
-    iconDelay: "1.4s",
   },
   {
     id: "redis",
@@ -118,10 +97,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "High-speed caching layer, atomic distributed checkout locks, leaderboard rankings, and session tokens.",
     productionUse: "Sub-50ms dashboard metric responses and inventory concurrency locks.",
     badge: "Redis 7.2",
-    cardDur: "5.6s",
-    cardDelay: "1.25s",
-    iconDur: "3.6s",
-    iconDelay: "0.3s",
   },
   {
     id: "docker",
@@ -132,10 +107,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Multi-stage production build optimization, isolated runtime environments, and reproducible deployments.",
     productionUse: "Containerizing Spring Boot APIs for Railway and local orchestration.",
     badge: "Docker Compose",
-    cardDur: "4.6s",
-    cardDelay: "0.65s",
-    iconDur: "4.2s",
-    iconDelay: "1.0s",
   },
   {
     id: "git",
@@ -146,10 +117,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Feature-branch workflows, rebasing, clean commit histories, code reviews, and collaborative team delivery.",
     productionUse: "Coordinating multi-member development on team platforms like DevSolve.",
     badge: "GitHub Workflow",
-    cardDur: "5.2s",
-    cardDelay: "2.35s",
-    iconDur: "3.8s",
-    iconDelay: "1.75s",
   },
   {
     id: "rest-api",
@@ -160,10 +127,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Stateless HTTP protocol design, RFC-7807 standardized error payloads, and OpenAPI contract documentation.",
     productionUse: "Clean, predictable endpoint interfaces consumed by web clients.",
     badge: "OpenAPI 3.0",
-    cardDur: "4.9s",
-    cardDelay: "1.45s",
-    iconDur: "4.0s",
-    iconDelay: "0.6s",
   },
   {
     id: "microservices",
@@ -174,10 +137,6 @@ const ENGINEERING_STACK: TechItem[] = [
     description: "Service boundary decomposition, reverse proxying, JWT stateless token propagation, and independent deployability.",
     productionUse: "Architecting Organization and User Profile domains on DevSolve.",
     badge: "Decoupled Systems",
-    cardDur: "5.3s",
-    cardDelay: "0.25s",
-    iconDur: "3.4s",
-    iconDelay: "1.3s",
   },
 ];
 
@@ -190,17 +149,16 @@ const CATEGORIES = [
 ] as const;
 
 const WORKFLOW_STEPS = [
-  { label: "IDEA", icon: Lightbulb, color: "#f59e0b" },
-  { label: "PLAN", icon: ClipboardList, color: "#f97316" },
-  { label: "CODE", icon: Code2, color: "#00d9ff" },
-  { label: "REVIEW", icon: Search, color: "#a78bfa" },
-  { label: "TEST", icon: FlaskConical, color: "#ec4899" },
-  { label: "DEPLOY", icon: Rocket, color: "#4ade80" },
+  { step: "01", label: "IDEA", icon: Lightbulb, color: "#f59e0b", desc: "Domain Modeling" },
+  { step: "02", label: "PLAN", icon: ClipboardList, color: "#f97316", desc: "Schema & Contracts" },
+  { step: "03", label: "CODE", icon: Code2, color: "#00d9ff", desc: "Clean Architecture" },
+  { step: "04", label: "REVIEW", icon: Search, color: "#a78bfa", desc: "Security & Quality" },
+  { step: "05", label: "TEST", icon: FlaskConical, color: "#ec4899", desc: "Integration Tests" },
+  { step: "06", label: "DEPLOY", icon: Rocket, color: "#4ade80", desc: "Docker CI/CD" },
 ];
 
 export default function Skills() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
 
   const filteredStack =
     selectedCategory === "all"
@@ -208,191 +166,268 @@ export default function Skills() {
       : ENGINEERING_STACK.filter((tech) => tech.category === selectedCategory);
 
   return (
-    <section
-      id="skills"
-      className="relative py-10 sm:py-24 px-3 sm:px-6 lg:px-8 border-b border-white/5 overflow-hidden"
-      aria-label="Core Technical Stack and Tooling"
-    >
-      <div className="relative max-w-6xl mx-auto">
-        {/* Section Header with EXPERTISE */}
-        <div className="text-center pt-1 sm:pt-4 mb-2 sm:mb-4">
-          <span className="text-[11px] sm:text-sm font-sans font-semibold tracking-[0.25em] sm:tracking-[0.3em] text-[#00a6f4] dark:text-[#00d9ff] uppercase">
-            EXPERTISE
-          </span>
-        </div>
+    <div className="space-y-14 sm:space-y-20">
+      {/* 01. 3D Interactive Technology Showcase */}
+      <section
+        aria-label="3D Technology Universe"
+        className="relative py-2 sm:py-4 overflow-hidden"
+      >
+        <TechSphere />
+      </section>
 
-        {/* 3D Interactive World Globe */}
-        <div className="mb-8 sm:mb-14">
-          <TechSphere />
-        </div>
-
-        {/* Filter Tabs & Engineering Matrix Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pt-6 sm:pt-8 border-t border-slate-200 dark:border-white/10">
+      {/* 02. Verified Production Tools & Filter Tabs */}
+      <section id="engineering-forge" aria-label="Verified Production Tools" className="space-y-6">
+        {/* Section Title & Responsive Filter Controls */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-2 border-b border-slate-200/60 dark:border-white/8">
           <div>
             <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#00a6f4] dark:text-[#00d9ff] font-semibold">
-              ENGINEERING FORGE
+              ENGINEERING MATRIX
             </span>
-            <h3 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mt-0.5">
               Verified Production Tools
-            </h3>
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 mt-1 max-w-xl">
+              Core programming languages, enterprise frameworks, databases, and DevOps tools used across verified projects.
+            </p>
           </div>
 
-          {/* Filter Tabs */}
-          <div
-            className="flex flex-wrap items-center gap-1 sm:gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-xs self-start sm:self-auto max-w-full"
-            role="tablist"
-          >
-            {CATEGORIES.map((cat) => {
-              const isSelected = selectedCategory === cat.id;
-              const count =
-                cat.id === "all"
-                  ? ENGINEERING_STACK.length
-                  : ENGINEERING_STACK.filter((item) => item.category === cat.id).length;
+          {/* Category Filter Pills (Horizontally scrollable on mobile, sleek row on desktop) */}
+          <div className="w-full lg:w-auto overflow-x-auto no-scrollbar scrollbar-none -mx-2 px-2 sm:mx-0 sm:px-0">
+            <div
+              className="inline-flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-xl shadow-xs whitespace-nowrap"
+              role="tablist"
+              aria-label="Skill category filters"
+            >
+              {CATEGORIES.map((cat) => {
+                const isSelected = selectedCategory === cat.id;
+                const count =
+                  cat.id === "all"
+                    ? ENGINEERING_STACK.length
+                    : ENGINEERING_STACK.filter((item) => item.category === cat.id).length;
 
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`relative px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 sm:gap-2 ${
-                    isSelected
-                      ? "bg-white dark:bg-[#00d9ff]/15 text-[#00a6f4] dark:text-[#00d9ff] border border-slate-300 dark:border-[#00d9ff]/35 shadow-xs font-semibold"
-                      : "text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/5 border border-transparent"
-                  }`}
-                >
-                  <span>{cat.label}</span>
-                  <span
-                    className={`text-[9px] sm:text-[10px] font-mono px-1 sm:px-1.5 rounded-md ${
-                      isSelected ? "bg-[#00a6f4]/15 dark:bg-[#00d9ff]/20 text-[#00a6f4] dark:text-[#00d9ff]" : "text-slate-400 dark:text-zinc-500"
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`relative px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 ${
+                      isSelected
+                        ? "bg-white dark:bg-[#00d9ff]/15 text-[#00a6f4] dark:text-[#00d9ff] border border-slate-300/80 dark:border-[#00d9ff]/35 shadow-xs font-semibold"
+                        : "text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/5 border border-transparent"
                     }`}
                   >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
+                    <span>{cat.label}</span>
+                    <span
+                      className={`text-[10px] font-mono px-1.5 py-0.2 rounded-md ${
+                        isSelected
+                          ? "bg-[#00a6f4]/15 dark:bg-[#00d9ff]/20 text-[#00a6f4] dark:text-[#00d9ff]"
+                          : "text-slate-400 dark:text-zinc-500 bg-slate-200/60 dark:bg-white/5"
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* 10 Technology Cards in Dark Cyber Glass Grid */}
+        {/* 10 Technology Cards Grid (Balanced 1-col on mobile, 2-col on tablet, 3-col on desktop) */}
         <div
           key={selectedCategory}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 animate-fade-in"
         >
           {filteredStack.map((tech) => {
             const Icon = tech.icon;
-            const isHovered = hoveredTech === tech.id;
 
             return (
-              <div
-                key={`${selectedCategory}-${tech.id}`}
+              <article
+                key={tech.id}
                 tabIndex={0}
-                role="article"
-                onMouseEnter={() => setHoveredTech(tech.id)}
-                onMouseLeave={() => setHoveredTech(null)}
-                className={`group relative p-4.5 rounded-2xl border transition-all duration-300 cursor-default flex flex-col justify-between ${
-                  isHovered
-                    ? "bg-slate-50 dark:bg-[#0f1521] border-[#00a6f4] dark:border-[#00d9ff]/50 shadow-md dark:shadow-[0_0_30px_rgba(0,217,255,0.14)] -translate-y-1.5"
-                    : "bg-white dark:bg-[#0a0e16]/80 border-slate-200 dark:border-white/8 hover:border-slate-300 dark:hover:border-white/20 shadow-xs"
-                }`}
-                style={{
-                  animation: `techCardFloat ${tech.cardDur} ease-in-out ${tech.cardDelay} infinite`,
-                  animationPlayState: isHovered ? "paused" : "running",
-                }}
+                className="group relative p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c121e]/90 shadow-xs hover:border-[#00a6f4]/50 dark:hover:border-[#00d9ff]/50 hover:shadow-lg dark:hover:shadow-[0_8px_30px_rgba(0,217,255,0.12)] transition-all duration-200 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 hover:-translate-y-1"
               >
                 <div>
-                  {/* Top Technology Logo & Badge */}
-                  <div className="flex items-center justify-between mb-3.5">
-                    <div
-                      className={`relative w-10.5 h-10.5 rounded-xl border flex items-center justify-center transition-all duration-200 ${
-                        isHovered
-                          ? "bg-[#00a6f4]/15 dark:bg-[#00d9ff]/15 text-[#00a6f4] dark:text-[#00d9ff] border-[#00a6f4]/40 dark:border-[#00d9ff]/40 shadow-xs dark:shadow-[0_0_16px_rgba(0,217,255,0.3)] scale-105"
-                          : "bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-700 dark:text-zinc-300 group-hover:text-slate-900 dark:group-hover:text-white"
-                      }`}
-                    >
-                      <div
-                        style={{
-                          animation: `techIconBreathe ${tech.iconDur} ease-in-out ${tech.iconDelay} infinite`,
-                          animationPlayState: isHovered ? "paused" : "running",
-                        }}
-                      >
-                        <Icon className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
-                      </div>
+                  {/* Top Technology Logo & Version Badge */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-slate-800 dark:text-zinc-100 flex items-center justify-center group-hover:border-[#00a6f4]/40 dark:group-hover:border-[#00d9ff]/40 group-hover:bg-[#00a6f4]/10 dark:group-hover:bg-[#00d9ff]/10 group-hover:text-[#00a6f4] dark:group-hover:text-[#00d9ff] transition-all duration-200 shrink-0">
+                      <Icon className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" />
                     </div>
 
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-zinc-300 transition-colors group-hover:border-[#00a6f4]/40 dark:group-hover:border-[#00d9ff]/30 group-hover:text-[#00a6f4] dark:group-hover:text-[#00d9ff]">
+                    <span className="text-[11px] font-mono px-2.5 py-1 rounded-md border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/5 text-slate-600 dark:text-zinc-300 font-medium group-hover:border-[#00a6f4]/30 dark:group-hover:border-[#00d9ff]/30 group-hover:text-[#00a6f4] dark:group-hover:text-[#00d9ff] transition-colors">
                       {tech.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-sm sm:text-[15px] font-bold text-slate-900 dark:text-white tracking-tight">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
                     {tech.name}
                   </h3>
-                  <div className="text-[10px] font-mono text-[#00a6f4] dark:text-[#00d9ff]/80 uppercase tracking-wider mt-0.5 font-semibold">
+                  <div className="text-xs font-mono text-[#00a6f4] dark:text-[#00d9ff] uppercase tracking-wider mt-0.5 font-semibold">
                     {tech.role}
                   </div>
 
-                  <p className="mt-2 text-xs text-slate-600 dark:text-zinc-400 leading-relaxed font-sans line-clamp-3">
+                  <p className="mt-2.5 text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-sans">
                     {tech.description}
                   </p>
                 </div>
 
-                {/* Usage Context Section */}
-                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/8 text-[11px] font-mono">
-                  <div className="flex items-center justify-between text-[9px] uppercase tracking-wider text-slate-400 dark:text-zinc-500 mb-1 font-semibold">
-                    <span>Usage Context</span>
-                    <span
-                      className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                        isHovered ? "bg-[#00a6f4] dark:bg-[#00d9ff] shadow-[0_0_8px_#00d9ff]" : "bg-slate-300 dark:bg-white/20"
-                      }`}
-                    />
+                {/* Practical Usage Context Section */}
+                <div className="mt-5 pt-3.5 border-t border-slate-100 dark:border-white/8 text-xs font-mono">
+                  <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-slate-400 dark:text-zinc-500 mb-1.5 font-semibold">
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                      <span>Production Applied</span>
+                    </span>
                   </div>
-                  <span className="text-slate-700 dark:text-zinc-300 line-clamp-2 leading-snug font-sans text-xs">
+                  <p className="text-slate-700 dark:text-zinc-300 leading-relaxed font-sans text-xs">
                     {tech.productionUse}
-                  </span>
+                  </p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 03. Development Workflow Pipeline (Clean section without card background) */}
+      <section
+        aria-label="Development Workflow Pipeline"
+        className="space-y-6"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200/60 dark:border-white/8">
+          <div>
+            <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#00a6f4] dark:text-[#00d9ff] font-semibold">
+              EXECUTION PROCESS
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
+              Development Workflow Pipeline
+            </h2>
+          </div>
+          <span className="text-xs font-mono text-slate-500 dark:text-zinc-400">
+            End-to-End Delivery
+          </span>
+        </div>
+
+        {/* Workflow Pipeline Display (Responsive: Grid on Mobile/Tablet, Connected Pipeline on Desktop) */}
+        <div className="hidden lg:flex items-center justify-between gap-3">
+          {WORKFLOW_STEPS.map((step, idx) => {
+            const StepIcon = step.icon;
+            return (
+              <React.Fragment key={step.label}>
+                <div className="flex-1 flex flex-col items-center text-center p-3.5 rounded-2xl border border-slate-200/80 dark:border-white/8 bg-white dark:bg-[#0c121e]/80 shadow-xs group hover:border-[#00a6f4]/40 dark:hover:border-[#00d9ff]/40 transition-all duration-200">
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-110 shadow-xs"
+                    style={{
+                      background: `${step.color}15`,
+                      border: `1px solid ${step.color}35`,
+                    }}
+                  >
+                    <StepIcon className="w-5 h-5" style={{ color: step.color }} />
+                  </div>
+                  <div className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">
+                    PHASE {step.step}
+                  </div>
+                  <div className="text-xs font-mono font-bold tracking-wider text-slate-900 dark:text-white mt-0.5">
+                    {step.label}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 font-sans">
+                    {step.desc}
+                  </div>
+                </div>
+
+                {idx < WORKFLOW_STEPS.length - 1 && (
+                  <div className="h-[2px] w-4 bg-gradient-to-r from-slate-200 dark:from-white/20 to-slate-200 dark:to-white/10 shrink-0" />
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+        {/* Mobile / Tablet Grid Layout (2 cols on small mobile, 3 cols on tablet - zero horizontal overflow!) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:hidden gap-3">
+          {WORKFLOW_STEPS.map((step) => {
+            const StepIcon = step.icon;
+            return (
+              <div
+                key={step.label}
+                className="p-3.5 rounded-2xl border border-slate-200/80 dark:border-white/8 bg-white dark:bg-[#0c121e]/80 shadow-xs flex flex-col items-center text-center"
+              >
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-2 shadow-xs"
+                  style={{
+                    background: `${step.color}15`,
+                    border: `1px solid ${step.color}35`,
+                  }}
+                >
+                  <StepIcon className="w-5 h-5" style={{ color: step.color }} />
+                </div>
+                <div className="text-[9px] font-mono text-slate-400 dark:text-zinc-500">
+                  STEP {step.step}
+                </div>
+                <div className="text-xs font-mono font-bold tracking-wider text-slate-900 dark:text-white mt-0.5">
+                  {step.label}
+                </div>
+                <div className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5 font-sans">
+                  {step.desc}
                 </div>
               </div>
             );
           })}
         </div>
+      </section>
 
-        {/* Workflow Pipeline (ayushcmd signature workflow) */}
-        <div className="mt-10 p-6 sm:p-7 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0e16]/90 relative overflow-hidden shadow-xs dark:shadow-2xl">
-          <div className="text-xs font-mono tracking-[0.25em] uppercase text-slate-500 dark:text-zinc-400 mb-6 font-semibold">
-            DEVELOPMENT WORKFLOW PIPELINE
+      {/* 04. Comprehensive Technical Competencies Directory */}
+      <section
+        aria-label="Comprehensive Technical Competencies"
+        className="space-y-6"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200/60 dark:border-white/8">
+          <div>
+            <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] text-[#00a6f4] dark:text-[#00d9ff] font-semibold">
+              COMPREHENSIVE DIRECTORY
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
+              Full-Stack Technical Competency Matrix
+            </h2>
           </div>
-
-          <div className="flex items-center justify-between gap-2 overflow-x-auto pb-2">
-            {WORKFLOW_STEPS.map((step, idx) => {
-              const StepIcon = step.icon;
-              return (
-                <React.Fragment key={step.label}>
-                  <div className="flex flex-col items-center gap-2.5 min-w-[64px] group cursor-pointer">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-xs"
-                      style={{
-                        background: `${step.color}15`,
-                        border: `1px solid ${step.color}35`,
-                      }}
-                    >
-                      <StepIcon className="w-5 h-5" style={{ color: step.color }} />
-                    </div>
-                    <span className="text-xs font-mono tracking-wider font-semibold text-slate-600 dark:text-zinc-400 group-hover:text-slate-950 dark:group-hover:text-white transition-colors">
-                      {step.label}
-                    </span>
-                  </div>
-
-                  {idx < WORKFLOW_STEPS.length - 1 && (
-                    <div className="flex-1 h-px min-w-[12px] bg-gradient-to-r from-slate-200 dark:from-white/15 to-slate-100 dark:to-white/5 mx-1" />
-                  )}
-                </React.Fragment>
-              );
-            })}
+          <div className="flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-zinc-400">
+            <Terminal className="w-3.5 h-3.5 text-[#00a6f4] dark:text-[#00d9ff]" />
+            <span>22 Core Competencies</span>
           </div>
         </div>
-      </div>
-    </section>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {skillCategories.map((cat) => (
+            <div
+              key={cat.title}
+              className="p-5.5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c121e]/90 shadow-xs flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  {cat.title}
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 mb-4 leading-relaxed font-sans">
+                  {cat.description}
+                </p>
+
+                <div className="flex flex-wrap gap-1.5">
+                  {cat.skills.map((s) => (
+                    <div
+                      key={s.name}
+                      title={s.description}
+                      className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-[11px] font-mono text-slate-700 dark:text-zinc-300 hover:border-[#00a6f4]/40 dark:hover:border-[#00d9ff]/40 hover:text-[#00a6f4] dark:hover:text-[#00d9ff] transition-colors cursor-default"
+                    >
+                      <span>{s.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
