@@ -27,17 +27,17 @@ export default function Hero() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Left Column: Text & Primary Actions (7 cols on desktop, full width on mobile) */}
-        <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
-          {/* Mobile Profile Avatar with Active Status Indicator (<lg only) */}
-          <div className="lg:hidden flex flex-col items-center mb-4">
-            <div className="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-zinc-200/90 dark:border-white/15 shadow-sm bg-zinc-100 dark:bg-zinc-800">
+        <div className="lg:col-span-7 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
+          {/* Mobile Profile Photo (<lg only) */}
+          <div className="lg:hidden w-full flex flex-col items-center mb-6">
+            <div className="relative w-[260px] sm:w-[300px] aspect-[4/3] rounded-2xl overflow-hidden border-2 border-zinc-200/90 dark:border-white/15 shadow-md bg-zinc-100 dark:bg-zinc-800 shrink-0">
               <Image
-                src="/bun-raksa.jpg"
+                src="/profile.JPEG"
                 alt="Bun Raksa — Full-Stack Developer"
                 fill
                 priority
-                sizes="80px"
-                className="object-cover object-[center_12%]"
+                unoptimized
+                className="object-cover"
               />
             </div>
           </div>
@@ -152,17 +152,17 @@ export default function Hero() {
 
         {/* Right Column: Desktop Portrait Card & Tech Badges (Hidden on mobile/tablet, visible on lg screens) */}
         <div className="hidden lg:flex lg:col-span-5 flex-col items-center">
-          <div className="relative w-full max-w-[280px] sm:max-w-[310px]">
+          <div className="relative w-full max-w-[360px] sm:max-w-[380px]">
             {/* Portrait Frame */}
             <div className="relative rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-white/10 shadow-md">
-              <div className="relative aspect-[4/5] w-full">
+              <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src="/bun-raksa.jpg"
+                  src="/profile.JPEG"
                   alt="Bun Raksa — Full-Stack Developer in Phnom Penh, Cambodia"
                   fill
                   priority
-                  sizes="310px"
-                  className="object-cover object-top"
+                  unoptimized
+                  className="object-cover"
                 />
               </div>
 

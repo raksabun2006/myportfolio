@@ -13,7 +13,7 @@ export function PersonJsonLd() {
         "description":
           "Backend and Full-Stack Developer based in Phnom Penh, Cambodia, specializing in Java, Spring Boot, React, PostgreSQL, REST APIs, and microservices.",
         "url": "https://bunraksa.site",
-        "image": "https://bunraksa.site/bun-raksa.jpg",
+        "image": "https://bunraksa.site/profile.JPEG",
         "email": "raksabun2006@gmail.com",
         "address": {
           "@type": "PostalAddress",
