@@ -19,6 +19,7 @@ const NAV_ITEMS: NavLinkItem[] = [
   { name: "Projects", href: "/#projects", targetId: "projects" },
   { name: "Skills", href: "/#skills", targetId: "skills" },
   { name: "Education", href: "/#education", targetId: "education" },
+  { name: "Certificates", href: "/#certifications", targetId: "certifications" },
   { name: "Contact", href: "/#contact", targetId: "contact" },
 ];
 
@@ -47,7 +48,7 @@ export default function Navbar() {
       : pathname.includes("contact")
       ? "contact"
       : pathname.includes("credentials")
-      ? "education"
+      ? "certifications"
       : "home";
 
   // Track scroll position for header shadow
@@ -65,7 +66,7 @@ export default function Navbar() {
   useEffect(() => {
     if (pathname !== "/") return;
 
-    const sectionIds = ["home", "about", "projects", "skills", "education", "contact"];
+    const sectionIds = ["home", "about", "projects", "skills", "education", "certifications", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {

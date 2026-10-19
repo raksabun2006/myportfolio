@@ -1,274 +1,280 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Shield,
-  ChevronLeft,
-  ChevronRight,
+  ShieldCheck,
+  Calendar,
+  ExternalLink,
   Copy,
   Check,
+  X,
+  Maximize2,
+  FileText,
   ArrowRight,
 } from "lucide-react";
-import { credentialsData } from "@/data/credentials";
+import { credentialsData, CredentialItem } from "@/data/credentials";
 
 export default function Credentials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedCert, setSelectedCert] = useState<CredentialItem | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const currentCert = credentialsData[currentIndex];
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? credentialsData.length - 1 : prev - 1));
+  const handleCopyId = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(id);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
   };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev === credentialsData.length - 1 ? 0 : prev + 1));
-  };
-
-  const handleCopyId = (code: string) => {
-    navigator.clipboard.writeText(code);
-    setCopiedId(code);
-    setTimeout(() => {
-      setCopiedId(null);
-    }, 2000);
-  };
-
-  // Keyboard navigation for carousel
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") handlePrev();
-      if (e.key === "ArrowRight") handleNext();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
 
   return (
     <section
-      id="credentials"
-      className="pt-2 sm:pt-4 pb-12 sm:pb-16 relative selection:bg-[#00d9ff] selection:text-[#07090e]"
+      id="certifications"
+      className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto scroll-mt-24 border-t border-zinc-200/80 dark:border-white/10"
     >
-      <div className="w-full mx-auto">
-        {/* Section Header */}
-        <div className="flex items-end justify-between gap-4 mb-8">
-          <div>
-            <span className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-[0.2em] text-[#00a6f4] dark:text-[#00d9ff] uppercase block mb-1">
-              ACHIEVEMENTS
-            </span>
-            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white font-sans">
-              Verified Credentials &amp; Certifications
-            </h1>
-            <p className="text-xs sm:text-sm font-mono text-slate-500 dark:text-zinc-400 mt-2">
-              {credentialsData.length} certificates · click to view full details
-            </p>
-          </div>
-
-          {/* Index Counter (e.g. 01 / 04) */}
-          <div className="text-sm font-mono text-slate-500 dark:text-zinc-400 shrink-0 select-none pb-1">
-            <span className="text-slate-900 dark:text-white font-semibold">0{currentIndex + 1}</span>
-            <span className="text-slate-400 dark:text-zinc-600 mx-1">/</span>
-            <span>0{credentialsData.length}</span>
-          </div>
+      {/* Section Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+        <div className="max-w-3xl">
+          <span className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400 block mb-2">
+            ACCREDITED CREDENTIALS
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            Verified Certifications
+          </h2>
+          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
+            Official software engineering, networking, and full-stack diplomas awarded by government ministries and industry academies.
+          </p>
         </div>
 
-        {/* Featured Credential Horizontal Bento Card */}
-        <div
-          key={currentCert.id}
-          className="relative rounded-3xl bg-white/90 dark:bg-[#0c1017]/95 border border-slate-200 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl p-6 sm:p-8 lg:p-10 transition-all duration-300 hover:border-slate-300 dark:hover:border-white/20 animate-fade-in"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Certificate Sheet (Links directly to detail page) */}
-            <div className="lg:col-span-6 w-full flex items-center justify-center">
-              <Link
-                href={`/credentials/${currentCert.id}`}
-                className="group/sheet relative w-full aspect-[1.414/1] max-w-lg bg-white rounded-2xl p-2.5 sm:p-3 shadow-xl dark:shadow-2xl border border-slate-200 dark:border-white/20 cursor-pointer overflow-hidden transition-all duration-300 hover:scale-[1.015] hover:border-cyan-400/50 hover:shadow-[0_16px_40px_rgba(0,217,255,0.18)] block"
-                title={`View ${currentCert.title} Details`}
+        <div className="flex items-center gap-2 self-start sm:self-auto text-xs font-mono text-zinc-500 dark:text-zinc-400">
+          <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          <span>{credentialsData.length} Verified Certificates</span>
+        </div>
+      </div>
+
+      {/* 4 Certificates Grid (1 col on mobile, 2 col on tablet/desktop) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-7 items-stretch">
+        {credentialsData.map((cert) => (
+          <article
+            key={cert.id}
+            className="group rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#0c121e] overflow-hidden shadow-2xs hover:shadow-md hover:border-zinc-300 dark:hover:border-white/25 transition-all duration-200 flex flex-col justify-between"
+          >
+            <div>
+              {/* Certificate Image Frame */}
+              <div
+                onClick={() => setSelectedCert(cert)}
+                className="relative w-full aspect-[1.414/1] bg-zinc-100 dark:bg-zinc-900 overflow-hidden cursor-pointer border-b border-zinc-200/80 dark:border-white/10 group/img"
               >
-                {/* Certificate Inner Image */}
-                <div className="relative w-full h-full rounded-xl overflow-hidden bg-zinc-50 border border-zinc-200/80">
-                  <Image
-                    src={currentCert.image}
-                    alt={currentCert.title}
-                    fill
-                    unoptimized
-                    priority
-                    className="object-contain object-center transition-transform duration-500 group-hover/sheet:scale-[1.03]"
-                  />
+                <Image
+                  src={cert.image}
+                  alt={cert.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain p-2.5 sm:p-3 transition-transform duration-300 group-hover/img:scale-[1.02]"
+                />
+
+                {/* Hover overlay hint */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white text-xs font-medium backdrop-blur-xs">
+                  <Maximize2 className="w-4 h-4" />
+                  <span>Click to Expand</span>
                 </div>
 
-                {/* Hover Details Overlay */}
-                <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px] opacity-0 group-hover/sheet:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-2xl">
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-zinc-900 font-mono text-xs font-bold shadow-xl">
-                    <span>View Page Detail</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-cyan-500" />
-                  </span>
+                {/* Category Pill */}
+                <div className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm border border-zinc-200/90 dark:border-white/15 text-[10px] font-mono font-semibold text-blue-600 dark:text-blue-400 shadow-2xs">
+                  {cert.category}
                 </div>
-              </Link>
-            </div>
+              </div>
 
-            {/* Right Column: Detailed Credential Information */}
-            <div className="lg:col-span-6 flex flex-col justify-between h-full">
-              <div>
-                {/* Pill Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {currentCert.tags.slice(0, 5).map((tag, idx) => (
+              {/* Card Body */}
+              <div className="p-5 sm:p-6">
+                {/* Issuer & Authority */}
+                <div className="flex items-center gap-1.5 text-xs text-blue-600 dark:text-blue-400 font-semibold mb-1">
+                  <ShieldCheck className="w-3.5 h-3.5 shrink-0 text-emerald-500" />
+                  <span className="truncate">{cert.issuerHighlight}</span>
+                </div>
+
+                <h3
+                  onClick={() => setSelectedCert(cert)}
+                  className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer leading-snug"
+                >
+                  {cert.title}
+                </h3>
+
+                {/* Description */}
+                <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed line-clamp-2">
+                  {cert.description}
+                </p>
+
+                {/* Tags */}
+                <div className="mt-3.5 flex flex-wrap gap-1.5">
+                  {cert.tags.slice(0, 5).map((tag) => (
                     <span
-                      key={idx}
-                      className="px-3.5 py-1 rounded-full text-xs font-sans text-slate-700 dark:text-zinc-300 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 transition-colors"
+                      key={tag}
+                      className="px-2.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-[11px] font-mono border border-zinc-200/80 dark:border-white/10"
                     >
                       {tag}
                     </span>
                   ))}
-                  {currentCert.tags.length > 5 && (
-                    <span className="px-2.5 py-1 rounded-full text-xs font-mono text-slate-500 dark:text-zinc-400 bg-slate-100/60 dark:bg-white/5">
-                      +{currentCert.tags.length - 5} more
+                  {cert.tags.length > 5 && (
+                    <span className="px-2 py-0.5 rounded-md text-[11px] font-mono text-zinc-500">
+                      +{cert.tags.length - 5}
                     </span>
                   )}
                 </div>
 
-                {/* Title (Clickable link to detail page) */}
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-3 font-sans">
-                  <Link
-                    href={`/credentials/${currentCert.id}`}
-                    className="hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors"
-                  >
-                    {currentCert.title}
-                  </Link>
-                </h3>
+                {/* Credential ID / Date Row */}
+                <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-zinc-400" />
+                    <span>{cert.issueDate}</span>
+                  </div>
 
-                {/* Issuer & Date */}
-                <div className="text-sm sm:text-base font-normal mb-5 flex flex-wrap items-center gap-1.5">
-                  <span className={`italic font-medium ${currentCert.issuerHighlightColor}`}>
-                    {currentCert.issuerHighlight}
-                  </span>
-                  <span className="text-slate-400 dark:text-zinc-500 mx-1">—</span>
-                  <span className="text-slate-500 dark:text-zinc-400 font-mono text-sm">
-                    {currentCert.issueDate}
-                  </span>
+                  {cert.credentialId && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="truncate max-w-[130px] sm:max-w-[160px] text-[11px]">
+                        ID: {cert.credentialId}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => handleCopyId(e, cert.credentialId!)}
+                        className="p-1 rounded hover:bg-zinc-200/70 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
+                        title="Copy Credential ID"
+                      >
+                        {copiedId === cert.credentialId ? (
+                          <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3 h-3" />
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </div>
-
-                {/* Description */}
-                <p className="text-sm sm:text-[15px] text-slate-600 dark:text-zinc-300 leading-relaxed mb-8">
-                  {currentCert.description}
-                </p>
               </div>
+            </div>
 
-              {/* Bottom Action Bar */}
-              <div className="pt-6 border-t border-slate-200 dark:border-white/8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                {/* Credential ID with Copy Action */}
-                {currentCert.credentialId ? (
-                  <div className="flex items-center gap-2 text-xs font-mono text-slate-600 dark:text-zinc-400">
-                    <Shield className="w-4 h-4 text-slate-500 dark:text-zinc-500 shrink-0" />
-                    <span className="truncate max-w-[200px] select-all text-slate-800 dark:text-zinc-300">
-                      {currentCert.credentialId}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => handleCopyId(currentCert.credentialId!)}
-                      title="Copy Credential ID"
-                      className="p-1 rounded hover:bg-slate-100 dark:hover:bg-white/10 text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
-                    >
-                      {copiedId === currentCert.credentialId ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2 text-xs font-mono text-slate-600 dark:text-zinc-400">
-                    <Shield className="w-4 h-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
-                    <span>Verified Academic Credential</span>
-                  </div>
+            {/* Footer Actions */}
+            <div className="px-5 sm:px-6 py-3.5 bg-zinc-50/70 dark:bg-white/[0.02] border-t border-zinc-100 dark:border-white/8 flex items-center justify-between gap-3 text-xs">
+              <button
+                type="button"
+                onClick={() => setSelectedCert(cert)}
+                className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-semibold hover:underline cursor-pointer"
+              >
+                <Maximize2 className="w-3.5 h-3.5" />
+                <span>Inspect Certificate</span>
+              </button>
+
+              <div className="flex items-center gap-2">
+                {cert.pdfUrl && (
+                  <a
+                    href={cert.pdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>PDF</span>
+                  </a>
                 )}
-
-                {/* Primary CTA: View Page Detail */}
                 <Link
-                  href={`/credentials/${currentCert.id}`}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 text-xs sm:text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-2xs cursor-pointer shrink-0"
+                  href={`/credentials/${cert.id}`}
+                  className="inline-flex items-center gap-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
                 >
-                  <span>View Page Detail</span>
+                  <span>Syllabus</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Carousel Slide Navigation Controls */}
-        <div className="flex items-center justify-between mt-6 px-1">
-          {/* Dot Indicators */}
-          <div className="flex items-center gap-2">
-            {credentialsData.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => setCurrentIndex(index)}
-                aria-label={`Go to certificate ${index + 1}`}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === index
-                    ? "w-8 bg-[#00a6f4] dark:bg-[#00d9ff] shadow-[0_0_10px_#00d9ff]"
-                    : "w-2.5 bg-slate-300 dark:bg-white/20 hover:bg-slate-400 dark:hover:bg-white/40"
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Prev / Next Arrow Controls */}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handlePrev}
-              aria-label="Previous certificate"
-              className="w-10 h-10 rounded-full border border-slate-300 dark:border-white/15 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-800 dark:text-zinc-200 hover:text-slate-950 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-sm dark:shadow-none"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              type="button"
-              onClick={handleNext}
-              aria-label="Next certificate"
-              className="w-10 h-10 rounded-full border border-slate-300 dark:border-white/15 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-800 dark:text-zinc-200 hover:text-slate-950 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-sm dark:shadow-none"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Compact Quick Switcher Strip below main card */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
-          {credentialsData.map((cert, index) => {
-            const isSelected = currentIndex === index;
-            return (
-              <button
-                key={cert.id}
-                type="button"
-                onClick={() => setCurrentIndex(index)}
-                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? "border-cyan-500/50 bg-white dark:bg-[#0c1017] shadow-sm dark:shadow-md ring-1 ring-cyan-500/30"
-                    : "border-slate-200/80 dark:border-white/8 bg-slate-50/60 dark:bg-white/[0.02] hover:bg-white dark:hover:bg-white/5"
-                }`}
-              >
-                <div className="flex items-center justify-between text-[10px] font-mono mb-1 text-slate-400 dark:text-zinc-500">
-                  <span>0{index + 1}</span>
-                  <span className="uppercase text-[9px] px-1.5 py-0.2 rounded bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-zinc-300">
-                    {cert.category}
-                  </span>
-                </div>
-                <p className="text-xs font-semibold text-slate-900 dark:text-white truncate group-hover:text-[#00a6f4] dark:group-hover:text-[#00d9ff] transition-colors">
-                  {cert.title}
-                </p>
-                <p className="text-[11px] text-slate-500 dark:text-zinc-400 truncate mt-0.5 font-sans">
-                  {cert.issuerHighlight}
-                </p>
-              </button>
-            );
-          })}
-        </div>
+          </article>
+        ))}
       </div>
+
+      {/* Lightbox Modal for Certificate Preview */}
+      {selectedCert && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-fade-in"
+          onClick={() => setSelectedCert(null)}
+        >
+          <div
+            className="relative w-full max-w-4xl bg-white dark:bg-[#0c121e] rounded-2xl border border-zinc-200 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-zinc-200 dark:border-white/10 flex items-center justify-between bg-zinc-50 dark:bg-white/[0.02]">
+              <div>
+                <span className="text-[11px] font-mono uppercase text-blue-600 dark:text-blue-400 font-semibold block">
+                  {selectedCert.authority}
+                </span>
+                <h3 className="font-bold text-base sm:text-lg text-zinc-900 dark:text-white leading-tight">
+                  {selectedCert.title}
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSelectedCert(null)}
+                className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                aria-label="Close certificate modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Certificate Image Preview */}
+            <div className="overflow-y-auto p-4 sm:p-6 flex flex-col items-center">
+              <div className="relative w-full aspect-[1.414/1] max-w-3xl rounded-xl overflow-hidden border border-zinc-200 dark:border-white/15 shadow-md bg-zinc-50 dark:bg-zinc-900">
+                <Image
+                  src={selectedCert.image}
+                  alt={selectedCert.title}
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+
+              {/* Description & Metadata below image */}
+              <div className="w-full max-w-3xl mt-5 space-y-3 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">
+                <p className="leading-relaxed">{selectedCert.description}</p>
+
+                {/* Highlights List */}
+                <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/5 space-y-1.5">
+                  <span className="font-semibold text-zinc-900 dark:text-white block font-mono text-xs">
+                    Curriculum Highlights:
+                  </span>
+                  {selectedCert.highlights.map((hl, i) => (
+                    <div key={i} className="flex items-start gap-2 text-xs">
+                      <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                      <span>{hl}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 sm:p-5 border-t border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-white/[0.02] flex items-center justify-between">
+              <a
+                href={selectedCert.image}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white font-medium"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Open Raw Image</span>
+              </a>
+
+              <Link
+                href={`/credentials/${selectedCert.id}`}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all"
+              >
+                <span>View Full Syllabus &amp; Modules</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

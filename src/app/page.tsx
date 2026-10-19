@@ -6,6 +6,7 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Education from "@/components/Education";
+import Credentials from "@/components/Credentials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -57,7 +58,10 @@ export default function Home() {
         {/* 05. Education */}
         <Education />
 
-        {/* 06. Contact Section */}
+        {/* 06. Verified Certifications */}
+        <Credentials />
+
+        {/* 07. Contact Section */}
         <Contact />
       </main>
 
