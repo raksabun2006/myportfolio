@@ -17,7 +17,7 @@ export const educationList: EducationItem[] = [
     location: "Phnom Penh, Cambodia",
     logo: "/logos/rupp-logo.png",
     highlights: [
-      "Computer Science Foundations",
+      "Computer Science and Engineering Foundations",
       "Software Development",
       "Data Structures & Algorithms",
       "Relational Database Systems",

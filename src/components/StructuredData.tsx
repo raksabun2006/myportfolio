@@ -29,12 +29,12 @@ export function PersonJsonLd() {
           {
             "@type": "EducationalOrganization",
             "name": "Institute of Science and Technology Advanced Development (ISTAD)",
-            "url": "https://www.cstad.edu.kh",
+            "url": "https://www.istad.co",
           },
         ],
         "sameAs": [
           "https://github.com/raksabun2006",
-          "https://www.linkedin.com/in/bun-raksa-0062b9326/",
+          "https://www.linkedin.com/in/bun-raksa-computer-science",
         ],
         "knowsAbout": [
           "Java",

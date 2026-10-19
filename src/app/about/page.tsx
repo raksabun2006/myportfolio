@@ -87,7 +87,7 @@ export default function AboutPage() {
           </div>
 
           {/* Right Column: Education Cards (With Official School Logos) */}
-          <div className="lg:col-span-6 flex flex-col gap-4">
+          <div id="education" className="lg:col-span-6 flex flex-col gap-4 scroll-mt-24 sm:scroll-mt-28">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
               Education &amp; Milestones
             </h3>
@@ -163,7 +163,7 @@ export default function AboutPage() {
         </div>
 
         {/* GitHub Contributions Section (Matching Screenshot 5) */}
-        <div className="mb-16">
+        <div id="github" className="mb-16 scroll-mt-24 sm:scroll-mt-28">
           <GitHubSection />
         </div>
 

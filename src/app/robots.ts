@@ -7,6 +7,5 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
     },
     sitemap: "https://bunraksa.site/sitemap.xml",
-    host: "https://bunraksa.site",
   };
 }

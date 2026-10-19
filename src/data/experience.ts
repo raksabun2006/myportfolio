@@ -33,19 +33,7 @@ export const learningJourney: JourneyStep[] = [
       "Production Bundle Delivery",
     ],
   },
-  {
-    title: "Advanced Backend & Systems",
-    tag: "Scalability & Distributed Systems",
-    path: ["Microservices", "API Gateway", "Service Communication", "Event-Driven Architecture"],
-    description:
-      "Expanded monolithic structures into scalable microservices. Implemented API Gateways for reverse proxying and rate limiting, inter-service communication patterns, and asynchronous messaging with message brokers and Redis caching.",
-    keyConcepts: [
-      "API Gateway Routing & Rate Limiting",
-      "Service-to-Service REST / gRPC",
-      "Distributed Caching with Redis",
-      "Event-Driven Design Patterns",
-    ],
-  },
+
   {
     title: "DevOps & Cloud Engineering",
     tag: "Infrastructure & Automation",

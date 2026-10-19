@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Project } from "@/data/projects";
-import { ExternalLink, ArrowRight, ShieldCheck } from "lucide-react";
+import { ExternalLink, ArrowRight, ShieldCheck, Check } from "lucide-react";
 import { GithubIcon } from "@/components/Icons";
 
 interface ProjectCardProps {
@@ -13,155 +13,132 @@ interface ProjectCardProps {
   priority?: boolean;
 }
 
-const ACCENT_COLORS = ["#00d9ff", "#f59e0b", "#a78bfa"];
-
 export default function ProjectCard({
   project,
   index,
   onSelectProject,
   priority = false,
 }: ProjectCardProps) {
-  const formattedIndex = (index + 1).toString().padStart(2, "0");
-  const accentColor = ACCENT_COLORS[index % ACCENT_COLORS.length];
-
   return (
-    <article
-      className="group rounded-2xl border border-white/10 bg-[#0a0e16]/90 p-5 shadow-xl hover:border-[#00d9ff]/50 hover:shadow-[0_0_35px_rgba(0,217,255,0.12)] transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 relative overflow-hidden"
-      style={{
-        backdropFilter: "blur(20px)",
-      }}
-    >
+    <article className="group rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#0c121e] overflow-hidden shadow-xs hover:shadow-md hover:border-zinc-300 dark:hover:border-white/25 transition-all duration-200 flex flex-col justify-between">
       <div>
-        {/* Top Accent Line & Role Pill */}
-        <div className="flex items-center justify-between mb-3.5">
-          <div className="flex items-center gap-2.5">
-            <span
-              className="w-8 h-1 rounded-full"
-              style={{
-                backgroundColor: accentColor,
-                boxShadow: `0 0 10px ${accentColor}`,
-              }}
-            />
-            <span className="font-mono text-xs font-bold text-zinc-400">
-              {formattedIndex}
-            </span>
-          </div>
-
-          <span
-            className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full font-semibold border"
-            style={{
-              backgroundColor: `${accentColor}12`,
-              color: accentColor,
-              borderColor: `${accentColor}30`,
-            }}
-          >
-            {project.role}
-          </span>
-        </div>
-
-        {/* Compact Image Preview */}
+        {/* Screenshot Container */}
         <div
           onClick={() => onSelectProject(project)}
-          className="relative w-full aspect-16/10 rounded-xl overflow-hidden bg-zinc-900 cursor-pointer border border-white/10 mb-3.5 group/img shadow-2xs"
+          className="relative w-full aspect-[16/10] bg-zinc-100 dark:bg-zinc-900 overflow-hidden cursor-pointer border-b border-zinc-200/80 dark:border-white/10"
         >
           <Image
             src={project.image}
-            alt={`${project.title} - ${project.category} - Software project by Bun Raksa`}
+            alt={`${project.title} — ${project.category} built by Bun Raksa`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={priority}
-            className="object-cover object-top group-hover/img:scale-105 transition-transform duration-500 ease-out"
+            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
           />
-          <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/35 transition-colors duration-200 flex items-center justify-center opacity-0 group-hover/img:opacity-100">
-            <span className="px-3 py-1.5 rounded-lg bg-[#07090e]/95 text-white text-[11px] font-medium border border-[#00d9ff]/40 flex items-center gap-1.5 shadow-lg">
-              <span>Inspect Architecture</span>
-              <ArrowRight className="w-3 h-3 text-[#00d9ff]" />
-            </span>
+
+          {/* Role Pill overlaid on top right */}
+          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm border border-zinc-200/90 dark:border-white/15 text-[11px] font-mono font-medium text-zinc-800 dark:text-zinc-200 shadow-2xs">
+            {project.role}
           </div>
         </div>
 
-        {/* Title, Category & Description */}
-        <div>
-          <div className="flex items-baseline justify-between gap-2">
-            <h3
-              onClick={() => onSelectProject(project)}
-              className="text-base sm:text-lg font-bold text-white tracking-tight cursor-pointer hover:text-[#00d9ff] transition-colors"
-            >
-              {project.title}
-            </h3>
-            <span className="font-mono text-[10px] text-zinc-400 uppercase tracking-wider shrink-0">
-              {project.category}
-            </span>
+        {/* Content Body */}
+        <div className="p-5 sm:p-6">
+          {/* Category & Title */}
+          <div className="flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400 mb-1.5">
+            <span className="uppercase tracking-wider">{project.category}</span>
+            <span>0{index + 1}</span>
           </div>
 
-          <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed line-clamp-2">
+          <h3
+            onClick={() => onSelectProject(project)}
+            className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer leading-snug"
+          >
+            {project.title}
+          </h3>
+
+          <p className="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
             {project.shortDescription}
           </p>
-        </div>
 
-        {/* Personal Contribution Highlight */}
-        {project.contributionHighlight && (
-          <div className="mt-2.5 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/8 text-[11px] flex items-center gap-2">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#00d9ff] shrink-0" />
-            <span className="text-zinc-300 line-clamp-1 font-mono text-[10.5px]">
-              {project.contributionHighlight}
-            </span>
-          </div>
-        )}
-
-        {/* Technology Capsules in Ayushcmd Style */}
-        <div className="mt-3.5 flex flex-wrap gap-1.5">
-          {project.technologies.slice(0, 5).map((tech) => (
-            <span
-              key={tech}
-              className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/5 text-zinc-300 border border-white/10 group-hover:border-[#00d9ff]/30 transition-colors"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.technologies.length > 5 && (
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full text-zinc-500">
-              +{project.technologies.length - 5}
-            </span>
+          {/* Contribution Highlight if available */}
+          {project.contributionHighlight && (
+            <div className="mt-3 px-3 py-2 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50 flex items-start gap-2 text-xs text-blue-900 dark:text-blue-200">
+              <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+              <span>
+                <strong className="font-semibold">Key Contribution:</strong> {project.contributionHighlight}
+              </span>
+            </div>
           )}
+
+          {/* Key Implemented Features Bullets */}
+          <div className="mt-3.5 pt-3.5 border-t border-zinc-100 dark:border-white/5 space-y-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-semibold block">
+              Core Implemented Features:
+            </span>
+            {project.features.slice(0, 3).map((feat, i) => (
+              <div key={i} className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+                <Check className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                <span className="leading-snug">{feat}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Technology Stack Chips */}
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {project.technologies.slice(0, 6).map((tech) => (
+              <span
+                key={tech}
+                className="px-2.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-[11px] font-mono border border-zinc-200/80 dark:border-white/10"
+              >
+                {tech}
+              </span>
+            ))}
+            {project.technologies.length > 6 && (
+              <span className="px-2 py-0.5 rounded-md text-[11px] font-mono text-zinc-500">
+                +{project.technologies.length - 6}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Card Action Row */}
-      <div className="mt-4 pt-3 border-t border-white/8 flex items-center justify-between">
-        <button
-          type="button"
-          onClick={() => onSelectProject(project)}
-          className="text-xs font-semibold text-zinc-300 hover:text-[#00d9ff] inline-flex items-center gap-1.5 cursor-pointer group/btn"
-        >
-          <span>Architecture Deep Dive</span>
-          <ArrowRight className="w-3.5 h-3.5 text-[#00d9ff] group-hover/btn:translate-x-0.5 transition-transform" />
-        </button>
-
-        <div className="flex items-center gap-1">
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`GitHub for ${project.title}`}
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              <GithubIcon className="w-4 h-4" />
-            </a>
-          )}
+      {/* Footer Action Links */}
+      <div className="px-5 sm:px-6 py-4 bg-zinc-50/70 dark:bg-white/[0.02] border-t border-zinc-100 dark:border-white/8 flex items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2">
           {project.liveUrl && (
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Live Demo for ${project.title}`}
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-[#00d9ff] hover:bg-white/10 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-2xs transition-all"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Live Demo</span>
+            </a>
+          )}
+
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-white/10 text-zinc-800 dark:text-zinc-200 font-medium transition-colors"
+            >
+              <GithubIcon className="w-3.5 h-3.5 fill-current" />
+              <span>Source</span>
             </a>
           )}
         </div>
+
+        <button
+          type="button"
+          onClick={() => onSelectProject(project)}
+          className="inline-flex items-center gap-1 text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors cursor-pointer"
+        >
+          <span>Architecture</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </button>
       </div>
     </article>
   );

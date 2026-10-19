@@ -1,246 +1,349 @@
 "use client";
 
-import React, { useState, useEffect, useSyncExternalStore } from "react";
+import React, { useState, useEffect, useCallback, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Menu, X } from "lucide-react";
-import { SunIcon, MoonIcon } from "@/components/Icons";
+import { Menu, X, Download, ExternalLink, Sun, Moon } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
 
-const NAV_ITEMS = [
-  { name: "Projects", href: "/projects" },
-  { name: "Certificate", href: "/credentials", match: ["/credentials", "/certificate"] },
-  { name: "Skills", href: "/skills", match: ["/skills", "/forge"] },
-  { name: "About", href: "/about", match: ["/about", "/persona"] },
+interface NavLinkItem {
+  name: string;
+  href: string;
+  targetId: string;
+}
+
+const NAV_ITEMS: NavLinkItem[] = [
+  { name: "Home", href: "/#home", targetId: "home" },
+  { name: "About", href: "/#about", targetId: "about" },
+  { name: "Projects", href: "/#projects", targetId: "projects" },
+  { name: "Skills", href: "/#skills", targetId: "skills" },
+  { name: "Education", href: "/#education", targetId: "education" },
+  { name: "Contact", href: "/#contact", targetId: "contact" },
 ];
 
 const emptySubscribe = () => () => {};
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("home");
+
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
-  // Passive scroll listener for navbar background state
+  // Derive active section for subpages without triggering effect set-state
+  const currentSection =
+    pathname === "/"
+      ? activeSection
+      : pathname.includes("projects")
+      ? "projects"
+      : pathname.includes("about")
+      ? "about"
+      : pathname.includes("skills")
+      ? "skills"
+      : pathname.includes("contact")
+      ? "contact"
+      : pathname.includes("credentials")
+      ? "education"
+      : "home";
+
+  // Track scroll position for header shadow
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    handleScroll();
+
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Ensure smooth scroll to top whenever pathname changes
+  // Track active section via IntersectionObserver when on home page
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (pathname !== "/") return;
+
+    const sectionIds = ["home", "about", "projects", "skills", "education", "contact"];
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(id);
+            }
+          });
+        },
+        { rootMargin: "-30% 0px -60% 0px", threshold: 0 }
+      );
+
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((obs) => obs.disconnect());
+    };
   }, [pathname]);
 
-  // Close mobile menu on Escape key
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Handle escape key to close mobile menu
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileMenuOpen(false);
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [mobileMenuOpen]);
 
-  const isItemActive = (item: (typeof NAV_ITEMS)[0]) => {
-    if (item.match) {
-      return item.match.some((m) => pathname === m || pathname.startsWith(m + "/"));
-    }
-    return pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href + "/"));
-  };
-
-  const handleBrandClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    setMobileMenuOpen(false);
-    if (pathname === "/") {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-    match?: string[]
-  ) => {
-    setMobileMenuOpen(false);
-    const isCurrent =
-      pathname === href || (match && match.some((m) => pathname === m || pathname.startsWith(m + "/")));
-
-    if (isCurrent) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
+  // Smooth scroll handler
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+      if (pathname === "/") {
+        e.preventDefault();
+        const element = document.getElementById(targetId);
+        if (element) {
+          const navOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: targetId === "home" ? 0 : elementPosition - navOffset,
+            behavior: "smooth",
+          });
+          setActiveSection(targetId);
+          window.history.pushState(null, "", `#${targetId}`);
+        }
+      }
+      setMobileMenuOpen(false);
+    },
+    [pathname]
+  );
 
   return (
-    <>
-      {/* Subtle top gradient blur mask so scrolled content doesn't abruptly clip above the floating capsule */}
-      <div
-        className="fixed top-0 inset-x-0 h-16 sm:h-20 pointer-events-none z-40 bg-gradient-to-b from-[#f8fafc]/90 via-[#f8fafc]/40 to-transparent dark:from-[#080d19]/90 dark:via-[#080d19]/40 dark:to-transparent backdrop-blur-[2px]"
-        aria-hidden="true"
-      />
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+        scrolled
+          ? "bg-white/90 dark:bg-[#090d16]/90 backdrop-blur-md border-b border-zinc-200/80 dark:border-white/10 shadow-xs"
+          : "bg-white/70 dark:bg-[#090d16]/70 backdrop-blur-sm border-b border-transparent"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-18">
+          {/* Brand Logo & Name */}
+          <Link
+            href="/#home"
+            onClick={(e) => handleNavClick(e, "home")}
+            className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg py-1 px-1.5"
+            aria-label="Bun Raksa — Return to Home"
+          >
+            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm flex items-center justify-center tracking-tight shadow-xs group-hover:scale-105 transition-transform">
+              BR
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-sm sm:text-base text-zinc-900 dark:text-white tracking-tight leading-none">
+                Bun Raksa
+              </span>
+              <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 leading-none mt-1">
+                Full-Stack Developer
+              </span>
+            </div>
+          </Link>
 
-      <div className="fixed top-3 sm:top-5 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-5xl">
-        <nav
-          className={`flex items-center justify-between rounded-[22px] sm:rounded-[24px] px-5 sm:px-7 md:px-8 transition-all duration-300 ease-out h-[64px] sm:h-[72px] ${
-            scrolled
-              ? "bg-[#0b1222]/96 dark:bg-[#080d18]/95 shadow-[0_12px_36px_rgba(0,0,0,0.28)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.55)]"
-              : "bg-[#0f172a]/92 dark:bg-[#0b101d]/90 shadow-[0_8px_30px_rgba(0,0,0,0.18)] dark:shadow-[0_12px_34px_rgba(0,0,0,0.45)]"
-          } border border-slate-700/50 dark:border-white/[0.08] backdrop-blur-xl`}
-          aria-label="Main Navigation"
-        >
-        {/* Left: Brand Identity */}
-        <Link
-          href="/"
-          onClick={handleBrandClick}
-          className="flex items-center gap-2.5 group select-none py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-lg transition-transform duration-200 active:scale-95"
-          aria-label="bunraksa.site homepage"
-        >
-          <Home className="w-[18px] h-[18px] text-cyan-400 group-hover:text-cyan-300 transition-colors duration-200 shrink-0" />
-          <span className="font-sans font-semibold text-[15px] sm:text-base tracking-tight text-slate-100 group-hover:text-white transition-colors duration-200">
-            bunraksa<span className="text-cyan-400 font-semibold">.site</span>
-          </span>
-        </Link>
-
-        {/* Center: Navigation Links */}
-        <div className="hidden md:flex items-center gap-4 lg:gap-6">
-          {NAV_ITEMS.map((item) => {
-            const active = isItemActive(item);
-
-            return (
-              <div key={item.name} className="relative flex items-center justify-center">
+          {/* Desktop Navigation Links */}
+          <nav
+            aria-label="Primary Navigation"
+            className="hidden md:flex items-center gap-1 bg-zinc-100/80 dark:bg-white/5 border border-zinc-200/70 dark:border-white/10 rounded-full px-2 py-1 shadow-2xs"
+          >
+            {NAV_ITEMS.map((item) => {
+              const isActive = currentSection === item.targetId;
+              return (
                 <Link
+                  key={item.name}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href, item.match)}
-                  className={`relative text-sm font-medium transition-all duration-200 py-1.5 px-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 ${
-                    active
-                      ? "text-white"
-                      : "text-slate-300 hover:text-white hover:bg-white/[0.05]"
+                  onClick={(e) => handleNavClick(e, item.targetId)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                    isActive
+                      ? "bg-white dark:bg-white/15 text-blue-600 dark:text-blue-400 font-semibold shadow-xs"
+                      : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/50 dark:hover:bg-white/5"
                   }`}
-                  aria-current={active ? "page" : undefined}
+                  aria-current={isActive ? "page" : undefined}
                 >
                   {item.name}
-
-                  {/* Smooth scaling and fading cyan active underline */}
-                  <span
-                    className={`absolute bottom-0 left-3 right-3 h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(6,182,212,0.7)] transition-all duration-300 ease-out origin-center ${
-                      active
-                        ? "opacity-100 scale-x-100"
-                        : "opacity-0 scale-x-0 pointer-events-none"
-                    }`}
-                    aria-hidden="true"
-                  />
                 </Link>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </nav>
 
-        {/* Right: Theme Mode Switcher */}
-        <div className="hidden sm:flex items-center">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={mounted && theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 border border-slate-700/60 dark:border-white/10 bg-slate-800/60 hover:bg-slate-800/90 dark:bg-white/[0.06] dark:hover:bg-white/[0.12] text-slate-200 hover:text-white cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 shadow-xs active:scale-95"
-          >
-            {mounted && theme === "light" ? (
-              <>
-                <SunIcon className="w-3.5 h-3.5 text-amber-400 transition-transform duration-200 group-hover:rotate-45" />
-                <span className="text-[12px] font-medium text-slate-200 tracking-wide">Light</span>
-              </>
-            ) : (
-              <>
-                <MoonIcon className="w-3.5 h-3.5 text-cyan-400 transition-transform duration-200 group-hover:-rotate-12" />
-                <span className="text-[12px] font-medium text-slate-200 tracking-wide">Dark</span>
-              </>
-            )}
-          </button>
-        </div>
+          {/* Right Action Controls: GitHub, LinkedIn, CV, Theme Toggle */}
+          <div className="hidden md:flex items-center gap-2">
+            <a
+              href="https://github.com/raksabun2006"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              aria-label="GitHub Profile"
+              title="GitHub Profile"
+            >
+              <GithubIcon className="w-4 h-4 fill-current" />
+            </a>
 
-        {/* Mobile Hamburger & Theme Toggle Controls */}
-        <div className="flex md:hidden items-center gap-1.5">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 cursor-pointer active:scale-95"
-            aria-label={mounted && theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-          >
-            {mounted && theme === "light" ? (
-              <SunIcon className="w-4 h-4 text-amber-400" />
-            ) : (
-              <MoonIcon className="w-4 h-4 text-cyan-400" />
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 cursor-pointer active:scale-95"
-            aria-label="Toggle navigation menu"
-            aria-expanded={mobileMenuOpen}
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5 text-cyan-400" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </nav>
+            <a
+              href="https://www.linkedin.com/in/bun-raksa-0062b9326/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              aria-label="LinkedIn Profile"
+              title="LinkedIn Profile"
+            >
+              <LinkedinIcon className="w-4 h-4 fill-current" />
+            </a>
 
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div
-          className="md:hidden mt-2 p-3.5 rounded-[20px] border border-slate-700/60 dark:border-white/10 bg-[#0f172a]/95 dark:bg-[#0b101d]/95 backdrop-blur-2xl shadow-2xl flex flex-col gap-1.5 animate-fade-in"
-          style={{
-            boxShadow: "0 16px 40px rgba(0, 0, 0, 0.45)",
-          }}
-        >
-          {NAV_ITEMS.map((item) => {
-            const active = isItemActive(item);
+            <div className="w-px h-4 bg-zinc-200 dark:bg-white/10 mx-1" aria-hidden="true" />
 
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href, item.match)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium flex items-center justify-between transition-colors duration-200 ${
-                  active
-                    ? "bg-cyan-500/15 text-cyan-400 font-semibold border border-cyan-500/30"
-                    : "text-slate-300 hover:text-white hover:bg-white/5"
-                }`}
-                aria-current={active ? "page" : undefined}
+            {/* Theme Toggle Button */}
+            {mounted && (
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+                title={`Switch to ${isDark ? "light" : "dark"} mode`}
               >
-                <span>{item.name}</span>
-                {active && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]" />}
-              </Link>
-            );
-          })}
+                {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-zinc-700" />}
+              </button>
+            )}
 
-          <div className="pt-2.5 mt-1 border-t border-slate-700/50 dark:border-white/10 flex items-center justify-between px-2">
-            <span className="text-xs font-mono text-slate-400">Appearance</span>
+            {/* Resume / CV Download Link */}
+            <a
+              href="/cv.pdf"
+              download="Bun-Raksa-CV.pdf"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 text-xs font-semibold tracking-wide transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>CV</span>
+            </a>
+          </div>
+
+          {/* Mobile Right Controls: Theme Toggle + Menu Button */}
+          <div className="flex md:hidden items-center gap-1.5">
+            {mounted && (
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+              >
+                {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-zinc-700" />}
+              </button>
+            )}
+
             <button
               type="button"
-              onClick={toggleTheme}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 hover:bg-slate-800 dark:bg-white/10 dark:hover:bg-white/15 text-xs font-medium text-slate-200 border border-slate-700/60 dark:border-white/10 cursor-pointer transition-colors active:scale-95"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav"
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             >
-              {mounted && theme === "light" ? (
-                <>
-                  <SunIcon className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Light</span>
-                </>
-              ) : (
-                <>
-                  <MoonIcon className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Dark</span>
-                </>
-              )}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Navigation Drawer & Backdrop */}
+      {mobileMenuOpen && (
+        <div
+          id="mobile-nav"
+          className="md:hidden fixed inset-0 top-16 sm:top-18 z-40 bg-black/40 backdrop-blur-xs animate-fade-in"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <div
+            className="w-full bg-white dark:bg-[#0c121e] border-b border-zinc-200 dark:border-white/10 px-5 py-6 shadow-xl flex flex-col gap-4 animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Nav Links */}
+            <div className="flex flex-col space-y-1">
+              {NAV_ITEMS.map((item) => {
+                const isActive = currentSection === item.targetId;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.targetId)}
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                      isActive
+                        ? "bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-semibold"
+                        : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5"
+                    }`}
+                  >
+                    <span>{item.name}</span>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Mobile Actions: GitHub, LinkedIn, CV */}
+            <div className="pt-4 border-t border-zinc-100 dark:border-white/10 flex flex-col gap-3">
+              <a
+                href="/cv.pdf"
+                download="Bun-Raksa-CV.pdf"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 text-white font-semibold text-xs tracking-wide shadow-xs active:scale-[0.99] transition-transform"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download CV (PDF)</span>
+              </a>
+
+              <div className="flex items-center justify-center gap-4 pt-1">
+                <a
+                  href="https://github.com/raksabun2006"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+                >
+                  <GithubIcon className="w-4 h-4 fill-current" />
+                  <span>GitHub</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+
+                <span className="text-zinc-300 dark:text-zinc-700">·</span>
+
+                <a
+                  href="https://www.linkedin.com/in/bun-raksa-0062b9326/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+                >
+                  <LinkedinIcon className="w-4 h-4 fill-current" />
+                  <span>LinkedIn</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
-    </div>
-  </>
+    </header>
   );
 }

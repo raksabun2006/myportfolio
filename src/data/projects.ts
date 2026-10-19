@@ -84,82 +84,22 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "devsolve",
-    title: "DevSolve",
-    role: "Team Project",
-    category: "Developer Community / Bug Bounty Platform",
-    shortDescription:
-      "A collaborative developer and vulnerability triage platform built with a team using Next.js and Spring Boot. Personally engineered the Organization Service APIs and User Profile subsystem.",
-    contributionHighlight: "Organization Service APIs and User Profile features",
-    image: "/projects/devsolve.png",
-    technologies: [
-      "Next.js",
-      "React",
-      "Spring Boot",
-      "PostgreSQL",
-      "Keycloak",
-      "Redis",
-      "Docker",
-    ],
-    features: [
-      "Bug bounty program publishing & vulnerability reporting workflows",
-      "Organization Service APIs for security program management",
-      "User Profile services with researcher reputation & badges",
-      "Developer community discussions, knowledge sharing & showcases",
-      "Centralized authentication via Keycloak (OIDC, OAuth 2.0 & JWT)",
-      "Typo-tolerant search across security programs & developer guides",
-    ],
-    githubUrl: "https://github.com/raksabun2006",
-    liveUrl: "https://devsolve.app",
-    featured: true,
-    detail: {
-      overview:
-        "DevSolve is a collaborative cybersecurity and developer platform built with a team to connect security researchers, organizations, and developers through bug bounty programs, vulnerability triage, and community knowledge sharing.",
-      problem:
-        "Organizations struggle to publish security disclosure programs and manage vulnerability reports cleanly, while security researchers and developers lack a unified hub to share technical solutions and build verified reputations.",
-      solution:
-        "Architected a scalable multi-service web platform with Next.js and Spring Boot. Personally engineered the Organization Service APIs and User Profile features, enabling companies to manage security programs and developers to showcase their achievements.",
-      architectureDescription:
-        "Next.js 16 frontend with Tailwind CSS connects to a Spring Boot REST API core. Traefik serves as reverse proxy, Keycloak manages enterprise auth (OIDC/OAuth 2.0), PostgreSQL stores relational records, Redis handles caching, and MinIO provides S3-compatible file storage.",
-      architectureNodes: [
-        { label: "Next.js 16 Web Client", role: "Researcher & Developer Portal", type: "client" },
-        { label: "Traefik Proxy", role: "SSL Termination & Rate Limiting", type: "gateway" },
-        { label: "Keycloak IAM", role: "OIDC & OAuth 2.0 Centralized Auth", type: "service" },
-        { label: "Spring Boot Core API", role: "Organization & Profile Services", type: "service" },
-        { label: "PostgreSQL Database", role: "Normalized Schema & Audit Logs", type: "database" },
-        { label: "Redis & MinIO S3", role: "Cache & Secure Object Storage", type: "external" },
-      ],
-      keyFeatures: [
-        "Organization Service APIs managing program lifecycles and team access",
-        "User Profile subsystem tracking bounties, reputation points, and badges",
-        "Vulnerability disclosure pipeline with severity classification",
-        "Developer knowledge hub with code solutions and technical problem solving",
-        "Keycloak integration providing secure single sign-on across microservices",
-        "Automated file attachment uploads with storage in MinIO S3",
-      ],
-      challenges:
-        "Collaborating across a multi-member development team while coordinating API contracts between frontend and backend. Addressed by designing strict OpenAPI specs and maintaining clean modular service boundaries.",
-      whatILearned:
-        "Gained direct experience working in an agile team, designing Organization Service APIs, implementing User Profile data structures, integrating Keycloak OIDC authentication, and debugging across distributed services.",
-    },
-  },
-  {
     id: "khmer-service-marketplace",
     title: "Khmer Service Marketplace",
     role: "Full-Stack Developer",
     category: "Service Marketplace",
     shortDescription:
-      "A two-sided service marketplace connecting Cambodian customers with verified local service providers, built with Next.js, React, Spring Boot, PostgreSQL, and JWT role-based security.",
+      "A two-sided service marketplace connecting customers who need services with verified local service providers, featuring categorical browsing, job requests, and role-based access control.",
     image: "/projects/khmer-service.png",
     technologies: [
       "Next.js",
       "React",
       "Spring Boot",
       "PostgreSQL",
-      "Docker",
+      "REST API",
       "JWT",
+      "Docker",
       "Railway",
-      "Vercel",
     ],
     features: [
       "Customer registration, service discovery & categorized browsing",
@@ -169,7 +109,7 @@ export const projects: Project[] = [
       "Role-based authorization distinguishing Customer, Provider, and Admin",
       "RESTful API architecture with complete OpenAPI documentation",
     ],
-    githubUrl: "https://github.com/raksabun2006",
+    githubUrl: "https://github.com/raksabun2006/servicemaketplaceapi",
     liveUrl: "https://servicemaketplacefront.vercel.app/services",
     featured: true,
     detail: {
@@ -201,6 +141,67 @@ export const projects: Project[] = [
         "Structuring a flexible database schema capable of handling varying service pricing models (hourly rates, fixed service fees, diagnostic quotes) without database denormalization.",
       whatILearned:
         "Deepened understanding of relational schema design for two-sided marketplaces, OpenAPI contract-first documentation, and building predictable RESTful APIs for frontend teams.",
+    },
+  },
+  {
+    id: "devsolve",
+    title: "DevSolve",
+    role: "Backend & Full-Stack Contributor",
+    category: "Developer Community & Bug Bounty",
+    shortDescription:
+      "A collaborative developer community and vulnerability triage platform. Personally engineered the Organization Service APIs, User Profile features, and Keycloak authentication workflows.",
+    contributionHighlight: "Organization Service APIs and User Profile features",
+    image: "/projects/devsolve.png",
+    technologies: [
+      "Next.js",
+      "React",
+      "Spring Boot",
+      "PostgreSQL",
+      "REST API",
+      "Keycloak",
+      "Redis",
+      "Docker",
+    ],
+    features: [
+      "Bug bounty program publishing & vulnerability reporting workflows",
+      "Organization Service APIs for security program management",
+      "User Profile services with researcher reputation & badges",
+      "Developer community discussions, knowledge sharing & showcases",
+      "Centralized authentication via Keycloak (OIDC, OAuth 2.0 & JWT)",
+      "Typo-tolerant search across security programs & developer guides",
+    ],
+    githubUrl: "https://github.com/raksabun2006",
+    liveUrl: "https://www.devsolve.app/",
+    featured: true,
+    detail: {
+      overview:
+        "DevSolve is a collaborative cybersecurity and developer platform built with a team to connect security researchers, organizations, and developers through bug bounty programs, vulnerability triage, and community knowledge sharing.",
+      problem:
+        "Organizations struggle to publish security disclosure programs and manage vulnerability reports cleanly, while security researchers and developers lack a unified hub to share technical solutions and build verified reputations.",
+      solution:
+        "Architected a scalable multi-service web platform with Next.js and Spring Boot. Personally engineered the Organization Service APIs and User Profile features, enabling companies to manage security programs and developers to showcase their achievements.",
+      architectureDescription:
+        "Next.js frontend with Tailwind CSS connects to a Spring Boot REST API core. Keycloak manages enterprise auth (OIDC/OAuth 2.0), PostgreSQL stores relational records, Redis handles caching, and Docker ensures reproducible service runs.",
+      architectureNodes: [
+        { label: "Next.js Web Client", role: "Researcher & Developer Portal", type: "client" },
+        { label: "Edge Proxy", role: "SSL Termination & Rate Limiting", type: "gateway" },
+        { label: "Keycloak IAM", role: "OIDC & OAuth 2.0 Centralized Auth", type: "service" },
+        { label: "Spring Boot Core API", role: "Organization & Profile Services", type: "service" },
+        { label: "PostgreSQL Database", role: "Normalized Schema & Audit Logs", type: "database" },
+        { label: "Redis Cache", role: "Cache & Fast Lookups", type: "external" },
+      ],
+      keyFeatures: [
+        "Organization Service APIs managing program lifecycles and team access",
+        "User Profile subsystem tracking bounties, reputation points, and badges",
+        "Vulnerability disclosure pipeline with severity classification",
+        "Developer knowledge hub with code solutions and technical problem solving",
+        "Keycloak integration providing secure single sign-on across microservices",
+        "Automated file attachment uploads with storage management",
+      ],
+      challenges:
+        "Collaborating across a multi-member development team while coordinating API contracts between frontend and backend. Addressed by designing strict OpenAPI specs and maintaining clean modular service boundaries.",
+      whatILearned:
+        "Gained direct experience working in an agile team, designing Organization Service APIs, implementing User Profile data structures, integrating Keycloak OIDC authentication, and debugging across distributed services.",
     },
   },
   {

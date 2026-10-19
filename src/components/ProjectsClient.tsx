@@ -30,7 +30,8 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
           return (
             <article
               key={project.id}
-              className="group rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c1017]/95 overflow-hidden shadow-sm dark:shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-slate-300 dark:hover:border-white/25 hover:shadow-xl hover:-translate-y-1"
+              id={project.id}
+              className="group rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c1017]/95 overflow-hidden shadow-sm dark:shadow-2xl flex flex-col justify-between transition-all duration-300 hover:border-slate-300 dark:hover:border-white/25 hover:shadow-xl hover:-translate-y-1 scroll-mt-24 sm:scroll-mt-28"
             >
               <div>
                 {/* Image Header Preview Banner */}
