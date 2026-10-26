@@ -58,7 +58,7 @@ export default function Hero() {
         <div className="lg:col-span-7 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
           {/* Mobile Profile Photo & Docked Tech Badges (<lg only) */}
           <div className="lg:hidden w-full flex flex-col items-center mb-6 hero-fade-up hero-delay-1">
-            <div className="relative w-[260px] sm:w-[300px] aspect-[4/3] rounded-2xl overflow-hidden border-2 border-zinc-200/90 dark:border-white/15 shadow-md bg-zinc-100 dark:bg-zinc-800 shrink-0 transition-transform duration-500 hover:scale-[1.01]">
+            <div className="relative w-[260px] sm:w-[300px] aspect-[768/987] rounded-2xl overflow-hidden border-2 border-zinc-200/90 dark:border-white/15 shadow-md bg-zinc-100 dark:bg-zinc-800 shrink-0 transition-transform duration-500 hover:scale-[1.01]">
               <Image
                 src="/profile.JPEG"
                 alt="Bun Raksa — Full-Stack Developer"
@@ -66,7 +66,7 @@ export default function Hero() {
                 priority
                 unoptimized
                 sizes="(max-width: 1023px) 300px, 360px"
-                className="object-cover object-[center_28%]"
+                className="object-contain object-center"
               />
             </div>
 
@@ -307,7 +307,7 @@ export default function Hero() {
 
             {/* Main Portrait Card Frame with Subtle Breathing Motion */}
             <div className="relative rounded-2xl overflow-hidden bg-white dark:bg-[#0c121e] border border-zinc-200/90 dark:border-white/10 shadow-[0_12px_36px_rgba(15,23,42,0.06)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.5)] transition-all duration-500 ease-out hover:border-zinc-300 dark:hover:border-white/20 animate-card-breathe">
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+              <div className="relative aspect-[768/987] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
                 <Image
                   src="/profile.JPEG"
                   alt="Bun Raksa — Full-Stack Developer in Phnom Penh, Cambodia"
@@ -315,7 +315,7 @@ export default function Hero() {
                   priority
                   unoptimized
                   sizes="(max-width: 1023px) 300px, 360px"
-                  className="object-cover object-[center_28%] transition-transform duration-700 ease-out hover:scale-[1.03]"
+                  className="object-contain object-center transition-transform duration-700 ease-out hover:scale-[1.02]"
                 />
               </div>
 
