@@ -9,9 +9,12 @@ export default function CountryFlag({ locale }: { locale: Locale }) {
         aria-hidden="true"
       >
         <rect width="30" height="20" fill="#032ea1" />
-        <rect y="3" width="30" height="14" fill="#e00025" />
-        <path d="M8 14V8h2V6h10v2h2v6h-2v-4h-2v4h-2v-4h-2v4h-2v-4h-2v4H8Z" fill="#fff" />
-        <path d="M10 6h10v2H10z" fill="#fff" />
+        <rect y="5" width="30" height="10" fill="#e00025" />
+        <g fill="#fff">
+          <path d="M5.25 14.15v-.9h1.1v-3.1h1.05V8.6h1.05V7.45h1.05V6.35h1.3v-.8h1.3v.8h1.25v1.1h1.15v-1.1h1.25v-.8h1.3v.8h1.3v1.1h1.05v1.15h1.05v1.55h1.05v3.1h1.1v.9H5.25Z" />
+          <path d="M4.6 14.15h20.8v.8H4.6z" />
+          <path d="M7.1 12.85h1.15v-2.7h1.05v2.7h1.25V9.5h1.05v3.35h1.25V8.2h1.05v4.65h1.25V9.5h1.05v3.35h1.25v-2.7h1.05v2.7h1.15v.55H7.1z" fill="#e00025" />
+        </g>
       </svg>
     );
   }
