@@ -7,7 +7,7 @@ import { Menu, X, Download, ExternalLink, Sun, Moon } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLocale } from "@/context/LocaleContext";
-import { localeLabels } from "@/i18n/config";
+import { localeFlags, localeLabels } from "@/i18n/config";
 
 interface NavLinkItem {
   label: "home" | "about" | "projects" | "skills" | "education" | "certificates" | "contact";
@@ -157,7 +157,7 @@ export default function Navbar() {
                 Bun Raksa
               </span>
               <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 leading-none mt-1">
-                Full-Stack Developer
+                {t("fullStackDeveloper")}
               </span>
             </div>
           </Link>
@@ -215,10 +215,12 @@ export default function Navbar() {
 
             <Link
               href={switchLocalePath}
-              className="px-2 py-1.5 rounded-lg text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
+              title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
             >
-              {localeLabels[locale]}
+              <span aria-hidden="true">{localeFlags[locale]}</span>
+              <span>{localeLabels[locale]}</span>
             </Link>
 
             {/* Theme Toggle Button */}
@@ -314,6 +316,7 @@ export default function Navbar() {
                 onClick={handleNavClick}
                 className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 font-semibold text-xs tracking-wide transition-colors"
               >
+                <span aria-hidden="true">{localeFlags[locale === "en" ? "kh" : "en"]}</span>
                 {t("language")}: {localeLabels[locale === "en" ? "kh" : "en"]}
               </Link>
               <a

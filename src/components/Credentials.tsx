@@ -15,8 +15,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { credentialsData, CredentialItem } from "@/data/credentials";
+import { useLocale } from "@/context/LocaleContext";
 
 export default function Credentials() {
+  const { t } = useLocale();
   const [selectedCert, setSelectedCert] = useState<CredentialItem | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -36,19 +38,19 @@ export default function Credentials() {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
         <div className="max-w-3xl">
           <span className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400 block mb-2">
-            ACCREDITED CREDENTIALS
+            {t("certificates")}
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            Verified Certifications
+            {t("verifiedCertifications")}
           </h2>
           <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-            Official software engineering, networking, and full-stack diplomas awarded by government ministries and industry academies.
+            {t("credentialsDescription")}
           </p>
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto text-xs font-mono text-zinc-500 dark:text-zinc-400">
           <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-          <span>{credentialsData.length} Verified Certificates</span>
+          <span>{credentialsData.length} {t("certificates")}</span>
         </div>
       </div>
 

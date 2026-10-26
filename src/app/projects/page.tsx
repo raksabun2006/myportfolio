@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProjectsClient from "@/components/ProjectsClient";
 import { projects } from "@/data/projects";
+import LocalizedText from "@/components/LocalizedText";
 
 export const metadata: Metadata = {
   title: "Projects & Software Architecture",
@@ -59,10 +60,10 @@ export default function ProjectsPage() {
         {/* Page Header */}
         <div className="text-center sm:text-left mb-12">
           <span className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-[0.25em] text-[#00a6f4] dark:text-[#00d9ff] uppercase block mb-2">
-            PORTFOLIO
+            <LocalizedText translationKey="featuredProjects" />
           </span>
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-slate-900 dark:text-white font-sans">
-            Selected Works <span className="sr-only">— Software Architecture &amp; Full-Stack Systems by Bun Raksa</span>
+            <LocalizedText translationKey="featuredProjects" /> <span className="sr-only">— Software Architecture &amp; Full-Stack Systems by Bun Raksa</span>
           </h1>
           <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-2xl mt-3 leading-relaxed">
             Production-grade systems, distributed microservices, and modern web applications built with Java, Spring Boot, React, and PostgreSQL.

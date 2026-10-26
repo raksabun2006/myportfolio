@@ -45,9 +45,22 @@
 
   body {
     min-height: 100vh;
+    font-family: var(--font-geist-sans), Arial, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     overflow-x: hidden;
     transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  html[data-lang="kh"] body {
+    font-family: "Khmer OS Siemreap", "Noto Sans Khmer", "Khmer OS", sans-serif;
+    line-height: 1.8;
+    letter-spacing: 0;
+  }
+
+  html[data-lang="kh"] button,
+  html[data-lang="kh"] input,
+  html[data-lang="kh"] textarea {
+    font-family: inherit;
   }
 
   nav, main, section, footer, article {
@@ -532,5 +545,4 @@
 .animate-particle-3 {
   animation: particleFloat3 18s ease-in-out 4s infinite;
 }
-
 

@@ -44,13 +44,13 @@ export default function Contact({ isStandalone = false }: ContactProps) {
 
     // Validation
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setError("Please fill in all required fields.");
+      setError(t("requiredFields"));
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      setError("Please enter a valid email address.");
+      setError(t("validEmail"));
       return;
     }
 
@@ -95,10 +95,10 @@ export default function Contact({ isStandalone = false }: ContactProps) {
         <div className="lg:col-span-5 space-y-4">
           <div className="p-6 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#0c121e] shadow-2xs space-y-4">
             <h3 className="font-semibold text-zinc-900 dark:text-white text-base">
-              Direct Contact Information
+              {t("directContact")}
             </h3>
             <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Feel free to send an email or reach out through LinkedIn or GitHub. I usually respond within 24 hours.
+              {t("directContactDescription")}
             </p>
 
             {/* Email Card with One-Click Copy */}
@@ -109,7 +109,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                 </div>
                 <div className="min-w-0">
                   <span className="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-500 block">
-                    Email Address
+                    {t("emailAddress")}
                   </span>
                   <a
                     href="mailto:raksabun2006@gmail.com"
@@ -144,7 +144,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                 </div>
                 <div>
                   <span className="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-500 block">
-                    GitHub Profile
+                    {t("githubProfile")}
                   </span>
                   <span className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     github.com/raksabun2006
@@ -167,7 +167,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                 </div>
                 <div>
                   <span className="text-[10px] font-mono uppercase text-zinc-400 dark:text-zinc-500 block">
-                    LinkedIn Profile
+                    {t("linkedinProfile")}
                   </span>
                   <span className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     Bun Raksa
@@ -185,7 +185,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
-                <span>Open for remote &amp; on-site roles</span>
+                <span>{t("remoteRoles")}</span>
               </div>
             </div>
           </div>
@@ -195,10 +195,10 @@ export default function Contact({ isStandalone = false }: ContactProps) {
         <div className="lg:col-span-7">
           <div className="p-6 sm:p-8 rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#0c121e] shadow-2xs">
             <h3 className="font-semibold text-zinc-900 dark:text-white text-base mb-1">
-              Send a Direct Message
+              {t("sendMessage")}
             </h3>
             <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mb-6">
-              Have a position, project, or question? Send a message and let&apos;s connect.
+              {t("messageDescription")}
             </p>
 
             {submitted ? (
@@ -207,7 +207,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <h4 className="text-base font-bold text-zinc-900 dark:text-white">
-                  Message Prepared
+                  {t("messagePrepared")}
                 </h4>
                 <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
                   Your email client has been opened with your drafted message. If it didn&apos;t open automatically, you can send directly to{" "}
@@ -222,14 +222,14 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                     }}
                     className="px-4 py-2 rounded-xl bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-white/10 transition-colors"
                   >
-                    Send Another Message
+                    {t("sendAnother")}
                   </button>
                   <button
                     type="button"
                     onClick={handleCopyEmail}
                     className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition-colors"
                   >
-                    {copied ? "Email Copied!" : "Copy Email Address"}
+                    {copied ? t("emailCopied") : t("copyEmail")}
                   </button>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                       htmlFor="contact-name"
                       className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
                     >
-                      Your Name <span className="text-rose-500">*</span>
+                      {t("yourName")} <span className="text-rose-500">*</span>
                     </label>
                     <input
                       id="contact-name"
@@ -266,7 +266,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                       htmlFor="contact-email"
                       className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
                     >
-                      Your Email <span className="text-rose-500">*</span>
+                      {t("yourEmail")} <span className="text-rose-500">*</span>
                     </label>
                     <input
                       id="contact-email"
@@ -285,7 +285,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                     htmlFor="contact-subject"
                     className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
                   >
-                    Subject
+                    {t("subject")}
                   </label>
                   <input
                     id="contact-subject"
@@ -302,7 +302,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                     htmlFor="contact-message"
                     className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
                   >
-                    Message <span className="text-rose-500">*</span>
+                    {t("message")} <span className="text-rose-500">*</span>
                   </label>
                   <textarea
                     id="contact-message"
@@ -321,10 +321,10 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                   className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm tracking-wide shadow-xs hover:shadow-sm transition-all disabled:opacity-60 cursor-pointer"
                 >
                   {submitting ? (
-                    <span>Opening Email Client...</span>
+                    <span>{t("submitMessage")}</span>
                   ) : (
                     <>
-                      <span>Send Message</span>
+                      <span>{t("send")}</span>
                       <Send className="w-3.5 h-3.5" />
                     </>
                   )}

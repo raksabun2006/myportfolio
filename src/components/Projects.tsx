@@ -28,16 +28,16 @@ export default function Projects() {
             {t("featuredProjects")}
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            Real Systems &amp; Web Applications
+            {t("projectsTitle")}
           </h2>
           <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-            Production-grade retail systems, two-sided service marketplaces, and collaborative developer platforms built with modern frontend tools and robust backend APIs.
+            {t("projectsDescription")}
           </p>
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto text-xs font-mono text-zinc-500 dark:text-zinc-400">
           <Layers className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-          <span>{displayedProjects.length} Verified Systems</span>
+          <span>{displayedProjects.length} {t("verifiedKnowledge")}</span>
         </div>
       </div>
 
@@ -62,7 +62,7 @@ export default function Projects() {
             onClick={() => setShowAll(!showAll)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-white/5 text-xs font-medium text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
           >
-            <span>{showAll ? "Show Core Featured Projects (3)" : `View More Projects (+${projects.length - coreProjects.length})`}</span>
+            <span>{showAll ? `${t("showCore")} (3)` : `${t("viewMore")} (+${projects.length - coreProjects.length})`}</span>
           </button>
         </div>
       )}

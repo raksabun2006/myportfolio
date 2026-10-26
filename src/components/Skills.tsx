@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Code2,
@@ -7,6 +9,7 @@ import {
   Check,
 } from "lucide-react";
 import { skillCategories } from "@/data/skills";
+import { useLocale } from "@/context/LocaleContext";
 
 const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Frontend: Code2,
@@ -16,6 +19,7 @@ const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>
 };
 
 export default function Skills() {
+  const { t } = useLocale();
   return (
     <section
       id="skills"
@@ -24,13 +28,13 @@ export default function Skills() {
       {/* Section Header */}
       <div className="max-w-3xl mb-12">
         <span className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400 block mb-2">
-          TECHNICAL SKILLS
+          {t("technicalArchitecture")}
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
-          Technologies &amp; Competencies
+          {t("technologiesCompetencies")}
         </h2>
         <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-          Languages, frameworks, databases, and developer tools I actively use in building production full-stack systems.
+          {t("skillsDescription")}
         </p>
       </div>
 
@@ -87,9 +91,9 @@ export default function Skills() {
 
               {/* Bottom Count Pill */}
               <div className="mt-5 pt-4 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">
-                <span>Verified Practical Knowledge</span>
+                <span>{t("verifiedKnowledge")}</span>
                 <span className="px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-[11px]">
-                  {category.skills.length} Technologies
+                  {category.skills.length} {t("technologies")}
                 </span>
               </div>
             </div>

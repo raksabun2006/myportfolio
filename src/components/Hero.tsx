@@ -114,7 +114,7 @@ export default function Hero() {
 
           {/* Tagline Statement (Stagger delay 4) */}
           <p className="hero-fade-up hero-delay-4 text-sm sm:text-base lg:text-lg text-zinc-700 dark:text-zinc-200 font-normal sm:font-medium leading-relaxed max-w-md sm:max-w-xl">
-            &ldquo;Building practical web applications with modern frontend technologies, robust backend APIs, and reliable database systems.&rdquo;
+            &ldquo;{t("heroTagline")}&rdquo;
           </p>
 
           {/* Supporting Information (Stagger delay 5) */}

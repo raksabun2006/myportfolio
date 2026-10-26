@@ -6,6 +6,7 @@ import { Project } from "@/data/projects";
 import ArchitectureDiagram from "./ArchitectureDiagram";
 import { X, ExternalLink, AlertCircle, CheckCircle2, Lightbulb, Wrench, BookOpen, Layers } from "lucide-react";
 import { GithubIcon } from "@/components/Icons";
+import { useLocale } from "@/context/LocaleContext";
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -13,6 +14,7 @@ interface ProjectDetailModalProps {
 }
 
 export default function ProjectDetailModal({ project, onClose }: ProjectDetailModalProps) {
+  const { t } = useLocale();
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -52,7 +54,7 @@ export default function ProjectDetailModal({ project, onClose }: ProjectDetailMo
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close modal"
+            aria-label={t("closeModal")}
             className="p-1.5 rounded-lg text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
@@ -95,7 +97,7 @@ export default function ProjectDetailModal({ project, onClose }: ProjectDetailMo
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white text-xs font-semibold transition-colors"
                 >
                   <GithubIcon className="w-3.5 h-3.5" />
-                  <span>GitHub Repository</span>
+                  <span>{t("source")}</span>
                 </a>
               )}
               {project.liveUrl && (
@@ -115,7 +117,7 @@ export default function ProjectDetailModal({ project, onClose }: ProjectDetailMo
           {/* Overview */}
           <div>
             <h4 className="text-xs font-mono uppercase tracking-wider text-[#00a6f4] dark:text-[#00d9ff] mb-2 font-semibold">
-              Project Overview
+              {t("projectOverview")}
             </h4>
             <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 leading-relaxed">
               {project.detail.overview}
@@ -127,7 +129,7 @@ export default function ProjectDetailModal({ project, onClose }: ProjectDetailMo
             <div className="p-5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02]">
               <div className="flex items-center gap-2 mb-2 text-slate-900 dark:text-white font-semibold text-sm">
                 <AlertCircle className="w-4 h-4 text-amber-500" />
-                <span>The Engineering Problem</span>
+                <span>{t("engineeringProblem")}</span>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
                 {project.detail.problem}
@@ -137,7 +139,7 @@ export default function ProjectDetailModal({ project, onClose }: ProjectDetailMo
             <div className="p-5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02]">
               <div className="flex items-center gap-2 mb-2 text-slate-900 dark:text-white font-semibold text-sm">
                 <Lightbulb className="w-4 h-4 text-[#00a6f4] dark:text-[#00d9ff]" />
-                <span>The Architecture Solution</span>
+                <span>{t("architectureSolution")}</span>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
                 {project.detail.solution}
@@ -149,7 +151,7 @@ export default function ProjectDetailModal({ project, onClose }: ProjectDetailMo
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#00a6f4] dark:text-[#00d9ff] font-semibold">
               <Layers className="w-4 h-4 text-[#00a6f4] dark:text-[#00d9ff]" />
-              <span>System Architecture &amp; Pipeline</span>
+              <span>{t("systemArchitecture")}</span>
             </div>
             <p className="text-sm text-slate-600 dark:text-zinc-400">
               {project.detail.architectureDescription}
@@ -163,7 +165,7 @@ export default function ProjectDetailModal({ project, onClose }: ProjectDetailMo
           {/* Key Features */}
           <div>
             <h4 className="text-xs font-mono uppercase tracking-wider text-[#00a6f4] dark:text-[#00d9ff] mb-3 font-semibold">
-              Key Features &amp; Implementation
+              {t("keyFeaturesImplementation")}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {project.detail.keyFeatures.map((feat, i) => (

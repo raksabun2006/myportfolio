@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import About from "@/components/About";
 import GitHubSection from "@/components/GitHubSection";
 import { MapPin, Building2 } from "lucide-react";
+import LocalizedText from "@/components/LocalizedText";
 
 export const metadata: Metadata = {
   title: "About Me & Engineering Persona",
@@ -46,10 +47,10 @@ export default function AboutPage() {
         {/* Page Header */}
         <div className="text-center sm:text-left mb-12">
           <span className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-[0.25em] text-[#00a6f4] dark:text-[#00d9ff] uppercase block mb-2">
-            WHO I AM
+            <LocalizedText translationKey="whoIAm" />
           </span>
           <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-slate-900 dark:text-white font-sans">
-            Persona &amp; Bio <span className="sr-only">— Bun Raksa Backend Developer Cambodia</span>
+            <LocalizedText translationKey="personaBio" /> <span className="sr-only">— Bun Raksa Backend Developer Cambodia</span>
           </h1>
         </div>
 

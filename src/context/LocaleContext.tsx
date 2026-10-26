@@ -20,6 +20,12 @@ export function LocaleProvider({
 }) {
   useEffect(() => {
     document.documentElement.lang = locale === "kh" ? "km" : "en";
+    document.documentElement.dataset.lang = locale;
+    try {
+      localStorage.setItem("portfolio_locale", locale);
+    } catch {
+      // Preferences are optional when storage is unavailable.
+    }
   }, [locale]);
 
   return (

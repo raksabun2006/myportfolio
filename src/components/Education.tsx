@@ -4,8 +4,10 @@ import React from "react";
 import Image from "next/image";
 import { educationList } from "@/data/education";
 import { GraduationCap, Calendar, MapPin, CheckCircle2 } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 export default function Education() {
+  const { t } = useLocale();
   return (
     <section
       id="education"
@@ -14,13 +16,13 @@ export default function Education() {
       {/* Section Header */}
       <div className="max-w-3xl mb-12">
         <span className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400 block mb-2">
-          EDUCATION &amp; TRAINING
+          {t("academicTraining")}
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
-          Academic Foundations &amp; Training
+          {t("academicFoundations")}
         </h2>
         <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-          Formal computer science foundations at university level combined with intensive enterprise software engineering training.
+          {t("educationDescription")}
         </p>
       </div>
 
@@ -81,7 +83,7 @@ export default function Education() {
               {/* Highlights / Focus Areas */}
               <div className="mt-4 space-y-2">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-semibold block">
-                  Core Focus &amp; Coursework:
+                  {t("coreFocus")}
                 </span>
                 <div className="space-y-1.5">
                   {item.highlights.map((hl, idx) => (

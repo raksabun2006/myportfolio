@@ -42,13 +42,13 @@ export default function About() {
       {/* Section Header */}
       <div className="max-w-3xl mb-12">
         <span className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400 block mb-2">
-          ABOUT ME
+          {t("whoIAm")}
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
           {t("backgroundFocus")}
         </h2>
         <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
-          Early-career developer passionate about software engineering fundamentals, full-stack web applications, and building reliable systems.
+          {t("aboutIntro")}
         </p>
       </div>
 
