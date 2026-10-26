@@ -220,7 +220,6 @@ export default function Navbar() {
               title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
             >
               <span aria-hidden="true">{localeFlags[locale]}</span>
-              <span>{localeLabels[locale]}</span>
             </Link>
 
             {/* Theme Toggle Button */}
@@ -248,7 +247,16 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Right Controls: Theme Toggle + Menu Button */}
-          <div className="flex md:hidden items-center gap-1.5">
+          <div className="flex md:hidden items-center gap-1">
+            <Link
+              href={switchLocalePath}
+              className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-lg hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
+              title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
+            >
+              <span aria-hidden="true">{localeFlags[locale]}</span>
+            </Link>
+
             {mounted && (
               <button
                 type="button"
@@ -314,10 +322,10 @@ export default function Navbar() {
               <Link
                 href={switchLocalePath}
                 onClick={handleNavClick}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 font-semibold text-xs tracking-wide transition-colors"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 font-semibold text-xs tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               >
                 <span aria-hidden="true">{localeFlags[locale === "en" ? "kh" : "en"]}</span>
-                {t("language")}: {localeLabels[locale === "en" ? "kh" : "en"]}
+                <span className="sr-only">{t("language")}: {localeLabels[locale === "en" ? "kh" : "en"]}</span>
               </Link>
               <a
                 href="/cv.pdf"

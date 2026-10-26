@@ -63,6 +63,18 @@
     font-family: inherit;
   }
 
+  @media (max-width: 640px) {
+    html[data-lang="kh"] body {
+      line-height: 1.9;
+    }
+
+    html[data-lang="kh"] h1,
+    html[data-lang="kh"] h2,
+    html[data-lang="kh"] h3 {
+      line-height: 1.45;
+    }
+  }
+
   nav, main, section, footer, article {
     transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -545,4 +557,3 @@
 .animate-particle-3 {
   animation: particleFloat3 18s ease-in-out 4s infinite;
 }
-
