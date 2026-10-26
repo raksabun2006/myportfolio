@@ -14,6 +14,15 @@ import {
   JavaIcon,
 } from "@/components/Icons";
 
+const TECH_STACK = [
+  { name: "React", icon: ReactIcon, className: "text-cyan-500 dark:text-cyan-400" },
+  { name: "Next.js", icon: NextjsIcon, className: "text-zinc-900 dark:text-white" },
+  { name: "Java", icon: JavaIcon, className: "text-amber-500" },
+  { name: "Spring Boot", icon: SpringIcon, className: "text-emerald-500" },
+  { name: "PostgreSQL", icon: PostgresIcon, className: "text-blue-500" },
+  { name: "Docker", icon: DockerIcon, className: "text-sky-500" },
+] as const;
+
 export default function Hero() {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
@@ -56,7 +65,8 @@ export default function Hero() {
                 fill
                 priority
                 unoptimized
-                className="object-cover"
+                sizes="(max-width: 1023px) 300px, 360px"
+                className="object-cover object-[center_28%]"
               />
             </div>
 
@@ -304,7 +314,8 @@ export default function Hero() {
                   fill
                   priority
                   unoptimized
-                  className="object-cover transition-transform duration-700 ease-out hover:scale-[1.03]"
+                  sizes="(max-width: 1023px) 300px, 360px"
+                  className="object-cover object-[center_28%] transition-transform duration-700 ease-out hover:scale-[1.03]"
                 />
               </div>
 
@@ -325,12 +336,13 @@ export default function Hero() {
 
             {/* Compact Tech Badges Row beneath portrait */}
             <div className="flex flex-wrap items-center justify-center gap-1.5 mt-3.5">
-              {["React", "Next.js", "Java", "Spring Boot", "PostgreSQL", "Docker"].map((tech) => (
+              {TECH_STACK.map(({ name, icon: Icon, className }) => (
                 <span
-                  key={tech}
-                  className="px-2.5 py-0.5 rounded-md bg-zinc-100/90 dark:bg-zinc-800/80 text-zinc-700 dark:text-zinc-300 text-[11px] font-mono border border-zinc-200/80 dark:border-zinc-700/60 shadow-2xs transition-all duration-200 hover:border-blue-400 dark:hover:border-blue-500/60 hover:-translate-y-0.5 hover:text-blue-600 dark:hover:text-blue-400 cursor-default"
+                  key={name}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100/90 dark:bg-zinc-800/80 text-zinc-700 dark:text-zinc-300 text-[11px] font-mono border border-zinc-200/80 dark:border-zinc-700/60 shadow-2xs transition-all duration-200 hover:border-blue-400 dark:hover:border-blue-500/60 hover:-translate-y-0.5 hover:text-blue-600 dark:hover:text-blue-400 cursor-default"
                 >
-                  {tech}
+                  <Icon className={`w-3 h-3 ${className}`} aria-hidden="true" />
+                  {name}
                 </span>
               ))}
             </div>
