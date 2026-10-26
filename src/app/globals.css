@@ -48,7 +48,20 @@
     font-family: var(--font-geist-sans), Arial, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     overflow-x: hidden;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition-duration: 0.38s !important;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
   }
 
   html[data-lang="kh"] body {
@@ -274,6 +287,36 @@
 
 .animate-fade-in {
   animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes mobileMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-mobile-menu {
+  animation: mobileMenuIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes themeIconIn {
+  from {
+    opacity: 0;
+    transform: rotate(-35deg) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+.animate-theme-icon {
+  animation: themeIconIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* ==========================================================================

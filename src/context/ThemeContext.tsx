@@ -16,6 +16,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 function applyThemeToDocument(t: Theme) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
+  root.classList.add("theme-transition");
   if (t === "dark") {
     root.classList.add("dark");
     root.classList.remove("light");
@@ -25,6 +26,7 @@ function applyThemeToDocument(t: Theme) {
     root.classList.remove("dark");
     root.style.colorScheme = "light";
   }
+  window.setTimeout(() => root.classList.remove("theme-transition"), 420);
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

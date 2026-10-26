@@ -232,7 +232,11 @@ export default function Navbar() {
                 aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
                 title={`Switch to ${isDark ? "light" : "dark"} mode`}
               >
-                {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-zinc-700" />}
+                {isDark ? (
+                  <Sun className="w-4 h-4 text-amber-400 animate-theme-icon" />
+                ) : (
+                  <Moon className="w-4 h-4 text-zinc-700 animate-theme-icon" />
+                )}
               </button>
             )}
 
@@ -265,7 +269,11 @@ export default function Navbar() {
                 className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
                 aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
               >
-                {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-zinc-700" />}
+                {isDark ? (
+                  <Sun className="w-4 h-4 text-amber-400 animate-theme-icon" />
+                ) : (
+                  <Moon className="w-4 h-4 text-zinc-700 animate-theme-icon" />
+                )}
               </button>
             )}
 
@@ -291,7 +299,7 @@ export default function Navbar() {
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
-            className="w-full bg-white dark:bg-[#0c121e] border-b border-zinc-200 dark:border-white/10 px-5 py-6 shadow-xl flex flex-col gap-4 animate-fade-in"
+            className="w-full bg-white dark:bg-[#0c121e] border-b border-zinc-200 dark:border-white/10 px-5 py-6 shadow-xl flex flex-col gap-4 animate-mobile-menu"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Nav Links */}
