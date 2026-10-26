@@ -14,13 +14,13 @@ interface NavLinkItem {
 }
 
 const NAV_ITEMS: NavLinkItem[] = [
-  { name: "Home", href: "/#home", targetId: "home" },
-  { name: "About", href: "/#about", targetId: "about" },
-  { name: "Projects", href: "/#projects", targetId: "projects" },
-  { name: "Skills", href: "/#skills", targetId: "skills" },
-  { name: "Education", href: "/#education", targetId: "education" },
-  { name: "Certificates", href: "/#certifications", targetId: "certifications" },
-  { name: "Contact", href: "/#contact", targetId: "contact" },
+  { name: "Home", href: "/", targetId: "home" },
+  { name: "About", href: "/about", targetId: "about" },
+  { name: "Projects", href: "/projects", targetId: "projects" },
+  { name: "Skills", href: "/skills", targetId: "skills" },
+  { name: "Education", href: "/education", targetId: "education" },
+  { name: "Certificates", href: "/credentials", targetId: "certifications" },
+  { name: "Contact", href: "/contact", targetId: "contact" },
 ];
 
 const emptySubscribe = () => () => {};
@@ -49,6 +49,8 @@ export default function Navbar() {
       ? "contact"
       : pathname.includes("credentials")
       ? "certifications"
+      : pathname.includes("education")
+      ? "education"
       : "home";
 
   // Track scroll position for header shadow
@@ -116,26 +118,10 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [mobileMenuOpen]);
 
-  // Smooth scroll handler
   const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-      if (pathname === "/") {
-        e.preventDefault();
-        const element = document.getElementById(targetId);
-        if (element) {
-          const navOffset = 80;
-          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-          window.scrollTo({
-            top: targetId === "home" ? 0 : elementPosition - navOffset,
-            behavior: "smooth",
-          });
-          setActiveSection(targetId);
-          window.history.pushState(null, "", `#${targetId}`);
-        }
-      }
+    () => {
       setMobileMenuOpen(false);
-    },
-    [pathname]
+    }, []
   );
 
   return (
@@ -150,8 +136,8 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Brand Logo & Name */}
           <Link
-            href="/#home"
-            onClick={(e) => handleNavClick(e, "home")}
+            href="/"
+            onClick={handleNavClick}
             className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg py-1 px-1.5"
             aria-label="Bun Raksa — Return to Home"
           >
@@ -179,7 +165,7 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.targetId)}
+                  onClick={handleNavClick}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
                     isActive
                       ? "bg-white dark:bg-white/15 text-blue-600 dark:text-blue-400 font-semibold shadow-xs"
@@ -289,7 +275,7 @@ export default function Navbar() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    onClick={(e) => handleNavClick(e, item.targetId)}
+                    onClick={handleNavClick}
                     className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                       isActive
                         ? "bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-semibold"
