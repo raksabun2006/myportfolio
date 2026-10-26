@@ -5,9 +5,8 @@ export default function CountryFlag({ locale }: { locale: Locale }) {
     return (
       <svg
         viewBox="0 0 30 20"
-        className="h-4 w-6 overflow-hidden rounded-sm shadow-xs"
-        role="img"
-        aria-label="Cambodia"
+        className="h-[18px] w-[26px] overflow-hidden rounded-[3px] border border-zinc-300/60 dark:border-white/20 shadow-2xs"
+        aria-hidden="true"
       >
         <rect width="30" height="20" fill="#032ea1" />
         <rect y="3" width="30" height="14" fill="#e00025" />
@@ -20,9 +19,8 @@ export default function CountryFlag({ locale }: { locale: Locale }) {
   return (
     <svg
       viewBox="0 0 30 20"
-      className="h-4 w-6 overflow-hidden rounded-sm shadow-xs"
-      role="img"
-      aria-label="United Kingdom"
+      className="h-[18px] w-[26px] overflow-hidden rounded-[3px] border border-zinc-300/60 dark:border-white/20 shadow-2xs"
+      aria-hidden="true"
     >
       <rect width="30" height="20" fill="#012169" />
       <path d="m0 0 30 20M30 0 0 20" stroke="#fff" strokeWidth="4" />

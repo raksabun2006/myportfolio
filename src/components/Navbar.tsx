@@ -216,7 +216,7 @@ export default function Navbar() {
 
             <Link
               href={switchLocalePath}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-full text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
               title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
             >
@@ -251,7 +251,7 @@ export default function Navbar() {
           <div className="flex md:hidden items-center gap-1">
             <Link
               href={switchLocalePath}
-              className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-lg hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
               title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
             >
