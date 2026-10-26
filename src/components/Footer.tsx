@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ArrowUp, Mail } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { useLocale } from "@/context/LocaleContext";
 
 export default function Footer() {
@@ -45,7 +45,7 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://www.linkedin.com/in/bun-raksa-0062b9326/"
+              href="https://www.linkedin.com/in/bun-raksa-computer-science"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-white/10 transition-colors"
@@ -53,6 +53,17 @@ export default function Footer() {
               title="LinkedIn"
             >
               <LinkedinIcon className="w-4 h-4 fill-current" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/bun.raksa.intelcorei5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-white/10 transition-colors"
+              aria-label="Facebook Profile"
+              title="Facebook"
+            >
+              <FacebookIcon className="w-4 h-4 fill-current" />
             </a>
 
             <a

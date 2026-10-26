@@ -156,7 +156,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
 
             {/* LinkedIn Card */}
             <a
-              href="https://www.linkedin.com/in/bun-raksa-0062b9326/"
+              href="https://www.linkedin.com/in/bun-raksa-computer-science"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/5 flex items-center justify-between gap-3 group hover:border-zinc-300 dark:hover:border-white/15 transition-all"

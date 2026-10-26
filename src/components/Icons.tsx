@@ -39,6 +39,20 @@ export function LinkedinIcon({ className = "w-4 h-4", ...props }: React.SVGProps
   );
 }
 
+export function FacebookIcon({ className = "w-4 h-4", ...props }: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      role="img"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      {...props}
+    >
+      <path d="M13.5 21v-8h2.75l.4-3h-3.15V8.08c0-.87.24-1.46 1.5-1.46h1.8V3.94c-.31-.04-1.38-.14-2.63-.14-2.6 0-4.38 1.59-4.38 4.52V10H7v3h2.79v8h3.71Z" />
+    </svg>
+  );
+}
+
 export function TwitterIcon({ className = "w-4 h-4", ...props }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -513,4 +527,3 @@ export function MoonIcon({ className = "w-4 h-4", ...props }: React.SVGProps<SVG
     </svg>
   );
 }
-

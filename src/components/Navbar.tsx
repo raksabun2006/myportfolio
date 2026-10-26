@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback, useSyncExternalStore } from "r
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Download, ExternalLink, Sun, Moon } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLocale } from "@/context/LocaleContext";
 import { localeLabels } from "@/i18n/config";
@@ -202,7 +202,7 @@ export default function Navbar() {
             </a>
 
             <a
-              href="https://www.linkedin.com/in/bun-raksa-0062b9326/"
+              href="https://www.linkedin.com/in/bun-raksa-computer-science"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
@@ -210,6 +210,17 @@ export default function Navbar() {
               title="LinkedIn Profile"
             >
               <LinkedinIcon className="w-4 h-4 fill-current" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/bun.raksa.intelcorei5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              aria-label="Facebook Profile"
+              title="Facebook Profile"
+            >
+              <FacebookIcon className="w-4 h-4 fill-current" />
             </a>
 
             <div className="w-px h-4 bg-zinc-200 dark:bg-white/10 mx-1" aria-hidden="true" />
@@ -352,13 +363,26 @@ export default function Navbar() {
                 <span className="text-zinc-300 dark:text-zinc-700">·</span>
 
                 <a
-                  href="https://www.linkedin.com/in/bun-raksa-0062b9326/"
+                  href="https://www.linkedin.com/in/bun-raksa-computer-science"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
                 >
                   <LinkedinIcon className="w-4 h-4 fill-current" />
                   <span>LinkedIn</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+
+                <span className="text-zinc-300 dark:text-zinc-700">·</span>
+
+                <a
+                  href="https://www.facebook.com/bun.raksa.intelcorei5"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+                >
+                  <FacebookIcon className="w-4 h-4 fill-current" />
+                  <span>Facebook</span>
                   <ExternalLink className="w-3 h-3 opacity-60" />
                 </a>
               </div>

@@ -35,6 +35,7 @@ export function PersonJsonLd() {
         "sameAs": [
           "https://github.com/raksabun2006",
           "https://www.linkedin.com/in/bun-raksa-computer-science",
+          "https://www.facebook.com/bun.raksa.intelcorei5",
         ],
         "knowsAbout": [
           "Java",

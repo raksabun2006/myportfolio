@@ -182,7 +182,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="https://www.linkedin.com/in/bun-raksa-0062b9326/"
+              href="https://www.linkedin.com/in/bun-raksa-computer-science"
               target="_blank"
               rel="noopener noreferrer"
               className="p-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
