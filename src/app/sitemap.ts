@@ -4,58 +4,33 @@ import { credentialsData } from "@/data/credentials";
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://bunraksa.site";
   const currentDate = new Date().toISOString();
-
-  const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/projects`,
-      lastModified: currentDate,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/skills`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/education`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/credentials`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
+  const localizedRoutes = [
+    { path: "", priority: 1.0, changeFrequency: "weekly" as const },
+    { path: "/projects", priority: 0.9, changeFrequency: "weekly" as const },
+    { path: "/skills", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/about", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/education", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/credentials", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/contact", priority: 0.8, changeFrequency: "monthly" as const },
   ];
 
-  const credentialRoutes: MetadataRoute.Sitemap = credentialsData.map((cred) => ({
-    url: `${baseUrl}/credentials/${cred.id}`,
-    lastModified: currentDate,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+  const staticRoutes: MetadataRoute.Sitemap = ["en", "kh"].flatMap((locale) =>
+    localizedRoutes.map((route) => ({
+      url: `${baseUrl}/${locale}${route.path}`,
+      lastModified: currentDate,
+      changeFrequency: route.changeFrequency,
+      priority: route.priority,
+    })),
+  );
+
+  const credentialRoutes: MetadataRoute.Sitemap = ["en", "kh"].flatMap((locale) =>
+    credentialsData.map((cred) => ({
+      url: `${baseUrl}/${locale}/credentials/${cred.id}`,
+      lastModified: currentDate,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  );
 
   return [...staticRoutes, ...credentialRoutes];
 }

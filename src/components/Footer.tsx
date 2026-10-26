@@ -3,8 +3,10 @@
 import React from "react";
 import { ArrowUp, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import { useLocale } from "@/context/LocaleContext";
 
 export default function Footer() {
+  const { t } = useLocale();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -21,7 +23,7 @@ export default function Footer() {
               </span>
               <span className="text-zinc-400">·</span>
               <span className="text-xs font-mono text-blue-600 dark:text-blue-400">
-                Full-Stack Developer
+                {t("fullStackDeveloper")}
               </span>
             </div>
             <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
@@ -69,7 +71,7 @@ export default function Footer() {
               onClick={scrollToTop}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
             >
-              <span>Back to Top</span>
+              <span>{t("backToTop")}</span>
               <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>

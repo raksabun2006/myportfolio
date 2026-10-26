@@ -13,6 +13,7 @@ import {
   DockerIcon,
   JavaIcon,
 } from "@/components/Icons";
+import { useLocale } from "@/context/LocaleContext";
 
 const TECH_STACK = [
   { name: "React", icon: ReactIcon, className: "text-cyan-500 dark:text-cyan-400" },
@@ -24,6 +25,7 @@ const TECH_STACK = [
 ] as const;
 
 export default function Hero() {
+  const { t } = useLocale();
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
@@ -97,7 +99,7 @@ export default function Hero() {
               <span className="animate-radar-pulse absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span>Available for Junior Roles &amp; Internships</span>
+            <span>{t("available")}</span>
           </div>
 
           {/* Heading: Name (Stagger delay 2) */}
@@ -107,7 +109,7 @@ export default function Hero() {
 
           {/* Role (Stagger delay 3) */}
           <p className="hero-fade-up hero-delay-3 text-lg sm:text-2xl font-semibold text-blue-600 dark:text-blue-400 mt-1 mb-3 sm:mb-4 tracking-tight">
-            Full-Stack Developer
+            {t("fullStackDeveloper")}
           </p>
 
           {/* Tagline Statement (Stagger delay 4) */}

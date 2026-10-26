@@ -6,21 +6,23 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Download, ExternalLink, Sun, Moon } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
+import { useLocale } from "@/context/LocaleContext";
+import { localeLabels } from "@/i18n/config";
 
 interface NavLinkItem {
-  name: string;
+  label: "home" | "about" | "projects" | "skills" | "education" | "certificates" | "contact";
   href: string;
   targetId: string;
 }
 
 const NAV_ITEMS: NavLinkItem[] = [
-  { name: "Home", href: "/", targetId: "home" },
-  { name: "About", href: "/about", targetId: "about" },
-  { name: "Projects", href: "/projects", targetId: "projects" },
-  { name: "Skills", href: "/skills", targetId: "skills" },
-  { name: "Education", href: "/education", targetId: "education" },
-  { name: "Certificates", href: "/credentials", targetId: "certifications" },
-  { name: "Contact", href: "/contact", targetId: "contact" },
+  { label: "home", href: "/", targetId: "home" },
+  { label: "about", href: "/about", targetId: "about" },
+  { label: "projects", href: "/projects", targetId: "projects" },
+  { label: "skills", href: "/skills", targetId: "skills" },
+  { label: "education", href: "/education", targetId: "education" },
+  { label: "certificates", href: "/credentials", targetId: "certifications" },
+  { label: "contact", href: "/contact", targetId: "contact" },
 ];
 
 const emptySubscribe = () => () => {};
@@ -28,6 +30,7 @@ const emptySubscribe = () => () => {};
 export default function Navbar() {
   const pathname = usePathname();
   const { isDark, toggleTheme } = useTheme();
+  const { locale, t } = useLocale();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -37,7 +40,7 @@ export default function Navbar() {
 
   // Derive active section for subpages without triggering effect set-state
   const currentSection =
-    pathname === "/"
+    pathname === `/${locale}`
       ? activeSection
       : pathname.includes("projects")
       ? "projects"
@@ -66,7 +69,7 @@ export default function Navbar() {
 
   // Track active section via IntersectionObserver when on home page
   useEffect(() => {
-    if (pathname !== "/") return;
+    if (pathname !== `/${locale}`) return;
 
     const sectionIds = ["home", "about", "projects", "skills", "education", "certifications", "contact"];
     const observers: IntersectionObserver[] = [];
@@ -93,7 +96,7 @@ export default function Navbar() {
     return () => {
       observers.forEach((obs) => obs.disconnect());
     };
-  }, [pathname]);
+  }, [locale, pathname]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -106,6 +109,11 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
+
+  const localizedPath = (href: string) => `/${locale}${href === "/" ? "" : href}`;
+  const switchLocalePath = pathname.match(/^\/(en|kh)(?=\/|$)/)
+    ? pathname.replace(/^\/(en|kh)/, `/${locale === "en" ? "kh" : "en"}`)
+    : `/${locale === "en" ? "kh" : "en"}${pathname === "/" ? "" : pathname}`;
 
   // Handle escape key to close mobile menu
   useEffect(() => {
@@ -136,7 +144,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Brand Logo & Name */}
           <Link
-            href="/"
+            href={localizedPath("/")}
             onClick={handleNavClick}
             className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg py-1 px-1.5"
             aria-label="Bun Raksa — Return to Home"
@@ -163,8 +171,8 @@ export default function Navbar() {
               const isActive = currentSection === item.targetId;
               return (
                 <Link
-                  key={item.name}
-                  href={item.href}
+                  key={item.label}
+                  href={localizedPath(item.href)}
                   onClick={handleNavClick}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
                     isActive
@@ -173,7 +181,7 @@ export default function Navbar() {
                   }`}
                   aria-current={isActive ? "page" : undefined}
                 >
-                  {item.name}
+                  {t(item.label)}
                 </Link>
               );
             })}
@@ -204,6 +212,14 @@ export default function Navbar() {
             </a>
 
             <div className="w-px h-4 bg-zinc-200 dark:bg-white/10 mx-1" aria-hidden="true" />
+
+            <Link
+              href={switchLocalePath}
+              className="px-2 py-1.5 rounded-lg text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors"
+              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
+            >
+              {localeLabels[locale]}
+            </Link>
 
             {/* Theme Toggle Button */}
             {mounted && (
@@ -273,8 +289,8 @@ export default function Navbar() {
                 const isActive = currentSection === item.targetId;
                 return (
                   <Link
-                    key={item.name}
-                    href={item.href}
+                    key={item.label}
+                    href={localizedPath(item.href)}
                     onClick={handleNavClick}
                     className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                       isActive
@@ -282,7 +298,7 @@ export default function Navbar() {
                         : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5"
                     }`}
                   >
-                    <span>{item.name}</span>
+                    <span>{t(item.label)}</span>
                     {isActive && (
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
                     )}
@@ -293,13 +309,20 @@ export default function Navbar() {
 
             {/* Mobile Actions: GitHub, LinkedIn, CV */}
             <div className="pt-4 border-t border-zinc-100 dark:border-white/10 flex flex-col gap-3">
+              <Link
+                href={switchLocalePath}
+                onClick={handleNavClick}
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 font-semibold text-xs tracking-wide transition-colors"
+              >
+                {t("language")}: {localeLabels[locale === "en" ? "kh" : "en"]}
+              </Link>
               <a
                 href="/cv.pdf"
                 download="Bun-Raksa-CV.pdf"
                 className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 text-white font-semibold text-xs tracking-wide shadow-xs active:scale-[0.99] transition-transform"
               >
                 <Download className="w-4 h-4" />
-                <span>Download CV (PDF)</span>
+                <span>{t("downloadCv")}</span>
               </a>
 
               <div className="flex items-center justify-center gap-4 pt-1">

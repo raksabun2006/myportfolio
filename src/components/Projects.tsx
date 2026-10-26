@@ -5,8 +5,10 @@ import { projects, Project } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 import ProjectDetailModal from "./ProjectDetailModal";
 import { Layers } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 export default function Projects() {
+  const { t } = useLocale();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [showAll, setShowAll] = useState(false);
 
@@ -23,7 +25,7 @@ export default function Projects() {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
         <div className="max-w-2xl">
           <span className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400 block mb-2">
-            FEATURED PROJECTS
+            {t("featuredProjects")}
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
             Real Systems &amp; Web Applications

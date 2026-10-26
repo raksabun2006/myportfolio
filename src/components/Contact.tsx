@@ -13,12 +13,14 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import { useLocale } from "@/context/LocaleContext";
 
 interface ContactProps {
   isStandalone?: boolean;
 }
 
 export default function Contact({ isStandalone = false }: ContactProps) {
+  const { t } = useLocale();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -78,7 +80,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
       {/* Section Header */}
       <div className="max-w-3xl mb-12">
         <span className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400 block mb-2">
-          GET IN TOUCH
+          {t("getInTouch")}
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
           Let&apos;s Build Something Together

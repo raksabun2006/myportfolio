@@ -20,6 +20,7 @@ export const viewport: Viewport = {
 
 import Script from "next/script";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { LocaleProvider } from "@/context/LocaleContext";
 import { PersonJsonLd } from "@/components/StructuredData";
 
 export const metadata: Metadata = {
@@ -137,7 +138,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-[#f8fafc] text-slate-900 dark:bg-[#07090e] dark:text-zinc-100 font-sans antialiased transition-colors duration-300">
         <ThemeProvider>
-          {children}
+          <LocaleProvider locale="en">{children}</LocaleProvider>
         </ThemeProvider>
       </body>
     </html>

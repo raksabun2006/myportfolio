@@ -9,6 +9,7 @@ import {
   MapPin,
   CheckCircle2,
 } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 const HIGHLIGHTS = [
   {
@@ -32,6 +33,7 @@ const HIGHLIGHTS = [
 ];
 
 export default function About() {
+  const { t } = useLocale();
   return (
     <section
       id="about"
@@ -43,7 +45,7 @@ export default function About() {
           ABOUT ME
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
-          Background &amp; Focus
+          {t("backgroundFocus")}
         </h2>
         <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
           Early-career developer passionate about software engineering fundamentals, full-stack web applications, and building reliable systems.
