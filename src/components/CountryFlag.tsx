@@ -10,10 +10,15 @@ export default function CountryFlag({ locale }: { locale: Locale }) {
       >
         <rect width="30" height="20" fill="#032ea1" />
         <rect y="5" width="30" height="10" fill="#e00025" />
-        <g fill="#fff">
-          <path d="M5.25 14.15v-.9h1.1v-3.1h1.05V8.6h1.05V7.45h1.05V6.35h1.3v-.8h1.3v.8h1.25v1.1h1.15v-1.1h1.25v-.8h1.3v.8h1.3v1.1h1.05v1.15h1.05v1.55h1.05v3.1h1.1v.9H5.25Z" />
-          <path d="M4.6 14.15h20.8v.8H4.6z" />
-          <path d="M7.1 12.85h1.15v-2.7h1.05v2.7h1.25V9.5h1.05v3.35h1.25V8.2h1.05v4.65h1.25V9.5h1.05v3.35h1.25v-2.7h1.05v2.7h1.15v.55H7.1z" fill="#e00025" />
+        <g fill="#fff" stroke="#111827" strokeWidth=".42" strokeLinejoin="round">
+          <path d="M5.1 14.1h19.8v.8H5.1z" />
+          <path d="M5.8 13.2h18.4v.9H5.8zM6.5 12.25h17v.95h-17zM7.2 11.35h15.6v.9H7.2z" />
+          <path d="M8.25 11.35V8.25h1.4v3.1M20.35 11.35V8.25h1.4v3.1M13.55 11.35V6.8h2.9v4.55" />
+          <path d="M7.65 8.25h2.6l-.45-1.05h-1.7zM19.75 8.25h2.6l-.45-1.05h-1.7zM12.9 6.8h4.2l-.55-1.15h-3.1z" />
+          <path d="M8.2 7.2 8.9 5.5l.7 1.7M20.3 7.2 21 5.5l.7 1.7M13.45 5.65 15 2.2l1.55 3.45" />
+          <path d="M14.45 2.8 15 1.8l.55 1M14.15 4.1h1.7M13.8 4.8h2.4" />
+          <path d="M9.6 8.25v2.25M20.4 8.25v2.25M15 6.8v4.55M6.95 14.1v-1.85M23.05 14.1v-1.85" />
+          <path d="M11 8.25h1.7v3.1H11zM17.3 8.25H19v3.1h-1.7z" />
         </g>
       </svg>
     );
