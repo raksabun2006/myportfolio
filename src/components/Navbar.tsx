@@ -248,15 +248,6 @@ export default function Navbar() {
 
           {/* Mobile Right Controls: Theme Toggle + Menu Button */}
           <div className="flex md:hidden items-center gap-1">
-            <Link
-              href={switchLocalePath}
-              className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-lg hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
-              title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
-            >
-              <span aria-hidden="true">{localeFlags[locale]}</span>
-            </Link>
-
             {mounted && (
               <button
                 type="button"
@@ -317,16 +308,19 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Mobile Actions: GitHub, LinkedIn, CV */}
+            {/* Mobile Actions: Language, GitHub, LinkedIn, CV */}
             <div className="pt-4 border-t border-zinc-100 dark:border-white/10 flex flex-col gap-3">
-              <Link
-                href={switchLocalePath}
-                onClick={handleNavClick}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 font-semibold text-xs tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-              >
-                <span aria-hidden="true">{localeFlags[locale === "en" ? "kh" : "en"]}</span>
-                <span className="sr-only">{t("language")}: {localeLabels[locale === "en" ? "kh" : "en"]}</span>
-              </Link>
+              <div className="flex justify-end">
+                <Link
+                  href={switchLocalePath}
+                  onClick={handleNavClick}
+                  className="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-white/5 text-xl hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                  aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
+                  title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
+                >
+                  <span aria-hidden="true">{localeFlags[locale]}</span>
+                </Link>
+              </div>
               <a
                 href="/cv.pdf"
                 download="Bun-Raksa-CV.pdf"
