@@ -215,6 +215,25 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .hero-fade-up,
+  .hero-scale-in {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .animate-float-node-1,
+  .animate-float-node-2,
+  .animate-float-node-3,
+  .animate-float-node-4,
+  .animate-float-node-5,
+  .animate-float-node-6,
+  .animate-radar-pulse,
+  .animate-card-breathe,
+  .animate-tech-rotate-slow,
+  .animate-node-glow {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 @keyframes pageFadeIn {
@@ -249,84 +268,178 @@
   animation: gridDriftSlow 36s linear infinite;
 }
 
-/* Independent Badge Float Animations with Asynchronous Timing */
-@keyframes floatBadge1 {
+/* ==========================================================================
+   Hero Entrance & Staggered Reveal Animations
+   ========================================================================== */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.hero-fade-up {
+  opacity: 0;
+  animation: heroFadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+.hero-scale-in {
+  opacity: 0;
+  animation: heroScaleIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+.hero-delay-1 { animation-delay: 60ms; }
+.hero-delay-2 { animation-delay: 130ms; }
+.hero-delay-3 { animation-delay: 200ms; }
+.hero-delay-4 { animation-delay: 270ms; }
+.hero-delay-5 { animation-delay: 340ms; }
+.hero-delay-6 { animation-delay: 420ms; }
+.hero-delay-7 { animation-delay: 500ms; }
+.hero-delay-8 { animation-delay: 580ms; }
+
+/* Organic Radar Ping for Availability Pill */
+@keyframes radarPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  65% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.animate-radar-pulse {
+  animation: radarPulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+/* Jitter-Free Pure GPU Floating Technology Nodes (Zero Rotation Jitter) */
+@keyframes floatSmooth1 {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate3d(0, 0px, 0);
   }
   50% {
-    transform: translateY(-7px) rotate(0.4deg);
+    transform: translate3d(0, -6px, 0);
   }
 }
 
-@keyframes floatBadge2 {
+@keyframes floatSmooth2 {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate3d(0, 0px, 0);
   }
   50% {
-    transform: translateY(-9px) rotate(-0.5deg);
+    transform: translate3d(0, -8px, 0);
   }
 }
 
-@keyframes floatBadge3 {
+@keyframes floatSmooth3 {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate3d(0, 0px, 0);
   }
   50% {
-    transform: translateY(-6px) rotate(0.3deg);
+    transform: translate3d(0, -5px, 0);
   }
 }
 
-@keyframes floatBadge4 {
+@keyframes floatSmooth4 {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate3d(0, 0px, 0);
   }
   50% {
-    transform: translateY(-8px) rotate(-0.4deg);
+    transform: translate3d(0, -7px, 0);
   }
 }
 
-@keyframes floatBadge5 {
+@keyframes floatSmooth5 {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translate3d(0, 0px, 0);
   }
   50% {
-    transform: translateY(-7px) rotate(0.3deg);
+    transform: translate3d(0, -5.5px, 0);
   }
 }
 
-.animate-float-badge-1 {
-  animation: floatBadge1 6.2s ease-in-out infinite;
-}
-
-.animate-float-badge-2 {
-  animation: floatBadge2 7.6s ease-in-out 1.2s infinite;
-}
-
-.animate-float-badge-3 {
-  animation: floatBadge3 5.8s ease-in-out 2.1s infinite;
-}
-
-.animate-float-badge-4 {
-  animation: floatBadge4 6.9s ease-in-out 0.8s infinite;
-}
-
-.animate-float-badge-5 {
-  animation: floatBadge5 8.2s ease-in-out 1.6s infinite;
-}
-
-/* Selected Badges Soft Pulsing Glow */
-@keyframes badgePulsingGlow {
+@keyframes floatSmooth6 {
   0%, 100% {
-    box-shadow: 0 4px 16px -2px rgba(14, 165, 233, 0.12), 0 0 0 1px rgba(14, 165, 233, 0.2);
+    transform: translate3d(0, 0px, 0);
   }
   50% {
-    box-shadow: 0 10px 24px -2px rgba(14, 165, 233, 0.32), 0 0 0 1.5px rgba(14, 165, 233, 0.45);
+    transform: translate3d(0, -7.5px, 0);
   }
 }
 
-.animate-badge-glow {
-  animation: badgePulsingGlow 3.5s ease-in-out infinite;
+.animate-float-node-1 {
+  animation: floatSmooth1 5.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -1.2s;
+  will-change: transform;
+}
+
+.animate-float-node-2 {
+  animation: floatSmooth2 7.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -3.4s;
+  will-change: transform;
+}
+
+.animate-float-node-3 {
+  animation: floatSmooth3 6.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -2.1s;
+  will-change: transform;
+}
+
+.animate-float-node-4 {
+  animation: floatSmooth4 7.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -4.6s;
+  will-change: transform;
+}
+
+.animate-float-node-5 {
+  animation: floatSmooth5 6.0s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -0.8s;
+  will-change: transform;
+}
+
+.animate-float-node-6 {
+  animation: floatSmooth6 7.0s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -2.8s;
+  will-change: transform;
+}
+
+/* Subtle, Efficient Pulse Glow (Opacity Based - Zero Paint Cost) */
+@keyframes nodePulseGlow {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.animate-node-glow {
+  animation: nodePulseGlow 3s ease-in-out infinite;
+  will-change: opacity;
 }
 
 /* Profile Card Breathing */
