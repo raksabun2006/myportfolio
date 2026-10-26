@@ -11,11 +11,6 @@ export const localeLabels: Record<Locale, string> = {
   kh: "ខ្មែរ",
 };
 
-export const localeFlags: Record<Locale, string> = {
-  en: "🇬🇧",
-  kh: "🇰🇭",
-};
-
 export const translations = {
   en: {
     home: "Home",

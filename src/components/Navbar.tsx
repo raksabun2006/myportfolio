@@ -7,7 +7,8 @@ import { Menu, X, Download, ExternalLink, Sun, Moon } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLocale } from "@/context/LocaleContext";
-import { localeFlags, localeLabels } from "@/i18n/config";
+import { localeLabels } from "@/i18n/config";
+import CountryFlag from "@/components/CountryFlag";
 
 interface NavLinkItem {
   label: "home" | "about" | "projects" | "skills" | "education" | "certificates" | "contact";
@@ -219,7 +220,7 @@ export default function Navbar() {
               aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
               title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
             >
-              <span aria-hidden="true">{localeFlags[locale]}</span>
+              <CountryFlag locale={locale} />
             </Link>
 
             {/* Theme Toggle Button */}
@@ -254,7 +255,7 @@ export default function Navbar() {
               aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
               title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
             >
-              <span aria-hidden="true">{localeFlags[locale]}</span>
+              <CountryFlag locale={locale} />
             </Link>
 
             {mounted && (
