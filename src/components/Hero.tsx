@@ -58,14 +58,14 @@ export default function Hero() {
         <div className="lg:col-span-7 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
           {/* Mobile Profile Photo & Docked Tech Badges (<lg only) */}
           <div className="lg:hidden w-full flex flex-col items-center mb-6 hero-fade-up hero-delay-1">
-            <div className="relative w-[260px] sm:w-[300px] aspect-[768/987] rounded-2xl overflow-hidden border-2 border-zinc-200/90 dark:border-white/15 shadow-md bg-zinc-100 dark:bg-zinc-800 shrink-0 transition-transform duration-500 hover:scale-[1.01]">
+            <div className="relative w-[220px] sm:w-[260px] aspect-[768/987] rounded-2xl overflow-hidden border-2 border-zinc-200/90 dark:border-white/15 shadow-md bg-zinc-100 dark:bg-zinc-800 shrink-0 transition-transform duration-500 hover:scale-[1.01]">
               <Image
                 src="/profile.JPEG"
                 alt="Bun Raksa — Full-Stack Developer"
                 fill
                 priority
                 unoptimized
-                sizes="(max-width: 1023px) 300px, 360px"
+                sizes="(max-width: 639px) 220px, 260px"
                 className="object-contain object-center"
               />
             </div>
@@ -203,7 +203,7 @@ export default function Hero() {
 
         {/* Right Column: Desktop Portrait Card & Floating Technology Badges (Visible on lg screens) */}
         <div className="hidden lg:flex lg:col-span-5 flex-col items-center justify-center relative hero-scale-in hero-delay-3">
-          <div className="relative w-full max-w-[340px] sm:max-w-[360px]">
+          <div className="relative w-full max-w-[280px] sm:max-w-[300px]">
             {/* Subtle Engineering Orbit Circle behind portrait */}
             <div
               className="absolute -inset-8 pointer-events-none select-none flex items-center justify-center -z-10 opacity-70 dark:opacity-60"
@@ -314,7 +314,7 @@ export default function Hero() {
                   fill
                   priority
                   unoptimized
-                  sizes="(max-width: 1023px) 300px, 360px"
+                  sizes="(max-width: 1023px) 280px, 300px"
                   className="object-contain object-center transition-transform duration-700 ease-out hover:scale-[1.02]"
                 />
               </div>
