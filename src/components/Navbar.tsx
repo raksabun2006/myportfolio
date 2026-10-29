@@ -12,7 +12,7 @@ import { localeLabels } from "@/i18n/config";
 import CountryFlag from "@/components/CountryFlag";
 
 interface NavLinkItem {
-  label: "home" | "about" | "projects" | "certificates" | "contact";
+  label: "home" | "about" | "skills" | "projects" | "certificates" | "contact";
   href: string;
   targetId: string;
 }
@@ -20,6 +20,7 @@ interface NavLinkItem {
 const NAV_ITEMS: NavLinkItem[] = [
   { label: "home", href: "/", targetId: "home" },
   { label: "about", href: "/about", targetId: "about" },
+  { label: "skills", href: "/skills", targetId: "skills" },
   { label: "projects", href: "/projects", targetId: "projects" },
   { label: "certificates", href: "/certifications", targetId: "certifications" },
   { label: "contact", href: "/contact", targetId: "contact" },
