@@ -238,7 +238,7 @@ export const projects: Project[] = [
     ],
     githubUrl: "https://github.com/raksabun2006/farmer-api/tree/farmer-RESTAPI",
     liveUrl: "https://farmer-digital-marketing-cam.vercel.app/",
-    featured: true,
+    featured: false,
     detail: {
       overview:
         "Farmer Digital Marketing is a digital agricultural marketplace with a Java and Spring Boot REST API that helps connect Cambodian farmers and buyers while making agricultural products and marketplace information easier to discover.",

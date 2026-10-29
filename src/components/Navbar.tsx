@@ -21,8 +21,7 @@ const NAV_ITEMS: NavLinkItem[] = [
   { label: "about", href: "/about", targetId: "about" },
   { label: "projects", href: "/projects", targetId: "projects" },
   { label: "skills", href: "/skills", targetId: "skills" },
-  { label: "education", href: "/education", targetId: "education" },
-  { label: "certificates", href: "/credentials", targetId: "certifications" },
+  { label: "certificates", href: "/certifications", targetId: "certifications" },
   { label: "contact", href: "/contact", targetId: "contact" },
 ];
 
@@ -51,7 +50,7 @@ export default function Navbar() {
       ? "skills"
       : pathname.includes("contact")
       ? "contact"
-      : pathname.includes("credentials")
+      : pathname.includes("certifications") || pathname.includes("credentials")
       ? "certifications"
       : pathname.includes("education")
       ? "education"

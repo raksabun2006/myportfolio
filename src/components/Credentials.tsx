@@ -128,13 +128,13 @@ export default function Credentials() {
                 <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
                   <div className="flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-zinc-400" />
-                    <span>{cert.issueDate}</span>
+                    <span>{t("issued")}: {cert.issueDate}</span>
                   </div>
 
                   {cert.credentialId && (
                     <div className="flex items-center gap-1.5">
                       <span className="truncate max-w-[130px] sm:max-w-[160px] text-[11px]">
-                        ID: {cert.credentialId}
+                        {t("credentialId")}: {cert.credentialId}
                       </span>
                       <button
                         type="button"
@@ -162,7 +162,7 @@ export default function Credentials() {
                 className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-semibold hover:underline cursor-pointer"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
-                <span>Inspect Certificate</span>
+                <span>{t("inspectCertificate")}</span>
               </button>
 
               <div className="flex items-center gap-2">
@@ -177,11 +177,22 @@ export default function Credentials() {
                     <span>PDF</span>
                   </a>
                 )}
+                {cert.verifyUrl && (
+                  <a
+                    href={cert.verifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>{t("verifyCredential")}</span>
+                  </a>
+                )}
                 <Link
                   href={`/credentials/${cert.id}`}
                   className="inline-flex items-center gap-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
                 >
-                  <span>Syllabus</span>
+                  <span>{t("syllabus")}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -217,7 +228,7 @@ export default function Credentials() {
                 type="button"
                 onClick={() => setSelectedCert(null)}
                 className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-white/10 transition-colors cursor-pointer"
-                aria-label="Close certificate modal"
+                aria-label={t("closeCertificate")}
               >
                 <X className="w-5 h-5" />
               </button>
@@ -242,7 +253,7 @@ export default function Credentials() {
                 {/* Highlights List */}
                 <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/5 space-y-1.5">
                   <span className="font-semibold text-zinc-900 dark:text-white block font-mono text-xs">
-                    Curriculum Highlights:
+                    {t("curriculumHighlights")}:
                   </span>
                   {selectedCert.highlights.map((hl, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs">
@@ -263,14 +274,14 @@ export default function Credentials() {
                 className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white font-medium"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span>Open Raw Image</span>
+                <span>{t("openRawImage")}</span>
               </a>
 
               <Link
                 href={`/credentials/${selectedCert.id}`}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-all"
               >
-                <span>View Full Syllabus &amp; Modules</span>
+                <span>{t("viewFullCredential")}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

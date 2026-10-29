@@ -1,12 +1,9 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
 import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
-import Education from "@/components/Education";
-import Credentials from "@/components/Credentials";
-import Contact from "@/components/Contact";
+import SkillsPreview from "@/components/SkillsPreview";
+import CertificationsPreview from "@/components/CertificationsPreview";
 import Footer from "@/components/Footer";
 
 export default function HomePage() {
@@ -15,12 +12,9 @@ export default function HomePage() {
       <Navbar />
       <main className="flex-1 w-full pt-20 sm:pt-24">
         <Hero />
-        <About />
         <Projects />
-        <Skills />
-        <Education />
-        <Credentials />
-        <Contact />
+        <SkillsPreview />
+        <CertificationsPreview />
       </main>
       <Footer />
     </div>

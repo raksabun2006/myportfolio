@@ -31,12 +31,12 @@ function applyThemeToDocument(t: Theme) {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "dark";
+    if (typeof window === "undefined") return "light";
     try {
       const saved = localStorage.getItem("portfolio_theme") as Theme | null;
-      return saved === "light" || saved === "dark" ? saved : "dark";
+      return saved === "light" || saved === "dark" ? saved : "light";
     } catch {
-      return "dark";
+      return "light";
     }
   });
 
