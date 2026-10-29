@@ -11,7 +11,7 @@ import { localeLabels } from "@/i18n/config";
 import CountryFlag from "@/components/CountryFlag";
 
 interface NavLinkItem {
-  label: "home" | "about" | "projects" | "skills" | "education" | "certificates" | "contact";
+  label: "home" | "about" | "projects" | "certificates" | "contact";
   href: string;
   targetId: string;
 }
@@ -20,7 +20,6 @@ const NAV_ITEMS: NavLinkItem[] = [
   { label: "home", href: "/", targetId: "home" },
   { label: "about", href: "/about", targetId: "about" },
   { label: "projects", href: "/projects", targetId: "projects" },
-  { label: "skills", href: "/skills", targetId: "skills" },
   { label: "certificates", href: "/certifications", targetId: "certifications" },
   { label: "contact", href: "/contact", targetId: "contact" },
 ];
@@ -309,7 +308,7 @@ export default function Navbar() {
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
-            className="w-full bg-white dark:bg-[#0c121e] border-b border-zinc-200 dark:border-white/10 px-5 py-6 shadow-xl flex flex-col gap-4 animate-mobile-menu"
+            className="max-h-[calc(100dvh-4rem)] w-full overflow-y-auto bg-white px-5 py-5 shadow-xl animate-mobile-menu dark:bg-[#0c121e] sm:max-h-[calc(100dvh-4.5rem)]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Nav Links */}

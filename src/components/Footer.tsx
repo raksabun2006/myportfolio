@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ArrowUp, Mail } from "lucide-react";
-import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/Icons";
+import { GithubIcon } from "@/components/Icons";
 import { useLocale } from "@/context/LocaleContext";
 
 export default function Footer() {
@@ -12,9 +12,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-zinc-200/80 dark:border-white/10 bg-zinc-50/50 dark:bg-[#070a10] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <footer className="border-t border-zinc-200/80 bg-zinc-50/50 px-4 py-8 dark:border-white/10 dark:bg-[#070a10] sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl space-y-6">
+        <div className="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
           {/* Brand & Description */}
           <div className="max-w-md">
             <div className="flex items-center gap-2 mb-2">
@@ -45,28 +45,6 @@ export default function Footer() {
             </a>
 
             <a
-              href="https://www.linkedin.com/in/bun-raksa-computer-science"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-white/10 transition-colors"
-              aria-label="LinkedIn Profile"
-              title="LinkedIn"
-            >
-              <LinkedinIcon className="w-4 h-4 fill-current" />
-            </a>
-
-            <a
-              href="https://www.facebook.com/bun.raksa.intelcorei5"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-white/10 transition-colors"
-              aria-label="Facebook Profile"
-              title="Facebook"
-            >
-              <FacebookIcon className="w-4 h-4 fill-current" />
-            </a>
-
-            <a
               href="mailto:raksabun2006@gmail.com"
               className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-white/10 transition-colors"
               aria-label="Email Bun Raksa"
@@ -89,17 +67,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom copyright and location */}
-        <div className="pt-6 border-t border-zinc-200/60 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-500 dark:text-zinc-500">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-zinc-200/60 pt-5 text-xs text-zinc-500 dark:border-white/5 sm:flex-row">
           <div>
             <span>© {new Date().getFullYear()} Bun Raksa. {t("allRightsReserved")}</span>
           </div>
-          <div className="flex items-center gap-4 text-xs font-mono">
-            <span>Next.js 16</span>
-            <span>·</span>
-            <span>React 19</span>
-            <span>·</span>
-            <span>Phnom Penh, Cambodia</span>
-          </div>
+          <span>Phnom Penh, Cambodia</span>
         </div>
       </div>
     </footer>

@@ -55,7 +55,7 @@ export default function ProjectCard({
         </div>
 
         {/* Content Body */}
-        <div className="p-5 sm:p-6">
+        <div className="p-4 sm:p-6">
           {/* Category & Title */}
           <div className="flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400 mb-1.5">
             <span className="uppercase tracking-wider">            {category}</span>
@@ -89,7 +89,7 @@ export default function ProjectCard({
               {t("coreFeatures")}:
             </span>
             {project.features.slice(0, 3).map((feat, i) => (
-              <div key={i} className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+              <div key={i} className={`flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300 ${i === 2 ? "hidden sm:flex" : ""}`}>
                 <Check className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                 <span className="leading-snug">{feat}</span>
               </div>
@@ -116,7 +116,7 @@ export default function ProjectCard({
       </div>
 
       {/* Footer Action Links */}
-      <div className="px-5 sm:px-6 py-4 bg-zinc-50/70 dark:bg-white/[0.02] border-t border-zinc-100 dark:border-white/8 flex items-center justify-between gap-3 text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-zinc-100 bg-zinc-50/70 px-4 py-3 text-xs dark:border-white/8 dark:bg-white/[0.02] sm:flex-nowrap sm:px-6 sm:py-4">
         <div className="flex items-center gap-2">
           {project.liveUrl && (
             <a
@@ -146,7 +146,7 @@ export default function ProjectCard({
         <button
           type="button"
           onClick={() => onSelectProject(project)}
-          className="inline-flex items-center gap-1 text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors cursor-pointer"
+          className="ml-auto inline-flex items-center gap-1 text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors cursor-pointer"
         >
           <span>{t("architecture")}</span>
           <ArrowRight className="w-3.5 h-3.5" />

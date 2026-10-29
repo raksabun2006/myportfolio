@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
 import SkillsPreview from "@/components/SkillsPreview";
-import CertificationsPreview from "@/components/CertificationsPreview";
 import Footer from "@/components/Footer";
 
 export default function HomePage() {
@@ -14,7 +13,6 @@ export default function HomePage() {
         <Hero />
         <Projects />
         <SkillsPreview />
-        <CertificationsPreview />
       </main>
       <Footer />
     </div>
