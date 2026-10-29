@@ -62,7 +62,7 @@ export default function Projects() {
             onClick={() => setShowAll(!showAll)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-white/5 text-xs font-medium text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
           >
-            <span>{showAll ? `${t("showCore")} (3)` : `${t("viewMore")} (+${projects.length - coreProjects.length})`}</span>
+            <span>{showAll ? `${t("showCore")} (${coreProjects.length})` : `${t("viewMore")} (+${projects.length - coreProjects.length})`}</span>
           </button>
         </div>
       )}

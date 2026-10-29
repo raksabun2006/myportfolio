@@ -205,6 +205,72 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "farmer-digital-marketing",
+    title: "Farmer Digital Marketing",
+    role: "Backend REST API Developer",
+    category: "Full-Stack Web Application",
+    shortDescription:
+      "An agricultural digital marketing platform backed by a REST API for products, farmers, orders, messaging, inventory, and payment workflows.",
+    contributionHighlight:
+      "Backend REST API development for agricultural marketplace workflows",
+    image: "/projects/farmer-digital-marketing.png",
+    technologies: [
+      "Java 25",
+      "Spring Boot",
+      "PostgreSQL",
+      "Spring Data JPA",
+      "Spring Security",
+      "JWT",
+      "Spring Data JDBC",
+      "SpringDoc OpenAPI",
+      "REST API",
+      "React",
+      "Tailwind CSS",
+      "Vercel",
+    ],
+    features: [
+      "REST endpoints for product, farmer, and category management",
+      "Order creation, lookup, status updates, and cancellation workflows",
+      "Farmer-to-buyer messaging and conversation endpoints",
+      "Inventory movement and financial transaction management",
+      "Bakong KHQR payment verification integration",
+      "OpenAPI documentation with Scalar UI",
+    ],
+    githubUrl: "https://github.com/raksabun2006/farmer-api/tree/farmer-RESTAPI",
+    liveUrl: "https://farmer-digital-marketing-cam.vercel.app/",
+    featured: true,
+    detail: {
+      overview:
+        "Farmer Digital Marketing is a digital agricultural marketplace with a Java and Spring Boot REST API that helps connect Cambodian farmers and buyers while making agricultural products and marketplace information easier to discover.",
+      problem:
+        "Farmers and buyers need a more accessible way to discover agricultural products, understand marketplace options, and connect directly across language preferences.",
+      solution:
+        "Built a REST API around product, farmer, category, order, messaging, inventory, financial, and payment workflows, with a responsive bilingual marketplace experience for the deployed web client.",
+      architectureDescription:
+        "The backend uses Java 25, Spring Boot, Spring Data JPA/JDBC, and PostgreSQL. Spring Security and JWT libraries provide authentication support, SpringDoc OpenAPI with Scalar documents the API, and the React/Tailwind CSS web client is deployed on Vercel.",
+      architectureNodes: [
+        { label: "React Web Client", role: "Marketplace & Product Discovery UI", type: "client" },
+        { label: "Spring Boot REST API", role: "Agricultural Marketplace Workflows", type: "service" },
+        { label: "Spring Security & JWT", role: "Authentication Support", type: "gateway" },
+        { label: "PostgreSQL", role: "Relational Marketplace Data", type: "database" },
+        { label: "SpringDoc OpenAPI", role: "API Documentation & Scalar UI", type: "service" },
+        { label: "Bakong KHQR", role: "Payment Verification Integration", type: "external" },
+      ],
+      keyFeatures: [
+        "Product CRUD and category-based product retrieval endpoints",
+        "Farmer and customer order workflows with status management",
+        "Conversation endpoints for direct farmer-buyer messaging",
+        "Inventory movement, dashboard, and financial transaction APIs",
+        "Bakong KHQR transaction verification integration",
+        "Responsive React marketplace client with English and Khmer controls",
+      ],
+      challenges:
+        "Coordinating marketplace domain workflows across product, order, inventory, finance, messaging, and payment APIs while keeping the deployed client simple for farmers and buyers.",
+      whatILearned:
+        "Strengthened practical experience in Spring Boot REST API design, relational data access with JPA/JDBC, JWT and Spring Security integration, API documentation, and agricultural marketplace workflows.",
+    },
+  },
+  {
     id: "educorekh",
     title: "EduCoreKH — School Management System",
     role: "Backend Developer",

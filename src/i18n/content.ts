@@ -25,6 +25,12 @@ const khmerProjectContent = {
     shortDescription:
       "Platform អប់រំដែលជួយសិស្សរៀនតាមមេរៀន រៀបចំធនធានសិក្សា និងតាមដានការរីកចម្រើនតាមរយៈបទពិសោធន៍ដែលងាយប្រើ។",
   },
+  "farmer-digital-marketing": {
+    title: "Farmer Digital Marketing",
+    category: "កម្មវិធី Web Full-Stack",
+    shortDescription:
+      "Platform ទីផ្សារឌីជីថលសម្រាប់វិស័យកសិកម្ម ដែលជួយភ្ជាប់កសិករជាមួយអ្នកទិញ និងធ្វើឱ្យផលិតផលកសិកម្មងាយស្វែងរក និងទទួលបានព័ត៌មាន។",
+  },
 } as const;
 
 export function getProjectText(
