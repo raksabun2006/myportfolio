@@ -55,59 +55,28 @@ export default function About() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Main Narrative (7 cols) */}
         <div className="lg:col-span-7 space-y-4 text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
-          <p>
-            I am a Computer Science student at the{" "}
-            <strong className="font-semibold text-zinc-900 dark:text-white">
-              Royal University of Phnom Penh (RUPP)
-            </strong>{" "}
-            and an active trainee in the intensive IT Expert program at{" "}
-            <strong className="font-semibold text-zinc-900 dark:text-white">
-              ISTAD
-            </strong>{" "}
-            in Phnom Penh, Cambodia. My primary interest lies in full-stack web development—building practical tools where intuitive user interfaces connect seamlessly with reliable backend services.
-          </p>
-
-          <p>
-            On the frontend, I focus on building responsive, maintainable user interfaces with{" "}
-            <span className="font-medium text-zinc-900 dark:text-white">React</span> and{" "}
-            <span className="font-medium text-zinc-900 dark:text-white">Next.js</span>. On the backend, I engineer robust RESTful APIs using{" "}
-            <span className="font-medium text-zinc-900 dark:text-white">Java</span> and{" "}
-            <span className="font-medium text-zinc-900 dark:text-white">Spring Boot</span>, managing structured data with{" "}
-            <span className="font-medium text-zinc-900 dark:text-white">PostgreSQL</span>.
-          </p>
-
-          <p>
-            I approach software with a strong focus on problem-solving, continuous learning, and clean code principles. Working on projects such as the Mart System POS, Khmer Service Marketplace, and the DevSolve team collaboration has given me hands-on experience designing schemas, preventing race conditions, integrating payment gateways, and collaborating across multidisciplinary teams.
-          </p>
-
-          <p>
-            I am eager to contribute my energy, adaptability, and technical foundations to a collaborative engineering team as a{" "}
-            <strong className="font-semibold text-zinc-900 dark:text-white">
-              Junior Full-Stack Developer
-            </strong>{" "}
-            or{" "}
-            <strong className="font-semibold text-zinc-900 dark:text-white">
-              Software Developer Intern
-            </strong>.
-          </p>
+          <p>{t("aboutBioOne")}</p>
+          <p>{t("aboutBioTwo")}</p>
+          <p>{t("aboutBioThree")}</p>
+          <p>{t("aboutBioFour")}</p>
 
           {/* Key Checklist */}
           <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-zinc-800 dark:text-zinc-200">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span>Full-stack web application development</span>
+              <span>{t("checklistFullStack")}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span>RESTful API design and integration</span>
+              <span>{t("checklistApi")}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span>Relational databases &amp; PostgreSQL</span>
+              <span>{t("checklistDatabase")}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span>Git, collaborative code reviews &amp; Docker</span>
+              <span>{t("checklistWorkflow")}</span>
             </div>
           </div>
         </div>

@@ -83,7 +83,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
           {t("getInTouch")}
         </span>
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">
-          Let&apos;s Build Something Together
+          {t("contactTitle")}
         </h2>
         <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
           I&apos;m interested in junior developer opportunities, internships, and collaborative software projects.
@@ -210,7 +210,7 @@ export default function Contact({ isStandalone = false }: ContactProps) {
                   {t("messagePrepared")}
                 </h4>
                 <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-                  Your email client has been opened with your drafted message. If it didn&apos;t open automatically, you can send directly to{" "}
+                  {t("contactSuccessDescription")}{" "}
                   <strong className="text-zinc-900 dark:text-white">raksabun2006@gmail.com</strong>.
                 </p>
                 <div className="pt-2 flex justify-center gap-3">

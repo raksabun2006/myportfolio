@@ -1,8 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PageShell from "@/components/PageShell";
 import About from "@/components/About";
 import GitHubSection from "@/components/GitHubSection";
 import { MapPin, Building2 } from "lucide-react";
@@ -25,25 +24,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 dark:bg-[#07090e] dark:text-zinc-100 flex flex-col font-sans selection:bg-[#00d9ff] selection:text-[#07090e] relative overflow-x-hidden transition-colors duration-300">
-      {/* Background Grid */}
-      <div className="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden" aria-hidden="true">
-        <div
-          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #00a6f4 1px, transparent 1px),
-              linear-gradient(to bottom, #00a6f4 1px, transparent 1px)
-            `,
-            backgroundSize: "48px 48px",
-          }}
-        />
-        <div className="absolute top-[15%] right-[15%] w-[550px] h-[550px] rounded-full bg-[#00a6f4]/[0.05] dark:bg-[#00d9ff]/[0.04] blur-[140px]" />
-      </div>
-
-      <Navbar />
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-20 relative z-10 animate-fade-in">
+    <PageShell mainClassName="pt-24 sm:pt-28 md:pt-32 pb-20 animate-fade-in">
         {/* Page Header */}
         <div className="text-center sm:text-left mb-12">
           <span className="text-[12px] sm:text-[13px] font-mono font-semibold tracking-[0.25em] text-[#00a6f4] dark:text-[#00d9ff] uppercase block mb-2">
@@ -90,7 +71,7 @@ export default function AboutPage() {
           {/* Right Column: Education Cards (With Official School Logos) */}
           <div id="education" className="lg:col-span-6 flex flex-col gap-4 scroll-mt-24 sm:scroll-mt-28">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-              Education &amp; Milestones
+              <LocalizedText translationKey="educationHeading" />
             </h3>
 
             {/* Education Card 1: RUPP */}
@@ -121,7 +102,7 @@ export default function AboutPage() {
                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-white/8 text-xs font-mono text-slate-500 dark:text-zinc-400">
                   <span>Algorithms · Operating Systems · Data Structures</span>
                   <span className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 text-[10px]">
-                    Undergraduate
+                    <LocalizedText translationKey="undergraduate" />
                   </span>
                 </div>
               </div>
@@ -172,9 +153,6 @@ export default function AboutPage() {
         <div className="pt-10 border-t border-slate-200 dark:border-white/10">
           <About />
         </div>
-      </main>
-
-      <Footer />
-    </div>
+    </PageShell>
   );
 }

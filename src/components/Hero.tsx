@@ -121,17 +121,17 @@ export default function Hero() {
           <div className="hero-fade-up hero-delay-5 mt-3.5 flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-1.5 text-xs text-zinc-600 dark:text-zinc-400">
             <span className="inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-zinc-900 dark:hover:text-zinc-200">
               <GraduationCap className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span>RUPP Computer Science</span>
+              <span>{t("heroEducation")}</span>
             </span>
             <span className="text-zinc-300 dark:text-zinc-700 select-none">·</span>
             <span className="inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-zinc-900 dark:hover:text-zinc-200">
               <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-              <span>Phnom Penh, Cambodia</span>
+              <span>{t("location")}</span>
             </span>
             <span className="text-zinc-300 dark:text-zinc-700 select-none">·</span>
             <span className="inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-zinc-900 dark:hover:text-zinc-200">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
-              <span>React &amp; Spring Boot</span>
+              <span>{t("stackSummary")}</span>
             </span>
           </div>
 

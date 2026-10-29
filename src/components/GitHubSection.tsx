@@ -3,13 +3,15 @@
 import React from "react";
 import { Star, GitFork, BookOpen, ExternalLink } from "lucide-react";
 import { GithubIcon } from "@/components/Icons";
+import { useLocale } from "@/context/LocaleContext";
 
 export default function GitHubSection() {
+  const { t } = useLocale();
   const stats = [
-    { label: "Active Public Repos", value: "18+", color: "#00d9ff" },
-    { label: "Main Language", value: "Java", color: "#f59e0b" },
-    { label: "Secondary Focus", value: "TypeScript / React", color: "#38bdf8" },
-    { label: "Engineering Status", value: "Active Shipping", color: "#4ade80" },
+    { label: t("activePublicRepos"), value: "18+", color: "#00d9ff" },
+    { label: t("mainLanguage"), value: "Java", color: "#f59e0b" },
+    { label: t("secondaryFocus"), value: "TypeScript / React", color: "#38bdf8" },
+    { label: t("engineeringStatus"), value: t("activeShipping"), color: "#4ade80" },
   ];
 
   const featuredRepos = [
@@ -55,10 +57,10 @@ export default function GitHubSection() {
               06 / OPEN SOURCE &amp; REPOSITORIES
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
-              GitHub Activity
+              {t("githubActivity")}
             </h2>
             <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 max-w-2xl mt-2 leading-relaxed">
-              Real projects, production test cases, and collaborative system architecture repositories.
+              {t("githubDescription")}
             </p>
           </div>
 
@@ -69,7 +71,7 @@ export default function GitHubSection() {
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-[#00a6f4] dark:hover:border-[#00d9ff]/50 hover:bg-slate-200 dark:hover:bg-[#00d9ff]/10 text-slate-900 dark:text-white text-xs font-semibold transition-all self-start sm:self-auto shadow-xs dark:shadow-md cursor-pointer"
           >
             <GithubIcon className="w-4 h-4 text-[#00a6f4] dark:text-[#00d9ff]" />
-            <span>View GitHub Profile</span>
+            <span>{t("viewGithubProfile")}</span>
             <ExternalLink className="w-3.5 h-3.5 text-[#00a6f4] dark:text-[#00d9ff]" />
           </a>
         </div>
@@ -95,7 +97,7 @@ export default function GitHubSection() {
         {/* Language Distribution Breakdown */}
         <div className="mb-8 p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c1018]/90 shadow-xs dark:shadow-lg">
           <div className="flex items-center justify-between mb-3 text-xs font-mono text-slate-600 dark:text-zinc-400">
-            <span>Primary Languages Breakdown</span>
+            <span>{t("primaryLanguages")}</span>
             <span className="text-[#00a6f4] dark:text-[#00d9ff] font-semibold">raksabun2006</span>
           </div>
 

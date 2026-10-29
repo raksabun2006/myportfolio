@@ -27,7 +27,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Building practical web applications with React, Next.js, Java, Spring Boot, and PostgreSQL. Based in Phnom Penh, Cambodia.
+              {t("footerDescription")}
             </p>
           </div>
 
@@ -91,7 +91,7 @@ export default function Footer() {
         {/* Bottom copyright and location */}
         <div className="pt-6 border-t border-zinc-200/60 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-500 dark:text-zinc-500">
           <div>
-            <span>© {new Date().getFullYear()} Bun Raksa. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} Bun Raksa. {t("allRightsReserved")}</span>
           </div>
           <div className="flex items-center gap-4 text-xs font-mono">
             <span>Next.js 16</span>
