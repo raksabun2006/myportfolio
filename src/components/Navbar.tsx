@@ -152,8 +152,10 @@ export default function Navbar() {
             <Image
               src="/profile.JPEG"
               alt="Bun Raksa"
-              width={32}
-              height={32}
+              width={96}
+              height={96}
+              quality={100}
+              sizes="32px"
               className="h-8 w-8 rounded-full object-cover object-top shadow-xs transition-transform group-hover:scale-105"
             />
             <div className="flex flex-col">
