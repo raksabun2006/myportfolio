@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useSyncExternalStore } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Download, ExternalLink, Sun, Moon } from "lucide-react";
 import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/Icons";
@@ -148,9 +149,13 @@ export default function Navbar() {
             className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg py-1 px-1.5"
             aria-label="Bun Raksa — Return to Home"
           >
-            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm flex items-center justify-center tracking-tight shadow-xs group-hover:scale-105 transition-transform">
-              BR
-            </div>
+            <Image
+              src="/profile.JPEG"
+              alt="Bun Raksa"
+              width={32}
+              height={32}
+              className="h-8 w-8 rounded-full object-cover object-top shadow-xs transition-transform group-hover:scale-105"
+            />
             <div className="flex flex-col">
               <span className="font-bold text-sm sm:text-base text-zinc-900 dark:text-white tracking-tight leading-none">
                 Bun Raksa
