@@ -12,6 +12,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/kh",
+        destination: "/km",
+        permanent: true,
+      },
+      {
+        source: "/kh/:path*",
+        destination: "/km/:path*",
+        permanent: true,
+      },
+      {
         source: "/persona",
         destination: "/about",
         permanent: true,

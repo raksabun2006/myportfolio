@@ -8,14 +8,14 @@ import LocalizedText from "@/components/LocalizedText";
 export const metadata: Metadata = {
   title: "Projects & Software Architecture",
   description:
-    "Explore backend and full-stack software engineering projects by Bun Raksa, including Mart System POS, Khmer Service Marketplace, DevSolve, and EduCoreKH with Spring Boot, PostgreSQL, and React.",
+    "Explore backend and full-stack software engineering projects by Bun Raksa, including Job Portal KH, Mart System POS, Khmer Service Marketplace, and DevSolve built with Laravel, Spring Boot, React, and MySQL.",
   alternates: {
     canonical: "https://bunraksa.site/projects",
   },
   openGraph: {
     title: "Projects & Software Architecture | Bun Raksa",
     description:
-      "Explore backend and full-stack software engineering projects by Bun Raksa, including Mart System POS, Khmer Service Marketplace, DevSolve, and EduCoreKH with Spring Boot, PostgreSQL, and React.",
+      "Explore backend and full-stack software engineering projects by Bun Raksa, including Job Portal KH, Mart System POS, Khmer Service Marketplace, and DevSolve built with Laravel, Spring Boot, React, and MySQL.",
     url: "https://bunraksa.site/projects",
     images: [
       {

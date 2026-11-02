@@ -13,7 +13,7 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  const isKhmer = lang === "kh";
+  const isKhmer = lang === "km";
 
   return {
     title: isKhmer
@@ -26,7 +26,7 @@ export async function generateMetadata({
       canonical: `/${lang}`,
       languages: {
         en: "/en",
-        km: "/kh",
+        km: "/km",
       },
     },
     openGraph: {

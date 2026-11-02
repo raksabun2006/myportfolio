@@ -112,9 +112,9 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   const localizedPath = (href: string) => `/${locale}${href === "/" ? "" : href}`;
-  const switchLocalePath = pathname.match(/^\/(en|kh)(?=\/|$)/)
-    ? pathname.replace(/^\/(en|kh)/, `/${locale === "en" ? "kh" : "en"}`)
-    : `/${locale === "en" ? "kh" : "en"}${pathname === "/" ? "" : pathname}`;
+  const switchLocalePath = pathname.match(/^\/(en|km|kh)(?=\/|$)/)
+    ? pathname.replace(/^\/(en|km|kh)/, `/${locale === "en" ? "km" : "en"}`)
+    : `/${locale === "en" ? "km" : "en"}${pathname === "/" ? "" : pathname}`;
 
   // Handle escape key to close mobile menu
   useEffect(() => {
@@ -234,8 +234,8 @@ export default function Navbar() {
             <Link
               href={switchLocalePath}
               className="inline-flex items-center justify-center w-9 h-9 rounded-full text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
-              title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
+              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
+              title={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
             >
               <CountryFlag locale={locale} />
             </Link>
@@ -273,8 +273,8 @@ export default function Navbar() {
             <Link
               href={switchLocalePath}
               className="inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
-              title={`${t("language")}: ${localeLabels[locale === "en" ? "kh" : "en"]}`}
+              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
+              title={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
             >
               <CountryFlag locale={locale} />
             </Link>

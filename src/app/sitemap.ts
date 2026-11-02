@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { credentialsData } from "@/data/credentials";
+import { locales } from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://bunraksa.site";
@@ -15,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/contact", priority: 0.8, changeFrequency: "monthly" as const },
   ];
 
-  const staticRoutes: MetadataRoute.Sitemap = ["en", "kh"].flatMap((locale) =>
+  const staticRoutes: MetadataRoute.Sitemap = locales.flatMap((locale) =>
     localizedRoutes.map((route) => ({
       url: `${baseUrl}/${locale}${route.path}`,
       lastModified: currentDate,
@@ -24,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  const credentialRoutes: MetadataRoute.Sitemap = ["en", "kh"].flatMap((locale) =>
+  const credentialRoutes: MetadataRoute.Sitemap = locales.flatMap((locale) =>
     credentialsData.map((cred) => ({
       url: `${baseUrl}/${locale}/credentials/${cred.id}`,
       lastModified: currentDate,

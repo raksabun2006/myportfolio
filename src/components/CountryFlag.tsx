@@ -1,7 +1,7 @@
 import type { Locale } from "@/i18n/config";
 
 export default function CountryFlag({ locale }: { locale: Locale }) {
-  if (locale === "kh") {
+  if (locale === "km") {
     return (
       <svg
         viewBox="0 0 30 20"

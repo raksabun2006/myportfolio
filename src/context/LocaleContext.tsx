@@ -19,7 +19,7 @@ export function LocaleProvider({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    document.documentElement.lang = locale === "kh" ? "km" : "en";
+    document.documentElement.lang = locale;
     document.documentElement.dataset.lang = locale;
     try {
       localStorage.setItem("portfolio_locale", locale);

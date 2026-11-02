@@ -1,4 +1,4 @@
-export const locales = ["en", "kh"] as const;
+export const locales = ["en", "km"] as const;
 
 export type Locale = (typeof locales)[number];
 
@@ -8,7 +8,7 @@ export function isLocale(value: string): value is Locale {
 
 export const localeLabels: Record<Locale, string> = {
   en: "EN",
-  kh: "ខ្មែរ",
+  km: "ខ្មែរ",
 };
 
 export const translations = {
@@ -128,7 +128,7 @@ export const translations = {
     activeShipping: "Active Shipping",
     primaryLanguages: "Primary Languages Breakdown",
   },
-  kh: {
+  km: {
     home: "ទំព័រដើម",
     about: "អំពីខ្ញុំ",
     projects: "គម្រោង",

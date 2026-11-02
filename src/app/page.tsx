@@ -10,14 +10,16 @@ export default function Home() {
     let preferredLanguage = "en";
     try {
       const savedLanguage = localStorage.getItem("portfolio_locale");
-      if (savedLanguage === "en" || savedLanguage === "kh") {
-        preferredLanguage = savedLanguage;
+      if (savedLanguage === "km" || savedLanguage === "kh") {
+        preferredLanguage = "km";
+      } else if (savedLanguage === "en") {
+        preferredLanguage = "en";
       } else if (navigator.language.toLowerCase().startsWith("km")) {
-        preferredLanguage = "kh";
+        preferredLanguage = "km";
       }
     } catch {
       if (navigator.language.toLowerCase().startsWith("km")) {
-        preferredLanguage = "kh";
+        preferredLanguage = "km";
       }
     }
 

@@ -12,7 +12,7 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
 
-  const isKhmer = lang === "kh";
+  const isKhmer = lang === "km";
   return {
     title: isKhmer ? "វិញ្ញាបនបត្រ" : "Certifications",
     description: isKhmer
@@ -22,7 +22,7 @@ export async function generateMetadata({
       canonical: `/${lang}/certifications`,
       languages: {
         en: "/en/certifications",
-        km: "/kh/certifications",
+        km: "/km/certifications",
       },
     },
     openGraph: {

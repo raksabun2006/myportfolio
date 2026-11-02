@@ -31,6 +31,12 @@ const khmerProjectContent = {
     shortDescription:
       "Platform ទីផ្សារឌីជីថលសម្រាប់វិស័យកសិកម្ម ដែលជួយភ្ជាប់កសិករជាមួយអ្នកទិញ និងធ្វើឱ្យផលិតផលកសិកម្មងាយស្វែងរក និងទទួលបានព័ត៌មាន។",
   },
+  "job-portal-kh": {
+    title: "Job Portal KH",
+    category: "Recruitment & Job Platform",
+    shortDescription:
+      "Platform ជ្រើសរើសពលកម្ម និងស្វែងរកការងារនៅកម្ពុជា បង្កើតឡើងដោយ Laravel, React.js, REST API និង MySQL ជួយភ្ជាប់បេក្ខជនស្វែងរកការងារជាមួយក្រុមហ៊ុន និងគ្រប់គ្រងការដាក់ពាក្យ។",
+  },
 } as const;
 
 export function getProjectText(
@@ -39,5 +45,5 @@ export function getProjectText(
   field: keyof (typeof khmerProjectContent)[keyof typeof khmerProjectContent],
   fallback: string,
 ) {
-  return locale === "kh" ? khmerProjectContent[id][field] : fallback;
+  return locale === "km" ? khmerProjectContent[id][field] : fallback;
 }

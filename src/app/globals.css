@@ -103,12 +103,16 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  html[data-lang="km"] body,
   html[data-lang="kh"] body {
     font-family: "Khmer OS Siemreap", "Noto Sans Khmer", "Khmer OS", sans-serif;
     line-height: 1.8;
     letter-spacing: 0;
   }
 
+  html[data-lang="km"] button,
+  html[data-lang="km"] input,
+  html[data-lang="km"] textarea,
   html[data-lang="kh"] button,
   html[data-lang="kh"] input,
   html[data-lang="kh"] textarea {
@@ -116,10 +120,14 @@
   }
 
   @media (max-width: 640px) {
+    html[data-lang="km"] body,
     html[data-lang="kh"] body {
       line-height: 1.9;
     }
 
+    html[data-lang="km"] h1,
+    html[data-lang="km"] h2,
+    html[data-lang="km"] h3,
     html[data-lang="kh"] h1,
     html[data-lang="kh"] h2,
     html[data-lang="kh"] h3 {

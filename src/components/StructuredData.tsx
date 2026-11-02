@@ -51,6 +51,9 @@ export function PersonJsonLd() {
           "Keycloak",
           "Git",
           "Bakong KHQR Payment Integration",
+          "Laravel",
+          "PHP",
+          "MySQL",
           "Full-Stack Development",
           "Backend Development",
         ],
@@ -132,6 +135,30 @@ export function PersonJsonLd() {
         "description":
           "A collaborative developer and bug bounty platform with organization service APIs, user profile reputation systems, and Keycloak authentication.",
         "softwareRequirements": "Next.js, Spring Boot, PostgreSQL, Keycloak, Redis",
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://job-portal-kh-v1.vercel.app/#app",
+        "name": "Job Portal KH – Cambodia Job Recruitment Platform",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser",
+        "url": "https://job-portal-kh-v1.vercel.app/",
+        "author": {
+          "@id": "https://bunraksa.site/#person",
+        },
+        "description":
+          "A full-stack Cambodian job recruitment platform built with Laravel, React.js, RESTful APIs, and MySQL for finding vacancies, submitting CV applications, and employer recruitment workflows.",
+        "softwareRequirements": "Laravel, PHP, React.js, REST API, MySQL, Tailwind CSS",
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://github.com/raksabun2006/job-portal-backend",
+        "name": "Job Portal KH Backend API",
+        "codeRepository": "https://github.com/raksabun2006/job-portal-backend",
+        "programmingLanguage": ["PHP", "SQL"],
+        "author": {
+          "@id": "https://bunraksa.site/#person",
+        },
       },
       {
         "@type": "SoftwareSourceCode",

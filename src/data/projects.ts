@@ -84,6 +84,66 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "job-portal-kh",
+    title: "Job Portal KH – Cambodia Job Recruitment Platform",
+    role: "Full-Stack Developer",
+    category: "Recruitment & Job Platform",
+    shortDescription:
+      "A web-based job recruitment platform designed to connect job seekers with employers across Cambodia, built with Laravel, React.js, RESTful APIs, and MySQL featuring vacancy discovery, resume submissions, and recruitment management.",
+    contributionHighlight:
+      "Full-Stack Development with Laravel REST API, React.js client, and MySQL architecture",
+    image: "/projects/job-portal-kh.png",
+    technologies: [
+      "Laravel",
+      "PHP",
+      "React.js",
+      "REST API",
+      "MySQL",
+      "Tailwind CSS",
+    ],
+    features: [
+      "Browse and search job opportunities with category, location, and salary filters",
+      "View detailed job descriptions with qualifications and company profiles",
+      "Job seeker account management with profile and resume file attachments",
+      "Employer and company management with corporate branding and job postings",
+      "Online job applications with real-time status and submission tracking",
+      "Recruitment workflow management with candidate evaluation and interview scheduling",
+    ],
+    githubUrl: "https://github.com/raksabun2006/job-portal-backend",
+    liveUrl: "https://job-portal-kh-v1.vercel.app/",
+    featured: true,
+    detail: {
+      overview:
+        "Job Portal KH is a web-based job recruitment platform designed to connect job seekers with employers across Cambodia. The platform provides an accessible environment for discovering job opportunities, publishing vacancies, and managing recruitment activities.",
+      problem:
+        "Job recruitment in Cambodia is often fragmented across social media channels and informal groups, resulting in difficult vacancy discovery for candidates and disorganized applicant screening for employers.",
+      solution:
+        "Engineered a full-stack platform featuring a responsive React.js frontend and a robust Laravel REST API backend with MySQL. Implemented role-based access control for candidates and employers, structured resume management, online application submissions, and recruitment workflow tracking.",
+      architectureDescription:
+        "Vite-powered React.js frontend deployed on Vercel communicates with a Laravel RESTful API backend deployed on Laravel Cloud. Authentication is secured using Laravel Sanctum bearer tokens with Spatie Permission for role-based access control, backed by a relational MySQL database.",
+      architectureNodes: [
+        { label: "React.js Web Client", role: "Job Search & Candidate/Employer Portals", type: "client" },
+        { label: "Vercel Edge Network", role: "Global Asset Delivery & Routing", type: "gateway" },
+        { label: "Laravel REST API", role: "Recruitment Logic & Controller Endpoints", type: "service" },
+        { label: "Sanctum Auth & RBAC", role: "Stateless Token Security & Role Guards", type: "gateway" },
+        { label: "MySQL Database", role: "Relational Storage for Jobs, Users & Resumes", type: "database" },
+        { label: "Media Storage", role: "Candidate Resumes & Company Logos", type: "external" },
+      ],
+      keyFeatures: [
+        "Browse and search job opportunities with keyword, category, and province filters",
+        "View detailed job descriptions with requirements, company profiles, and salary info",
+        "Job seeker account management with profile editing and resume attachment uploads",
+        "Employer and company management with logo branding and team configuration",
+        "Online job applications with direct status monitoring and interview scheduling",
+        "Job posting and recruitment management with draft, published, and closed lifecycle states",
+      ],
+      challenges:
+        "Coordinating multi-tier role authorization (Candidate, Employer, Admin) while handling secure resume file uploads and complex relational queries across applications, interviews, and company listings. Solved by leveraging Spatie permission guards and optimized Eloquent relationships in Laravel.",
+      whatILearned:
+        "Strengthened full-stack development experience integrating Laravel RESTful APIs with modern React.js frontends, designing robust relational MySQL schemas, managing Sanctum bearer token security, and deploying production web applications on Vercel and Laravel Cloud.",
+    },
+  },
+  {
     id: "khmer-service-marketplace",
     title: "Khmer Service Marketplace",
     role: "Full-Stack Developer",
