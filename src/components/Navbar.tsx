@@ -39,23 +39,25 @@ export default function Navbar() {
 
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
+  const isHomePage =
+    pathname === `/${locale}` || pathname === `/${locale}/` || pathname === "/";
+
   // Derive active section for subpages without triggering effect set-state
-  const currentSection =
-    pathname === `/${locale}`
-      ? activeSection
-      : pathname.includes("projects")
-      ? "projects"
-      : pathname.includes("about")
-      ? "about"
-      : pathname.includes("skills")
-      ? "skills"
-      : pathname.includes("contact")
-      ? "contact"
-      : pathname.includes("certifications") || pathname.includes("credentials")
-      ? "certifications"
-      : pathname.includes("education")
-      ? "education"
-      : "home";
+  const currentSection = isHomePage
+    ? activeSection
+    : pathname.includes("projects")
+    ? "projects"
+    : pathname.includes("about")
+    ? "about"
+    : pathname.includes("skills")
+    ? "skills"
+    : pathname.includes("contact")
+    ? "contact"
+    : pathname.includes("certifications") || pathname.includes("credentials")
+    ? "certifications"
+    : pathname.includes("education")
+    ? "education"
+    : "home";
 
   // Track scroll position for header shadow
   useEffect(() => {
@@ -70,9 +72,9 @@ export default function Navbar() {
 
   // Track active section via IntersectionObserver when on home page
   useEffect(() => {
-    if (pathname !== `/${locale}`) return;
+    if (!isHomePage) return;
 
-    const sectionIds = ["home", "about", "projects", "skills", "education", "certifications", "contact"];
+    const sectionIds = ["home", "projects", "skills"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -87,7 +89,7 @@ export default function Navbar() {
             }
           });
         },
-        { rootMargin: "-30% 0px -60% 0px", threshold: 0 }
+        { rootMargin: "-25% 0px -55% 0px", threshold: 0 }
       );
 
       observer.observe(el);
@@ -97,7 +99,7 @@ export default function Navbar() {
     return () => {
       observers.forEach((obs) => obs.disconnect());
     };
-  }, [locale, pathname]);
+  }, [isHomePage]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -111,7 +113,11 @@ export default function Navbar() {
     };
   }, [mobileMenuOpen]);
 
-  const localizedPath = (href: string) => `/${locale}${href === "/" ? "" : href}`;
+  const localizedPath = useCallback(
+    (href: string) => `/${locale}${href === "/" ? "" : href}`,
+    [locale]
+  );
+
   const switchLocalePath = pathname.match(/^\/(en|km|kh)(?=\/|$)/)
     ? pathname.replace(/^\/(en|km|kh)/, `/${locale === "en" ? "km" : "en"}`)
     : `/${locale === "en" ? "km" : "en"}${pathname === "/" ? "" : pathname}`;
@@ -128,42 +134,72 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   const handleNavClick = useCallback(
-    () => {
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string, targetId: string) => {
       setMobileMenuOpen(false);
-    }, []
+
+      // If clicking Home while on Home page -> smooth scroll to top
+      if (isHomePage && (targetId === "home" || href === "/")) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setActiveSection("home");
+        return;
+      }
+
+      // If on home page and clicking a section that exists on current page (e.g. projects or skills)
+      if (isHomePage && targetId !== "home") {
+        const el = document.getElementById(targetId);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: "smooth" });
+          setActiveSection(targetId);
+          return;
+        }
+      }
+
+      // If navigating to the same page we are already on -> smooth scroll to top
+      const targetUrl = localizedPath(href);
+      if (pathname === targetUrl) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    },
+    [isHomePage, localizedPath, pathname]
   );
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "bg-white/90 dark:bg-[#090d16]/90 backdrop-blur-md border-b border-zinc-200/80 dark:border-white/10 shadow-xs"
-          : "bg-white/70 dark:bg-[#090d16]/70 backdrop-blur-sm border-b border-transparent"
+          ? "bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-md border-b border-zinc-200/80 dark:border-white/10 shadow-xs"
+          : "bg-white/80 dark:bg-[#090d16]/80 backdrop-blur-sm border-b border-zinc-200/40 dark:border-white/5"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
+        <div className="flex items-center justify-between h-[85px]">
           {/* Brand Logo & Name */}
           <Link
             href={localizedPath("/")}
-            onClick={handleNavClick}
-            className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg py-1 px-1.5"
+            onClick={(e) => handleNavClick(e, "/", "home")}
+            className="group flex items-center gap-2.5 sm:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl py-1 px-1.5 transition-all shrink-0"
             aria-label="Bun Raksa — Return to Home"
           >
-            <Image
-              src="/profile.JPEG"
-              alt="Bun Raksa"
-              width={96}
-              height={96}
-              quality={100}
-              sizes="32px"
-              className="h-8 w-8 rounded-full object-cover object-top shadow-xs transition-transform group-hover:scale-105"
-            />
+            <div className="relative">
+              <Image
+                src="/profile.JPEG"
+                alt="Bun Raksa"
+                width={96}
+                height={96}
+                quality={100}
+                sizes="40px"
+                className="h-9 w-9 sm:h-10 sm:w-10 rounded-full object-cover object-top ring-2 ring-zinc-200/80 dark:ring-white/10 shadow-xs transition-transform duration-200 group-hover:scale-105"
+              />
+              <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#090d16]" />
+            </div>
             <div className="flex flex-col">
-              <span className="font-bold text-sm sm:text-base text-zinc-900 dark:text-white tracking-tight leading-none">
+              <span className="font-bold text-sm sm:text-base text-zinc-950 dark:text-white tracking-tight leading-none group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors whitespace-nowrap">
                 Bun Raksa
               </span>
-              <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 leading-none mt-1">
+              <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 leading-none mt-1 whitespace-nowrap">
                 {t("fullStackDeveloper")}
               </span>
             </div>
@@ -172,19 +208,20 @@ export default function Navbar() {
           {/* Desktop Navigation Links */}
           <nav
             aria-label="Primary Navigation"
-            className="hidden md:flex items-center gap-1 bg-zinc-100/80 dark:bg-white/5 border border-zinc-200/70 dark:border-white/10 rounded-full px-2 py-1 shadow-2xs"
+            className="hidden md:flex items-center gap-1 bg-zinc-100/90 dark:bg-white/[0.06] border border-zinc-200/80 dark:border-white/10 rounded-full px-2 py-1 shadow-2xs backdrop-blur-sm"
           >
             {NAV_ITEMS.map((item) => {
               const isActive = currentSection === item.targetId;
+
               return (
                 <Link
                   key={item.label}
                   href={localizedPath(item.href)}
-                  onClick={handleNavClick}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                  onClick={(e) => handleNavClick(e, item.href, item.targetId)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs lg:text-[13px] font-medium whitespace-nowrap transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 select-none ${
                     isActive
                       ? "bg-white dark:bg-white/15 text-blue-600 dark:text-blue-400 font-semibold shadow-xs"
-                      : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-200/50 dark:hover:bg-white/5"
+                      : "text-zinc-600 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-200/50 dark:hover:bg-white/5"
                   }`}
                   aria-current={isActive ? "page" : undefined}
                 >
@@ -194,13 +231,13 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action Controls: GitHub, LinkedIn, CV, Theme Toggle */}
-          <div className="hidden md:flex items-center gap-2">
+          {/* Right Action Controls: GitHub, LinkedIn, Facebook, Locale Switcher, Theme Toggle, CV Download */}
+          <div className="hidden md:flex items-center gap-1.5 lg:gap-2 shrink-0">
             <a
               href="https://github.com/raksabun2006"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="p-2 rounded-xl text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-label="GitHub Profile"
               title="GitHub Profile"
             >
@@ -211,7 +248,7 @@ export default function Navbar() {
               href="https://www.linkedin.com/in/bun-raksa-computer-science"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="p-2 rounded-xl text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-label="LinkedIn Profile"
               title="LinkedIn Profile"
             >
@@ -222,7 +259,7 @@ export default function Navbar() {
               href="https://www.facebook.com/bun.raksa.intelcorei5"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="p-2 rounded-xl text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-label="Facebook Profile"
               title="Facebook Profile"
             >
@@ -233,7 +270,7 @@ export default function Navbar() {
 
             <Link
               href={switchLocalePath}
-              className="inline-flex items-center justify-center w-9 h-9 rounded-full text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="inline-flex items-center justify-center w-8 h-8 rounded-full text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
               title={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
             >
@@ -245,7 +282,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                className="p-2 rounded-xl text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
                 aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
                 title={`Switch to ${isDark ? "light" : "dark"} mode`}
               >
@@ -261,7 +298,7 @@ export default function Navbar() {
             <a
               href="/cv.pdf"
               download="Bun-Raksa-CV.pdf"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 text-xs font-semibold tracking-wide transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 text-xs font-semibold tracking-wide transition-all shadow-xs hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ml-0.5"
             >
               <Download className="w-3.5 h-3.5" />
               <span>CV</span>
@@ -269,10 +306,10 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Right Controls: Theme Toggle + Menu Button */}
-          <div className="flex md:hidden items-center gap-1">
+          <div className="flex md:hidden items-center gap-1.5">
             <Link
               href={switchLocalePath}
-              className="inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="inline-flex items-center justify-center w-8 h-8 rounded-full hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
               title={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
             >
@@ -283,7 +320,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+                className="p-2 rounded-xl text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
                 aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
               >
                 {isDark ? (
@@ -297,7 +334,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
+              className="p-2 rounded-xl text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav"
               aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -312,26 +349,27 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div
           id="mobile-nav"
-          className="md:hidden fixed inset-0 top-16 sm:top-18 z-40 bg-black/40 backdrop-blur-xs animate-fade-in"
+          className="md:hidden fixed inset-0 top-[85px] z-40 bg-black/40 backdrop-blur-xs animate-fade-in"
           onClick={() => setMobileMenuOpen(false)}
         >
           <div
-            className="max-h-[calc(100dvh-4rem)] w-full overflow-y-auto bg-white px-5 py-5 shadow-xl animate-mobile-menu dark:bg-[#0c121e] sm:max-h-[calc(100dvh-4.5rem)]"
+            className="max-h-[calc(100dvh-85px)] w-full overflow-y-auto bg-white px-5 py-5 shadow-xl animate-mobile-menu dark:bg-[#0c121e]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Nav Links */}
+            {/* Nav Links - Clean without borders */}
             <div className="flex flex-col space-y-1">
               {NAV_ITEMS.map((item) => {
                 const isActive = currentSection === item.targetId;
+
                 return (
                   <Link
                     key={item.label}
                     href={localizedPath(item.href)}
-                    onClick={handleNavClick}
-                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                    onClick={(e) => handleNavClick(e, item.href, item.targetId)}
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm whitespace-nowrap transition-colors ${
                       isActive
                         ? "bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-semibold"
-                        : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5"
+                        : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 font-medium"
                     }`}
                   >
                     <span>{t(item.label)}</span>
@@ -343,8 +381,8 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Mobile Actions: GitHub, LinkedIn, CV */}
-            <div className="pt-4 border-t border-zinc-100 dark:border-white/10 flex flex-col gap-3">
+            {/* Mobile Actions: CV and Social Links */}
+            <div className="pt-4 flex flex-col gap-3">
               <a
                 href="/cv.pdf"
                 download="Bun-Raksa-CV.pdf"

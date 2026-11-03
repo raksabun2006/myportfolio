@@ -12,8 +12,8 @@ export default function SkillsPreview() {
 
   return (
     <section
-      id="skills-preview"
-      className="mx-auto max-w-6xl border-t border-zinc-200/80 px-4 py-14 dark:border-white/10 sm:px-6 sm:py-16 lg:px-8"
+      id="skills"
+      className="mx-auto max-w-6xl scroll-mt-24 sm:scroll-mt-28 border-t border-zinc-200/80 px-4 py-14 dark:border-white/10 sm:px-6 sm:py-16 lg:px-8"
     >
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div>

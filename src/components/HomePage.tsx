@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <div className="site-shell selection:bg-blue-600 selection:text-white overflow-x-hidden">
       <Navbar />
-      <main className="flex-1 w-full pt-20 sm:pt-24">
+      <main className="flex-1 w-full pt-24 sm:pt-28">
         <Hero />
         <Projects />
         <SkillsPreview />
