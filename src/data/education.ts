@@ -18,26 +18,10 @@ export const educationList: EducationItem[] = [
     logo: "/logos/rupp-logo.png",
     highlights: [
       "Computer Science and Engineering Foundations",
-      "Software Development",
-      "Data Structures & Algorithms",
-      "Relational Database Systems",
-      "Computer Networks & Protocols",
-    ],
-  },
-  {
-    institution: "ISTAD",
-    degree: "IT Expert 3rd Generation",
-    period: "March 2026 – Present",
-    status: "Active Intensive Training",
-    location: "Phnom Penh, Cambodia",
-    logo: "/logos/istad-logo.png",
-    highlights: [
-      "Enterprise Java & Spring Boot",
-      "Production-Grade RESTful APIs",
-      "Microservices Architecture",
-      "Spring Security & JWT Authentication",
-      "PostgreSQL & Database Optimization",
-      "DevOps, Docker & CI/CD Pipelines",
+      "Software Development & OOP Principles",
+      "Data Structures & Algorithmic Complexity",
+      "Relational Database Management Systems",
+      "Computer Networks & Communication Protocols",
     ],
   },
   {
@@ -49,6 +33,7 @@ export const educationList: EducationItem[] = [
     highlights: [
       "National High School Baccalaureate",
       "Strong foundation in Mathematics and Sciences",
+      "Analytical problem solving & logical reasoning",
     ],
   },
 ];

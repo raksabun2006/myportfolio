@@ -4,7 +4,7 @@ import Image from "next/image";
 import PageShell from "@/components/PageShell";
 import About from "@/components/About";
 import GitHubSection from "@/components/GitHubSection";
-import { MapPin, Building2 } from "lucide-react";
+import { MapPin, Building2, GraduationCap } from "lucide-react";
 import LocalizedText from "@/components/LocalizedText";
 
 export const metadata: Metadata = {
@@ -134,9 +134,36 @@ export default function AboutPage() {
                   IT Expert 3rd Generation
                 </p>
                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-white/8 text-xs font-mono text-slate-500 dark:text-zinc-400">
-                  <span>Spring Framework · JPA · Keycloak · Docker · CI/CD and Microservices Archeticture</span>
-                  <span className="px-2 py-0.5 rounded-md bg-[#8b5cf6]/10 text-[#8b5cf6] dark:text-[#a78bfa] text-[10px]">
+                  <span>Spring Framework · JPA · Keycloak · Docker · CI/CD and Microservices Architecture</span>
+                  <span className="px-2 py-0.5 rounded-md bg-[#8b5cf6]/10 text-[#8b5cf6] dark:text-[#a78bfa] text-[10px] font-semibold">
+                    Advanced
+                  </span>
+                </div>
+              </div>
+            </div>
 
+            {/* Education Card 3: Samrong Ponley High School */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0c1017]/90 border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-xl flex items-start gap-4 sm:gap-5 transition-all hover:border-slate-300 dark:hover:border-white/20">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <GraduationCap className="w-7 h-7 sm:w-8 sm:h-8" />
+              </div>
+
+              <div className="flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                    Samrong Ponley High School
+                  </h4>
+                  <span className="text-[11px] font-mono text-slate-400 dark:text-zinc-500">
+                    2018 – 2024
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm font-medium text-emerald-600 dark:text-emerald-400 mt-0.5">
+                  High School Diploma (Baccalaureate)
+                </p>
+                <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 dark:border-white/8 text-xs font-mono text-slate-500 dark:text-zinc-400">
+                  <span>Mathematics · Sciences · Analytical Problem Solving</span>
+                  <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold">
+                    Graduated
                   </span>
                 </div>
               </div>

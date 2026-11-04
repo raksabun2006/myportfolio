@@ -2,73 +2,76 @@
 
 import React from "react";
 import Image from "next/image";
-import { GraduationCap, Calendar, MapPin, Check, Code2 } from "lucide-react";
+import { GraduationCap, Calendar, MapPin, Check, Code2, Server } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 
-interface TimelineItem {
+interface ExperienceItem {
   id: string;
-  institution: string;
+  organization: string;
   role: string;
   period: string;
   location: string;
   badge: string;
   logo?: string;
-  type: "academic" | "engineering";
+  icon?: "academic" | "code" | "server";
   summary: string;
   highlights: string[];
 }
 
-const TIMELINE_DATA: TimelineItem[] = [
+const EXPERIENCE_DATA: ExperienceItem[] = [
   {
-    id: "istad",
-    institution: "ISTAD — Institute of Science and Technology Advanced Development",
-    role: "IT Expert 3rd Generation",
-    period: "2026 — Present",
+    id: "istad-practicum",
+    organization: "ISTAD — Institute of Science and Technology Advanced Development",
+    role: "Enterprise Software Engineering Trainee",
+    period: "March 2026 — Present",
     location: "Phnom Penh, Cambodia",
-    badge: "Intensive Enterprise Training",
+    badge: "Enterprise Practicum",
     logo: "/logos/istad-logo.png",
-    type: "academic",
+    icon: "academic",
     summary:
-      "Advanced enterprise engineering curriculum emphasizing microservices architecture, Spring Boot backend systems, containerization, and agile team delivery.",
+      "Intensive enterprise engineering training focused on building production-grade distributed microservices, Spring Boot backends, Spring Security JWT workflows, Dockerization, and agile teamwork.",
     highlights: [
       "Enterprise Java & Spring Boot microservices design",
       "Spring Security, OAuth 2.0, OIDC, and stateless JWT token workflows",
       "PostgreSQL normalized modeling, ACID transactions, and JPA criteria",
-      "Docker multi-stage optimization and CI/CD deployment pipelines",
+      "Docker multi-stage container optimization and CI/CD pipelines",
       "Collaborative team development and API contract management",
     ],
   },
   {
-    id: "rupp",
-    institution: "RUPP — Royal University of Phnom Penh",
-    role: "Bachelor of Computer Science and Engineering",
-    period: "2025 — Present",
+    id: "devsolve-contribution",
+    organization: "DevSolve — Cybersecurity & Developer Platform",
+    role: "Backend & Security Workflow Contributor",
+    period: "2026",
     location: "Phnom Penh, Cambodia",
-    badge: "Undergraduate Degree",
-    logo: "/logos/rupp-logo.png",
-    type: "academic",
+    badge: "Team Project",
+    icon: "code",
     summary:
-      "Rigorous core computer science education focusing on algorithmic complexity, data structures, network protocols, and mathematical foundations.",
+      "Collaborative developer community and bug bounty platform. Personally engineered the Organization Service APIs, user profile reputation subsystem, and Keycloak authentication workflows.",
     highlights: [
-      "Data Structures & Object-Oriented Programming principles",
-      "Relational database design, normalization, and SQL optimization",
-      "Computer architecture, operating systems, and memory management",
-      "Software engineering lifecycle methodologies and system analysis",
+      "Engineered Organization Service REST APIs managing security program lifecycles",
+      "Integrated Keycloak centralized IAM for stateless OIDC / OAuth 2.0 auth",
+      "Designed normalized PostgreSQL relational schema with audit logs",
+      "Implemented Redis caching layer for fast lookups and sub-50ms responses",
+      "Collaborated with frontend engineers to align typed OpenAPI specifications",
     ],
   },
   {
-    id: "samrong-ponley",
-    institution: "Samrong Ponley High School",
-    role: "High School Diploma",
-    period: "2018 — 2024",
-    location: "Cambodia",
-    badge: "Graduated",
-    type: "academic",
+    id: "mart-system-lead",
+    organization: "Mart System — POS & Online Storefront",
+    role: "Full-Stack Project Lead & Architect",
+    period: "2026",
+    location: "Phnom Penh, Cambodia",
+    badge: "Production System",
+    icon: "server",
     summary:
-      "Completed secondary education with a strong academic foundation in Mathematics, Sciences, and analytical problem solving.",
+      "Production-grade full-stack online store and retail point-of-sale platform combining inventory synchronization, barcode checkout, and Cambodian national KHQR dynamic payments.",
     highlights: [
-      "National High School Baccalaureate",
-      "Strong foundation in Mathematics and Sciences",
+      "Constructed asynchronous Spring Boot backend with PostgreSQL ACID persistence",
+      "Implemented Redis distributed locking to eliminate checkout race conditions",
+      "Integrated Bakong KHQR dynamic banking settlement with webhook callbacks",
+      "Built clean React checkout UI with SKU barcode scanning compatibility",
+      "Deployed containerized backend on Railway and client on Vercel",
     ],
   },
 ];
@@ -93,52 +96,56 @@ export default function Experience() {
           </h2>
           <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
             {isKhmer
-              ? "ការបណ្តុះបណ្តាលវិស្វកម្មសហគ្រាសជាក់ស្តែងនៅ ISTAD រួមផ្សំជាមួយមូលដ្ឋានគ្រឹះវិទ្យាសាស្ត្រកុំព្យូទ័រនៅសាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ (RUPP)។"
-              : "Formal computer science foundations at RUPP combined with intensive enterprise software engineering training at ISTAD."}
+              ? "ការអនុវត្តវិស្វកម្មកម្មវិធីកម្រិតសហគ្រាសនៅ ISTAD ការចូលរួមបង្កើតសេវា Backend និងការដាក់ឱ្យដំណើរការប្រព័ន្ធពិត។"
+              : "Applied enterprise software engineering practicum at ISTAD, backend service contributions, and production system delivery."}
           </p>
         </div>
 
         {/* Timeline Sequence */}
-        <div className="relative pl-6 sm:pl-8 border-l border-zinc-200 dark:border-white/10 space-y-10">
-          {TIMELINE_DATA.map((item) => (
+        <div className="relative pl-6 sm:pl-8 border-l-2 border-blue-200 dark:border-blue-900/50 space-y-8">
+          {EXPERIENCE_DATA.map((item) => (
             <div key={item.id} className="relative group">
-              {/* Timeline Bullet Node */}
-              <div className="absolute -left-[31px] sm:-left-[39px] top-2 w-4 h-4 rounded-full bg-white dark:bg-[#090d16] border-2 border-blue-600 dark:border-blue-400 group-hover:scale-125 transition-transform shadow-xs" />
+              {/* Perfectly centered solid timeline node */}
+              <div className="absolute -left-[31px] sm:-left-[39px] top-6 w-3.5 h-3.5 rounded-full bg-blue-600 ring-4 ring-blue-50 dark:ring-[#090d16] transition-transform group-hover:scale-125" />
 
-              {/* Timeline Card */}
+              {/* Experience Card */}
               <div className="rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-[#0c121e] p-6 sm:p-7 shadow-2xs hover:shadow-xs hover:border-zinc-300 dark:hover:border-white/20 transition-all">
                 {/* Header Row */}
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
                   <div className="flex items-start gap-3.5">
-                    {/* Institution Logo */}
+                    {/* Organization Logo or Icon */}
                     {item.logo ? (
                       <div className="relative w-11 h-11 sm:w-12 sm:h-12 shrink-0 flex items-center justify-center rounded-xl bg-zinc-50 dark:bg-white/5 border border-zinc-200/80 dark:border-white/10 p-1">
                         <Image
                           src={item.logo}
-                          alt={item.institution}
+                          alt={item.organization}
                           width={96}
                           height={96}
                           className="w-full h-full object-contain"
                         />
                       </div>
-                    ) : item.type === "academic" ? (
+                    ) : item.icon === "server" ? (
                       <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-                        <GraduationCap className="w-5 h-5" />
+                        <Server className="w-5 h-5" />
+                      </div>
+                    ) : item.icon === "code" ? (
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                        <Code2 className="w-5 h-5" />
                       </div>
                     ) : (
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-900 dark:text-white flex items-center justify-center shrink-0">
-                        <Code2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-100 dark:border-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                        <GraduationCap className="w-5 h-5" />
                       </div>
                     )}
 
                     <div>
                       <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white leading-snug">
-                        {item.institution}
+                        {item.organization}
                       </h3>
-                      <p className="text-sm font-medium text-blue-600 dark:text-blue-400 mt-0.5">
+                      <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mt-0.5">
                         {item.role}
                       </p>
-                      <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mt-2 font-sans">
+                      <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 font-sans">
                         <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
                         <span>{item.location}</span>
                       </div>
@@ -158,14 +165,14 @@ export default function Experience() {
                 </div>
 
                 {/* Summary narrative */}
-                <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4">
+                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed mb-4">
                   {item.summary}
                 </p>
 
                 {/* Bullet highlights */}
                 <div className="pt-4 border-t border-zinc-100 dark:border-white/5">
                   <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block mb-2.5 font-semibold">
-                    {isKhmer ? "សមត្ថភាពសំខាន់ៗ & សមិទ្ធផល:" : "Key Competencies & Milestones:"}
+                    {isKhmer ? "សមត្ថភាពសំខាន់ៗ & សមិទ្ធផល:" : "Key Contributions & Engineering Deliverables:"}
                   </span>
                   <ul className="space-y-2">
                     {item.highlights.map((h, i) => (

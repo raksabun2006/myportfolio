@@ -6,8 +6,6 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
-import Experience from "@/components/Experience";
-import Education from "@/components/Education";
 import CertificationsPreview from "@/components/CertificationsPreview";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -44,16 +42,10 @@ export default function HomePage() {
         {/* 4. Technical Skills */}
         <Skills />
 
-        {/* 5. Experience and Contributions */}
-        <Experience />
-
-        {/* 6. Education */}
-        <Education />
-
-        {/* 7. Certifications */}
+        {/* 5. Certifications */}
         <CertificationsPreview />
 
-        {/* 8. Contact */}
+        {/* 6. Contact */}
         <Contact />
       </main>
       <Footer />
