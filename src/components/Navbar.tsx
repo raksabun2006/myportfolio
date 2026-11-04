@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback, useSyncExternalStore } from "r
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Download, ExternalLink, Sun, Moon } from "lucide-react";
+import { Menu, X, ExternalLink, Sun, Moon } from "lucide-react";
 import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLocale } from "@/context/LocaleContext";
@@ -12,7 +12,7 @@ import { localeLabels } from "@/i18n/config";
 import CountryFlag from "@/components/CountryFlag";
 
 interface NavLinkItem {
-  label: "home" | "about" | "skills" | "projects" | "certificates" | "contact";
+  label: "home" | "about" | "projects" | "skills" | "certificates" | "contact";
   href: string;
   targetId: string;
 }
@@ -20,8 +20,8 @@ interface NavLinkItem {
 const NAV_ITEMS: NavLinkItem[] = [
   { label: "home", href: "/", targetId: "home" },
   { label: "about", href: "/about", targetId: "about" },
-  { label: "skills", href: "/skills", targetId: "skills" },
   { label: "projects", href: "/projects", targetId: "projects" },
+  { label: "skills", href: "/skills", targetId: "skills" },
   { label: "certificates", href: "/certifications", targetId: "certifications" },
   { label: "contact", href: "/contact", targetId: "contact" },
 ];
@@ -35,29 +35,24 @@ export default function Navbar() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("home");
 
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
-  const isHomePage =
-    pathname === `/${locale}` || pathname === `/${locale}/` || pathname === "/";
-
-  // Derive active section for subpages without triggering effect set-state
-  const currentSection = isHomePage
-    ? activeSection
-    : pathname.includes("projects")
-    ? "projects"
-    : pathname.includes("about")
-    ? "about"
-    : pathname.includes("skills")
-    ? "skills"
-    : pathname.includes("contact")
-    ? "contact"
-    : pathname.includes("certifications") || pathname.includes("credentials")
-    ? "certifications"
-    : pathname.includes("education")
-    ? "education"
-    : "home";
+  // Derive active section based on current page router pathname
+  const currentSection =
+    pathname.includes("/projects")
+      ? "projects"
+      : pathname.includes("/about")
+      ? "about"
+      : pathname.includes("/skills")
+      ? "skills"
+      : pathname.includes("/contact")
+      ? "contact"
+      : pathname.includes("/certifications") || pathname.includes("/credentials")
+      ? "certifications"
+      : pathname.includes("/education")
+      ? "education"
+      : "home";
 
   // Track scroll position for header shadow
   useEffect(() => {
@@ -69,37 +64,6 @@ export default function Navbar() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Track active section via IntersectionObserver when on home page
-  useEffect(() => {
-    if (!isHomePage) return;
-
-    const sectionIds = ["home", "projects", "skills"];
-    const observers: IntersectionObserver[] = [];
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveSection(id);
-            }
-          });
-        },
-        { rootMargin: "-25% 0px -55% 0px", threshold: 0 }
-      );
-
-      observer.observe(el);
-      observers.push(observer);
-    });
-
-    return () => {
-      observers.forEach((obs) => obs.disconnect());
-    };
-  }, [isHomePage]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -134,36 +98,17 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string, targetId: string) => {
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       setMobileMenuOpen(false);
 
-      // If clicking Home while on Home page -> smooth scroll to top
-      if (isHomePage && (targetId === "home" || href === "/")) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        setActiveSection("home");
-        return;
-      }
-
-      // If on home page and clicking a section that exists on current page (e.g. projects or skills)
-      if (isHomePage && targetId !== "home") {
-        const el = document.getElementById(targetId);
-        if (el) {
-          e.preventDefault();
-          el.scrollIntoView({ behavior: "smooth" });
-          setActiveSection(targetId);
-          return;
-        }
-      }
-
-      // If navigating to the same page we are already on -> smooth scroll to top
       const targetUrl = localizedPath(href);
+      // If clicking the current page's nav link, smoothly scroll to top
       if (pathname === targetUrl) {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     },
-    [isHomePage, localizedPath, pathname]
+    [localizedPath, pathname]
   );
 
   return (
@@ -179,7 +124,7 @@ export default function Navbar() {
           {/* Brand Logo & Name */}
           <Link
             href={localizedPath("/")}
-            onClick={(e) => handleNavClick(e, "/", "home")}
+            onClick={(e) => handleNavClick(e, "/")}
             className="group flex items-center gap-2.5 sm:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-xl py-1 px-1.5 transition-all shrink-0"
             aria-label="Bun Raksa — Return to Home"
           >
@@ -205,7 +150,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (Routes: /about, /projects, /skills, /certifications, /contact) */}
           <nav
             aria-label="Primary Navigation"
             className="hidden md:flex items-center gap-1 bg-zinc-100/90 dark:bg-white/[0.06] border border-zinc-200/80 dark:border-white/10 rounded-full px-2 py-1 shadow-2xs backdrop-blur-sm"
@@ -217,7 +162,7 @@ export default function Navbar() {
                 <Link
                   key={item.label}
                   href={localizedPath(item.href)}
-                  onClick={(e) => handleNavClick(e, item.href, item.targetId)}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className={`px-3.5 py-1.5 rounded-full text-xs lg:text-[13px] font-medium whitespace-nowrap transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 select-none ${
                     isActive
                       ? "bg-white dark:bg-white/15 text-blue-600 dark:text-blue-400 font-semibold shadow-xs"
@@ -231,7 +176,7 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action Controls: GitHub, LinkedIn, Facebook, Locale Switcher, Theme Toggle, CV Download */}
+          {/* Right Action Controls: GitHub, LinkedIn, Facebook, Locale Switcher, Theme Toggle */}
           <div className="hidden md:flex items-center gap-1.5 lg:gap-2 shrink-0">
             <a
               href="https://github.com/raksabun2006"
@@ -294,15 +239,6 @@ export default function Navbar() {
               </button>
             )}
 
-            {/* Resume / CV Download Link */}
-            <a
-              href="/cv.pdf"
-              download="Bun-Raksa-CV.pdf"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 text-xs font-semibold tracking-wide transition-all shadow-xs hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ml-0.5"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>CV</span>
-            </a>
           </div>
 
           {/* Mobile Right Controls: Theme Toggle + Menu Button */}
@@ -356,7 +292,7 @@ export default function Navbar() {
             className="max-h-[calc(100dvh-85px)] w-full overflow-y-auto bg-white px-5 py-5 shadow-xl animate-mobile-menu dark:bg-[#0c121e]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Nav Links - Clean without borders */}
+            {/* Nav Links */}
             <div className="flex flex-col space-y-1">
               {NAV_ITEMS.map((item) => {
                 const isActive = currentSection === item.targetId;
@@ -365,7 +301,7 @@ export default function Navbar() {
                   <Link
                     key={item.label}
                     href={localizedPath(item.href)}
-                    onClick={(e) => handleNavClick(e, item.href, item.targetId)}
+                    onClick={(e) => handleNavClick(e, item.href)}
                     className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm whitespace-nowrap transition-colors ${
                       isActive
                         ? "bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-semibold"
@@ -381,18 +317,9 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Mobile Actions: CV and Social Links */}
-            <div className="pt-4 flex flex-col gap-3">
-              <a
-                href="/cv.pdf"
-                download="Bun-Raksa-CV.pdf"
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 text-white font-semibold text-xs tracking-wide shadow-xs active:scale-[0.99] transition-transform"
-              >
-                <Download className="w-4 h-4" />
-                <span>{t("downloadCv")}</span>
-              </a>
-
-              <div className="flex items-center justify-center gap-4 pt-1">
+            {/* Mobile Actions: Social Links */}
+            <div className="pt-3">
+              <div className="flex items-center justify-center gap-4">
                 <a
                   href="https://github.com/raksabun2006"
                   target="_blank"

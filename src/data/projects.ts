@@ -10,6 +10,7 @@ export interface Project {
   features: string[];
   githubUrl?: string;
   liveUrl?: string;
+  apiDocsUrl?: string;
   featured: boolean;
   detail: {
     overview: string;
@@ -33,13 +34,14 @@ export const projects: Project[] = [
       "A full-stack online store and point-of-sale (POS) system engineered with React, Spring Boot, PostgreSQL, and Redis, featuring inventory management, barcode scanning, and Bakong KHQR dynamic payment integration.",
     image: "/projects/mart-system.png",
     technologies: [
-      "React",
-      "JavaScript",
       "Spring Boot",
+      "Java",
       "PostgreSQL",
       "Redis",
       "REST API",
+      "React",
       "KHQR",
+      "Docker",
     ],
     features: [
       "Product & inventory management with automated stock alerts",
@@ -51,6 +53,7 @@ export const projects: Project[] = [
     ],
     githubUrl: "https://github.com/raksabun2006/martsystem",
     liveUrl: "https://martsystemkh.software/",
+    apiDocsUrl: "https://martsystemkh.software/",
     featured: true,
     detail: {
       overview:
@@ -84,6 +87,68 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "devsolve",
+    title: "DevSolve",
+    role: "Backend & Full-Stack Contributor",
+    category: "Developer Community & Bug Bounty",
+    shortDescription:
+      "A collaborative developer community and vulnerability triage platform. Personally engineered the Organization Service APIs, User Profile features, and Keycloak authentication workflows.",
+    contributionHighlight: "Organization Service APIs, User Profile features, and Keycloak authentication",
+    image: "/projects/devsolve.png",
+    technologies: [
+      "Spring Boot",
+      "Java",
+      "PostgreSQL",
+      "Keycloak",
+      "REST API",
+      "Redis",
+      "Next.js",
+      "Docker",
+    ],
+    features: [
+      "Bug bounty program publishing & vulnerability reporting workflows",
+      "Organization Service APIs for security program management",
+      "User Profile services with researcher reputation & badges",
+      "Developer community discussions, knowledge sharing & showcases",
+      "Centralized authentication via Keycloak (OIDC, OAuth 2.0 & JWT)",
+      "Typo-tolerant search across security programs & developer guides",
+    ],
+    githubUrl: "https://github.com/raksabun2006",
+    liveUrl: "https://www.devsolve.app/",
+    apiDocsUrl: "https://github.com/raksabun2006",
+    featured: true,
+    detail: {
+      overview:
+        "DevSolve is a collaborative cybersecurity and developer platform built with a team to connect security researchers, organizations, and developers through bug bounty programs, vulnerability triage, and community knowledge sharing.",
+      problem:
+        "Organizations struggle to publish security disclosure programs and manage vulnerability reports cleanly, while security researchers and developers lack a unified hub to share technical solutions and build verified reputations.",
+      solution:
+        "Architected a scalable multi-service web platform with Next.js and Spring Boot. Personally engineered the Organization Service APIs and User Profile features, enabling companies to manage security programs and developers to showcase their achievements.",
+      architectureDescription:
+        "Next.js frontend with Tailwind CSS connects to a Spring Boot REST API core. Keycloak manages enterprise auth (OIDC/OAuth 2.0), PostgreSQL stores relational records, Redis handles caching, and Docker ensures reproducible service runs.",
+      architectureNodes: [
+        { label: "Next.js Web Client", role: "Researcher & Developer Portal", type: "client" },
+        { label: "Edge Proxy", role: "SSL Termination & Rate Limiting", type: "gateway" },
+        { label: "Keycloak IAM", role: "OIDC & OAuth 2.0 Centralized Auth", type: "service" },
+        { label: "Spring Boot Core API", role: "Organization & Profile Services", type: "service" },
+        { label: "PostgreSQL Database", role: "Normalized Schema & Audit Logs", type: "database" },
+        { label: "Redis Cache", role: "Cache & Fast Lookups", type: "external" },
+      ],
+      keyFeatures: [
+        "Organization Service APIs managing program lifecycles and team access",
+        "User Profile subsystem tracking bounties, reputation points, and badges",
+        "Vulnerability disclosure pipeline with severity classification",
+        "Developer knowledge hub with code solutions and technical problem solving",
+        "Keycloak integration providing secure single sign-on across microservices",
+        "Automated file attachment uploads with storage management",
+      ],
+      challenges:
+        "Designing modular Spring Boot organization endpoints that handle fine-grained permissions without tight coupling between bounty workflows and user profile states. Solved with event-driven service separation and Keycloak JWT claims.",
+      whatILearned:
+        "Practical mastery of Keycloak OIDC/OAuth 2.0 integration, modular Spring Boot microservice boundaries, multi-tenant database constraints, and team-based API contract alignment.",
+    },
+  },
+  {
     id: "job-portal-kh",
     title: "Job Portal KH – Cambodia Job Recruitment Platform",
     role: "Full-Stack Developer",
@@ -96,9 +161,9 @@ export const projects: Project[] = [
     technologies: [
       "Laravel",
       "PHP",
-      "React.js",
       "REST API",
       "MySQL",
+      "React.js",
       "Tailwind CSS",
     ],
     features: [
@@ -150,14 +215,15 @@ export const projects: Project[] = [
     category: "Service Marketplace",
     shortDescription:
       "A two-sided service marketplace connecting customers who need services with verified local service providers, featuring categorical browsing, job requests, and role-based access control.",
+    contributionHighlight: "Spring Boot microservices, JWT authentication, and OpenAPI contracts",
     image: "/projects/khmer-service.png",
     technologies: [
-      "Next.js",
-      "React",
       "Spring Boot",
+      "Java",
       "PostgreSQL",
       "REST API",
       "JWT",
+      "Next.js",
       "Docker",
       "Railway",
     ],
@@ -171,6 +237,7 @@ export const projects: Project[] = [
     ],
     githubUrl: "https://github.com/raksabun2006/servicemaketplaceapi",
     liveUrl: "https://servicemaketplacefront.vercel.app/services",
+    apiDocsUrl: "https://servicemaketplaceapi.software/swagger-ui/index.html",
     featured: true,
     detail: {
       overview:
@@ -204,148 +271,22 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "devsolve",
-    title: "DevSolve",
-    role: "Backend & Full-Stack Contributor",
-    category: "Developer Community & Bug Bounty",
+    id: "educore-kh",
+    title: "EduCoreKH — School & Academic Management System",
+    role: "Backend Architect & Spring Boot Engineer",
+    category: "Academic & Institutional System",
     shortDescription:
-      "A collaborative developer community and vulnerability triage platform. Personally engineered the Organization Service APIs, User Profile features, and Keycloak authentication workflows.",
-    contributionHighlight: "Organization Service APIs and User Profile features",
-    image: "/projects/devsolve.png",
-    technologies: [
-      "Next.js",
-      "React",
-      "Spring Boot",
-      "PostgreSQL",
-      "REST API",
-      "Keycloak",
-      "Redis",
-      "Docker",
-    ],
-    features: [
-      "Bug bounty program publishing & vulnerability reporting workflows",
-      "Organization Service APIs for security program management",
-      "User Profile services with researcher reputation & badges",
-      "Developer community discussions, knowledge sharing & showcases",
-      "Centralized authentication via Keycloak (OIDC, OAuth 2.0 & JWT)",
-      "Typo-tolerant search across security programs & developer guides",
-    ],
-    githubUrl: "https://github.com/raksabun2006",
-    liveUrl: "https://www.devsolve.app/",
-    featured: true,
-    detail: {
-      overview:
-        "DevSolve is a collaborative cybersecurity and developer platform built with a team to connect security researchers, organizations, and developers through bug bounty programs, vulnerability triage, and community knowledge sharing.",
-      problem:
-        "Organizations struggle to publish security disclosure programs and manage vulnerability reports cleanly, while security researchers and developers lack a unified hub to share technical solutions and build verified reputations.",
-      solution:
-        "Architected a scalable multi-service web platform with Next.js and Spring Boot. Personally engineered the Organization Service APIs and User Profile features, enabling companies to manage security programs and developers to showcase their achievements.",
-      architectureDescription:
-        "Next.js frontend with Tailwind CSS connects to a Spring Boot REST API core. Keycloak manages enterprise auth (OIDC/OAuth 2.0), PostgreSQL stores relational records, Redis handles caching, and Docker ensures reproducible service runs.",
-      architectureNodes: [
-        { label: "Next.js Web Client", role: "Researcher & Developer Portal", type: "client" },
-        { label: "Edge Proxy", role: "SSL Termination & Rate Limiting", type: "gateway" },
-        { label: "Keycloak IAM", role: "OIDC & OAuth 2.0 Centralized Auth", type: "service" },
-        { label: "Spring Boot Core API", role: "Organization & Profile Services", type: "service" },
-        { label: "PostgreSQL Database", role: "Normalized Schema & Audit Logs", type: "database" },
-        { label: "Redis Cache", role: "Cache & Fast Lookups", type: "external" },
-      ],
-      keyFeatures: [
-        "Organization Service APIs managing program lifecycles and team access",
-        "User Profile subsystem tracking bounties, reputation points, and badges",
-        "Vulnerability disclosure pipeline with severity classification",
-        "Developer knowledge hub with code solutions and technical problem solving",
-        "Keycloak integration providing secure single sign-on across microservices",
-        "Automated file attachment uploads with storage management",
-      ],
-      challenges:
-        "Collaborating across a multi-member development team while coordinating API contracts between frontend and backend. Addressed by designing strict OpenAPI specs and maintaining clean modular service boundaries.",
-      whatILearned:
-        "Gained direct experience working in an agile team, designing Organization Service APIs, implementing User Profile data structures, integrating Keycloak OIDC authentication, and debugging across distributed services.",
-    },
-  },
-  {
-    id: "farmer-digital-marketing",
-    title: "Farmer Digital Marketing",
-    role: "Backend REST API Developer",
-    category: "Full-Stack Web Application",
-    shortDescription:
-      "An agricultural digital marketing platform backed by a REST API for products, farmers, orders, messaging, inventory, and payment workflows.",
-    contributionHighlight:
-      "Backend REST API development for agricultural marketplace workflows",
-    image: "/projects/farmer-digital-marketing.png",
-    technologies: [
-      "Java 25",
-      "Spring Boot",
-      "PostgreSQL",
-      "Spring Data JPA",
-      "Spring Security",
-      "JWT",
-      "Spring Data JDBC",
-      "SpringDoc OpenAPI",
-      "REST API",
-      "React",
-      "Tailwind CSS",
-      "Vercel",
-    ],
-    features: [
-      "REST endpoints for product, farmer, and category management",
-      "Order creation, lookup, status updates, and cancellation workflows",
-      "Farmer-to-buyer messaging and conversation endpoints",
-      "Inventory movement and financial transaction management",
-      "Bakong KHQR payment verification integration",
-      "OpenAPI documentation with Scalar UI",
-    ],
-    githubUrl: "https://github.com/raksabun2006/farmer-api/tree/farmer-RESTAPI",
-    liveUrl: "https://farmer-digital-marketing-cam.vercel.app/",
-    featured: false,
-    detail: {
-      overview:
-        "Farmer Digital Marketing is a digital agricultural marketplace with a Java and Spring Boot REST API that helps connect Cambodian farmers and buyers while making agricultural products and marketplace information easier to discover.",
-      problem:
-        "Farmers and buyers need a more accessible way to discover agricultural products, understand marketplace options, and connect directly across language preferences.",
-      solution:
-        "Built a REST API around product, farmer, category, order, messaging, inventory, financial, and payment workflows, with a responsive bilingual marketplace experience for the deployed web client.",
-      architectureDescription:
-        "The backend uses Java 25, Spring Boot, Spring Data JPA/JDBC, and PostgreSQL. Spring Security and JWT libraries provide authentication support, SpringDoc OpenAPI with Scalar documents the API, and the React/Tailwind CSS web client is deployed on Vercel.",
-      architectureNodes: [
-        { label: "React Web Client", role: "Marketplace & Product Discovery UI", type: "client" },
-        { label: "Spring Boot REST API", role: "Agricultural Marketplace Workflows", type: "service" },
-        { label: "Spring Security & JWT", role: "Authentication Support", type: "gateway" },
-        { label: "PostgreSQL", role: "Relational Marketplace Data", type: "database" },
-        { label: "SpringDoc OpenAPI", role: "API Documentation & Scalar UI", type: "service" },
-        { label: "Bakong KHQR", role: "Payment Verification Integration", type: "external" },
-      ],
-      keyFeatures: [
-        "Product CRUD and category-based product retrieval endpoints",
-        "Farmer and customer order workflows with status management",
-        "Conversation endpoints for direct farmer-buyer messaging",
-        "Inventory movement, dashboard, and financial transaction APIs",
-        "Bakong KHQR transaction verification integration",
-        "Responsive React marketplace client with English and Khmer controls",
-      ],
-      challenges:
-        "Coordinating marketplace domain workflows across product, order, inventory, finance, messaging, and payment APIs while keeping the deployed client simple for farmers and buyers.",
-      whatILearned:
-        "Strengthened practical experience in Spring Boot REST API design, relational data access with JPA/JDBC, JWT and Spring Security integration, API documentation, and agricultural marketplace workflows.",
-    },
-  },
-  {
-    id: "educorekh",
-    title: "EduCoreKH — School Management System",
-    role: "Backend Developer",
-    category: "Academic ERP & Records",
-    shortDescription:
-      "An academic ERP and school management backend system engineered with Java, Spring Boot, PostgreSQL, and Hibernate for student record lifecycles, enrollment concurrency, and grade calculation.",
-    image: "/projects/educore.jpg",
+      "A centralized school information and student records management system engineered with Spring Boot, Spring Data JPA, PostgreSQL, and Docker. Designed to streamline academic administration, course enrollment, student grading, and faculty record-keeping.",
+    contributionHighlight: "Engineered student enrollment transaction isolation, JPA criteria grading queries, and RFC-7807 error responses",
+    image: "/projects/educore-kh.png",
     technologies: [
       "Java",
       "Spring Boot",
       "PostgreSQL",
-      "Docker",
-      "REST API",
+      "Spring Data JPA",
       "Hibernate",
-      "JWT",
+      "REST API",
+      "Docker",
     ],
     features: [
       "Student record and lifecycle management",

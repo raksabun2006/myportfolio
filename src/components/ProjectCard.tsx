@@ -117,7 +117,7 @@ export default function ProjectCard({
 
       {/* Footer Action Links */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-zinc-100 bg-zinc-50/70 px-4 py-3 text-xs dark:border-white/8 dark:bg-white/[0.02] sm:flex-nowrap sm:px-6 sm:py-4">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {project.liveUrl && (
             <a
               href={project.liveUrl}
@@ -139,6 +139,18 @@ export default function ProjectCard({
             >
               <GithubIcon className="w-3.5 h-3.5 fill-current" />
               <span>{t("source")}</span>
+            </a>
+          )}
+
+          {project.apiDocsUrl && (
+            <a
+              href={project.apiDocsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 text-[11px] font-mono font-semibold transition-colors"
+              title="API Documentation"
+            >
+              <span>API Docs</span>
             </a>
           )}
         </div>

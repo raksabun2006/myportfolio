@@ -10,45 +10,46 @@ export interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   {
-    title: "Frontend",
-    description: "Responsive, accessible user interfaces and web applications",
-    skills: [
-      { name: "React", description: "Component-driven UI, hooks & state management" },
-      { name: "Next.js", description: "SSR, App Router & modern web performance" },
-      { name: "JavaScript", description: "ES6+, async/await & DOM manipulation" },
-      { name: "TypeScript", description: "Static typing, interfaces & contract alignment" },
-      { name: "HTML", description: "Semantic markup & web accessibility standards" },
-      { name: "CSS", description: "Responsive layouts, Flexbox, Grid & Tailwind CSS" },
-    ],
-  },
-  {
     title: "Backend",
-    description: "Robust server-side architecture, business logic & RESTful APIs",
+    description: "Robust server-side architecture, Spring Boot microservices & secure RESTful APIs",
     skills: [
-      { name: "Java", description: "Object-oriented programming, concurrency & JVM fundamentals" },
-      { name: "Spring Boot", description: "Production REST APIs, Spring Security & Spring Data JPA" },
-      { name: "Laravel", description: "MVC architecture, Eloquent ORM & backend routing" },
-      { name: "REST APIs", description: "Stateless HTTP protocol design & RFC error handling" },
+      { name: "Java", description: "Modern Java (21), OOP principles, concurrency & JVM fundamentals" },
+      { name: "Spring Boot", description: "Enterprise REST APIs, Spring Security, Spring Data JPA & MVC" },
+      { name: "REST API Design", description: "Resource modeling, HTTP semantics, validation & RFC error contracts" },
+      { name: "Auth & Security", description: "JWT tokens, stateless authentication, OAuth 2.0 / Keycloak & RBAC" },
+      { name: "Microservices", description: "Service decomposition, API gateway routing & inter-service contracts" },
+      { name: "Laravel", description: "MVC architecture, Eloquent ORM & RESTful endpoints" },
     ],
   },
   {
     title: "Database",
-    description: "Relational data modeling, ACID compliance & indexing",
+    description: "Relational data modeling, schema optimization, ACID transactions & caching",
     skills: [
-      { name: "PostgreSQL", description: "Primary relational database, schema design & query optimization" },
-      { name: "SQL", description: "Complex joins, aggregations, transactions & normalization" },
-      { name: "Redis", description: "In-memory caching & distributed locking for concurrency" },
+      { name: "PostgreSQL", description: "Primary relational database, schema design, constraints & query tuning" },
+      { name: "SQL", description: "Complex joins, indexing, ACID transactions & relational normalization" },
+      { name: "Redis", description: "In-memory caching, TTL sessions & distributed locking for concurrency" },
+      { name: "MySQL", description: "Relational storage, foreign keys, migrations & index optimization" },
+    ],
+  },
+  {
+    title: "Frontend",
+    description: "Modern, responsive user interfaces and client-side application state",
+    skills: [
+      { name: "React", description: "Component-driven architecture, custom hooks & reactive state" },
+      { name: "Next.js", description: "App Router, SSR, SEO optimization & production web performance" },
+      { name: "TypeScript", description: "Type-safe interfaces, generics & frontend-backend contract alignment" },
+      { name: "JavaScript", description: "Modern ES6+, asynchronous promises, fetch API & DOM events" },
+      { name: "Tailwind CSS", description: "Utility-first responsive layouts, dark/light themes & design systems" },
     ],
   },
   {
     title: "Tools & DevOps",
-    description: "Version control, collaboration, API testing & containerization",
+    description: "Version control, containerization, API testing, deployment & troubleshooting",
     skills: [
-      { name: "Git", description: "Feature-branch workflows, rebasing & clean commit history" },
-      { name: "GitHub", description: "Pull requests, code review & repository management" },
-      { name: "Docker", description: "Containerized application runtime & Docker Compose" },
-      { name: "Postman", description: "API contract testing & automated verification" },
+      { name: "Docker", description: "Multi-stage container builds, runtime isolation & Docker Compose" },
+      { name: "Git & GitHub", description: "Branching strategies, pull requests, code reviews & clean commits" },
+      { name: "Postman & Swagger", description: "API contract testing, OpenAPI 3.0 documentation & verification" },
+      { name: "Deployment", description: "Cloud hosting on Railway, Vercel & server troubleshooting" },
     ],
   },
 ];
-

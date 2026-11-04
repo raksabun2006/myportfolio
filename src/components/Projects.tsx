@@ -42,8 +42,8 @@ export default function Projects() {
         </Link>
       </div>
 
-      {/* Projects Grid: 1 col on mobile, 2 col on tablet, 3 col on desktop */}
-      <div className="grid grid-cols-1 items-stretch gap-4 sm:gap-7 md:grid-cols-2 lg:grid-cols-3">
+      {/* Projects Grid: 1 col on mobile, 2 col on tablet & desktop */}
+      <div className="grid grid-cols-1 items-stretch gap-6 sm:gap-8 md:grid-cols-2">
         {coreProjects.map((project, index) => (
           <ProjectCard
             key={project.id}
