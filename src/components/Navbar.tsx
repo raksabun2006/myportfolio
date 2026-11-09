@@ -9,7 +9,7 @@ import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/Icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLocale } from "@/context/LocaleContext";
 import { localeLabels } from "@/i18n/config";
-import CountryFlag from "@/components/CountryFlag";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 interface NavLinkItem {
   label: "home" | "about" | "projects" | "skills" | "progress" | "certificates" | "contact";
@@ -84,10 +84,6 @@ export default function Navbar() {
     (href: string) => `/${locale}${href === "/" ? "" : href}`,
     [locale]
   );
-
-  const switchLocalePath = pathname.match(/^\/(en|km|kh)(?=\/|$)/)
-    ? pathname.replace(/^\/(en|km|kh)/, `/${locale === "en" ? "km" : "en"}`)
-    : `/${locale === "en" ? "km" : "en"}${pathname === "/" ? "" : pathname}`;
 
   // Handle escape key to close mobile menu
   useEffect(() => {
@@ -216,14 +212,8 @@ export default function Navbar() {
 
             <div className="w-px h-4 bg-zinc-200 dark:bg-white/10 mx-1" aria-hidden="true" />
 
-            <Link
-              href={switchLocalePath}
-              className="inline-flex items-center justify-center w-8 h-8 rounded-full text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
-              title={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
-            >
-              <CountryFlag locale={locale} />
-            </Link>
+            {/* Flag-only Language Switcher (Click to toggle EN / KM) */}
+            <LanguageSwitcher />
 
             {/* Theme Toggle Button */}
             {mounted && (
@@ -244,16 +234,9 @@ export default function Navbar() {
 
           </div>
 
-          {/* Mobile Right Controls: Theme Toggle + Menu Button */}
+          {/* Mobile Right Controls: Language Switcher + Theme Toggle + Menu Button */}
           <div className="flex md:hidden items-center gap-1.5">
-            <Link
-              href={switchLocalePath}
-              className="inline-flex items-center justify-center w-8 h-8 rounded-full hover:bg-zinc-100 dark:hover:bg-white/5 transition-transform hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-              aria-label={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
-              title={`${t("language")}: ${localeLabels[locale === "en" ? "km" : "en"]}`}
-            >
-              <CountryFlag locale={locale} />
-            </Link>
+            <LanguageSwitcher />
 
             {mounted && (
               <button
@@ -318,6 +301,14 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+            </div>
+
+            {/* Mobile Language Selector in Drawer */}
+            <div className="pt-3 pb-1 border-t border-zinc-100 dark:border-white/5 mt-3">
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 block mb-2 px-1">
+                {t("language")}
+              </span>
+              <LanguageSwitcher variant="drawer" onLanguageChange={() => setMobileMenuOpen(false)} />
             </div>
 
             {/* Mobile Actions: Social Links */}

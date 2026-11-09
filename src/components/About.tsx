@@ -5,8 +5,6 @@ import {
   Code2,
   Server,
   Users2,
-  GraduationCap,
-  MapPin,
   CheckCircle2,
 } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
@@ -104,18 +102,6 @@ export default function About() {
               </div>
             );
           })}
-
-          {/* Quick Context Card */}
-          <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-white/10 flex items-center justify-between text-xs font-mono text-zinc-600 dark:text-zinc-400">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-              <span>Phnom Penh, Cambodia</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <GraduationCap className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-              <span>CS Class of 2029</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>

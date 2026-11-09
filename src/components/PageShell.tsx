@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 
 interface PageShellProps {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ export default function PageShell({
       <Navbar />
       <main className={`site-main ${mainClassName}`}>{children}</main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

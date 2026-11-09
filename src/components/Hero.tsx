@@ -164,11 +164,6 @@ export default function Hero() {
       className="mx-auto grid max-w-6xl scroll-mt-24 items-center gap-8 px-4 pb-14 pt-8 sm:gap-10 sm:px-6 sm:pb-18 sm:pt-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:px-8 lg:pb-20 lg:pt-20"
     >
       <div className="order-2 max-w-2xl lg:order-1">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 dark:border-emerald-800/60 dark:bg-emerald-950/30 dark:text-emerald-300">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
-          {t("available")}
-        </div>
-
         <h1 className="text-[clamp(2rem,10vw,3rem)] font-bold tracking-tight text-zinc-950 dark:text-white sm:text-6xl">
           Bun Raksa
         </h1>

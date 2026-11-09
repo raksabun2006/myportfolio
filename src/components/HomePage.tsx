@@ -9,6 +9,7 @@ import Skills from "@/components/Skills";
 import CertificationsPreview from "@/components/CertificationsPreview";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 
 export default function HomePage() {
   // Handle initial hash routing (e.g. /en#projects or /en#about)
@@ -49,6 +50,7 @@ export default function HomePage() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

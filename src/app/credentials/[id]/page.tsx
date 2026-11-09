@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CredentialDetailClient from "@/components/CredentialDetailClient";
+import BackToTop from "@/components/BackToTop";
 import { credentialsData } from "@/data/credentials";
 
 interface PageProps {
@@ -96,6 +97,7 @@ export default async function CredentialDetailPage({ params }: PageProps) {
       </main>
 
       <Footer />
+      <BackToTop />
     </div>
   );
 }

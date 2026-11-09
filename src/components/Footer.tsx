@@ -1,15 +1,12 @@
 "use client";
 
 import React from "react";
-import { ArrowUp, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { GithubIcon } from "@/components/Icons";
 import { useLocale } from "@/context/LocaleContext";
 
 export default function Footer() {
   const { t } = useLocale();
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <footer className="border-t border-zinc-200/80 bg-zinc-50/50 px-4 py-8 dark:border-white/10 dark:bg-[#070a10] sm:px-6 lg:px-8">
@@ -52,17 +49,6 @@ export default function Footer() {
             >
               <Mail className="w-4 h-4" />
             </a>
-
-            <div className="w-px h-4 bg-zinc-300 dark:bg-zinc-700 mx-1" aria-hidden="true" />
-
-            <button
-              type="button"
-              onClick={scrollToTop}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
-            >
-              <span>{t("backToTop")}</span>
-              <ArrowUp className="w-3.5 h-3.5" />
-            </button>
           </div>
         </div>
 
