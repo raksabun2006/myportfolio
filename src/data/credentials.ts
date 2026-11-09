@@ -343,4 +343,72 @@ export const credentialsData: CredentialItem[] = [
       technologies: ["ReactJS", "JavaScript", "HTML5/CSS3", "Git"],
     },
   },
+  {
+    id: "basic-web-sala-it",
+    title: "Basic Web Development (HTML, CSS, Javascript & Tailwind CSS)",
+    issuerName: "Sala-IT",
+    issuerHighlight: "Sala-IT",
+    issuerHighlightColor: "text-amber-400",
+    issueDate: "Aug 23, 2025",
+    category: "Fundamentals",
+    duration: "48 Training Hours",
+    credentialType: "Certificate of Completion",
+    authority: "Sala-IT",
+    tags: [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "Tailwind CSS",
+      "Responsive Design",
+      "Web Fundamentals",
+    ],
+    image: "/certificates/basic-web-sala-it.png",
+    pdfUrl: "/certificates/basic-web-sala-it.pdf",
+    verifyUrl: "/certificates/basic-web-sala-it.pdf",
+    description:
+      "Completed 48 intensive training hours covering foundational web development technologies at Sala-IT, validating practical proficiency in semantic HTML5 markup, responsive layouts with CSS3 and Tailwind CSS, and client-side interactivity using vanilla JavaScript.",
+    highlights: [
+      "Successfully completed 48 hours of hands-on web development training at Sala-IT",
+      "Built clean, semantic markup adhering to web standards and modern accessibility practices",
+      "Constructed responsive, mobile-first layouts using Tailwind CSS utility classes and modern CSS layouts",
+      "Implemented dynamic user interfaces and event handling with vanilla JavaScript",
+    ],
+    curriculum: [
+      {
+        moduleNumber: "01",
+        title: "Semantic HTML5 Architecture",
+        description:
+          "Web document structures, semantic elements, forms, input validation, audio/video media, and web accessibility standards.",
+        skills: ["HTML5", "Semantic Markup", "Forms & Validation", "Accessibility"],
+      },
+      {
+        moduleNumber: "02",
+        title: "Modern CSS3 Styling & Layouts",
+        description:
+          "Box model, specificity, responsive design with CSS Flexbox and Grid, transitions, transforms, and media queries.",
+        skills: ["CSS3", "Flexbox", "CSS Grid", "Responsive Design"],
+      },
+      {
+        moduleNumber: "03",
+        title: "Tailwind CSS Utility Framework",
+        description:
+          "Rapid, maintainable UI development using Tailwind utility classes, responsive breakpoints, typography, and custom configuration.",
+        skills: ["Tailwind CSS", "Utility Classes", "Responsive UI", "Component Styling"],
+      },
+      {
+        moduleNumber: "04",
+        title: "JavaScript Fundamentals & DOM Manipulation",
+        description:
+          "Variables, control flow, functions, event listeners, dynamic DOM manipulation, and interactive web elements.",
+        skills: ["JavaScript", "DOM Manipulation", "Event Listeners", "ES6+"],
+      },
+    ],
+    capstoneProject: {
+      title: "Responsive Web Landing Platform",
+      role: "Frontend Developer",
+      description:
+        "Engineered a responsive, mobile-first showcase website built with semantic HTML5, modern Tailwind CSS layout design, and vanilla JavaScript interactivity.",
+      technologies: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript"],
+    },
+  },
 ];
