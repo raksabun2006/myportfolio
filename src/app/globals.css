@@ -655,3 +655,111 @@
 .animate-particle-3 {
   animation: particleFloat3 18s ease-in-out 4s infinite;
 }
+
+/* ==========================================================================
+   Hero Name Continuous Animation (Bun Raksa / ប៊ុន រក្សា)
+   ========================================================================== */
+@keyframes nameShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes nameAuraPulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.03);
+  }
+}
+
+.hero-name-wrapper {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+.hero-name-glow {
+  position: absolute;
+  inset: -6px -16px;
+  background: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.16) 0%, rgba(37, 99, 235, 0.08) 50%, transparent 75%);
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: -1;
+  animation: nameAuraPulse 6s ease-in-out infinite;
+  border-radius: 9999px;
+}
+
+.dark .hero-name-glow {
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.25) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%);
+  filter: blur(22px);
+}
+
+.hero-name-animated {
+  font-weight: 500;
+  display: inline-block;
+  position: relative;
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: nameShimmer 6s ease-in-out infinite;
+  will-change: background-position;
+  padding: 0.04em 0.06em;
+}
+
+/* Light Mode: Elegant, unified sapphire-to-sky shimmer (cohesive across all words) */
+.hero-name-animated {
+  background-image: linear-gradient(
+    110deg,
+    #1e3a8a 0%,
+    #2563eb 25%,
+    #0ea5e9 50%,
+    #2563eb 75%,
+    #1e3a8a 100%
+  );
+  filter: drop-shadow(0 2px 10px rgba(37, 99, 235, 0.14));
+}
+
+/* Dark Mode: Radiant celestial white, cyan, and royal blue shimmer */
+.dark .hero-name-animated {
+  background-image: linear-gradient(
+    110deg,
+    #ffffff 0%,
+    #93c5fd 25%,
+    #38bdf8 50%,
+    #c7d2fe 75%,
+    #ffffff 100%
+  );
+  filter: drop-shadow(0 2px 18px rgba(56, 189, 248, 0.22));
+}
+
+/* Khmer-specific typography: Khmer OS Siemreap with clean line-height & no diacritic clipping */
+.hero-name-animated.is-khmer {
+  font-family: "Khmer OS Siemreap", "Kantumruy Pro", "Noto Sans Khmer", "Khmer OS", sans-serif !important;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-name-animated {
+    animation: none !important;
+    background-image: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    filter: none !important;
+  }
+  .hero-name-glow {
+    animation: none !important;
+    opacity: 0.3 !important;
+  }
+}

@@ -225,7 +225,7 @@ export default function Navbar() {
                 title={`Switch to ${isDark ? "light" : "dark"} mode`}
               >
                 {isDark ? (
-                  <Sun className="w-4 h-4 text-amber-400 animate-theme-icon" />
+                  <Sun className="w-4 h-4 text-white animate-theme-icon" />
                 ) : (
                   <Moon className="w-4 h-4 text-zinc-700 animate-theme-icon" />
                 )}
@@ -246,7 +246,7 @@ export default function Navbar() {
                 aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
               >
                 {isDark ? (
-                  <Sun className="w-4 h-4 text-amber-400 animate-theme-icon" />
+                  <Sun className="w-4 h-4 text-white animate-theme-icon" />
                 ) : (
                   <Moon className="w-4 h-4 text-zinc-700 animate-theme-icon" />
                 )}

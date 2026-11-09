@@ -53,6 +53,7 @@ export default function Hero() {
   const { t, locale } = useLocale();
 
   const activeLang: "en" | "km" = locale === "km" ? "km" : "en";
+  const heroName = activeLang === "km" ? "ប៊ុន រក្សា" : "Bun Raksa";
   const titles = useMemo(() => HERO_TITLES[activeLang], [activeLang]);
 
   const prefersReducedMotion = useSyncExternalStore(
@@ -164,8 +165,17 @@ export default function Hero() {
       className="mx-auto grid max-w-6xl scroll-mt-24 items-center gap-8 px-4 pb-14 pt-8 sm:gap-10 sm:px-6 sm:pb-18 sm:pt-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:px-8 lg:pb-20 lg:pt-20"
     >
       <div className="order-2 max-w-2xl lg:order-1">
-        <h1 className="text-[clamp(2rem,10vw,3rem)] font-bold tracking-tight text-zinc-950 dark:text-white sm:text-6xl">
-          Bun Raksa
+        <h1 className="text-[clamp(2.15rem,9vw,3.25rem)] font-medium tracking-tight sm:text-6xl lg:text-[4rem] leading-[1.1]">
+          <span className="hero-name-wrapper">
+            <span className="hero-name-glow" aria-hidden="true" />
+            <span
+              className={`hero-name-animated font-medium ${
+                activeLang === "km" ? "is-khmer" : "tracking-tight"
+              }`}
+            >
+              {heroName}
+            </span>
+          </span>
         </h1>
 
         {/* Bilingual Continuous Typewriter Animation */}
