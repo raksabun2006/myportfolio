@@ -12,7 +12,7 @@ import { localeLabels } from "@/i18n/config";
 import CountryFlag from "@/components/CountryFlag";
 
 interface NavLinkItem {
-  label: "home" | "about" | "projects" | "skills" | "certificates" | "contact";
+  label: "home" | "about" | "projects" | "skills" | "progress" | "certificates" | "contact";
   href: string;
   targetId: string;
 }
@@ -22,6 +22,7 @@ const NAV_ITEMS: NavLinkItem[] = [
   { label: "about", href: "/about", targetId: "about" },
   { label: "projects", href: "/projects", targetId: "projects" },
   { label: "skills", href: "/skills", targetId: "skills" },
+  { label: "progress", href: "/progress", targetId: "progress" },
   { label: "certificates", href: "/certifications", targetId: "certifications" },
   { label: "contact", href: "/contact", targetId: "contact" },
 ];
@@ -46,6 +47,8 @@ export default function Navbar() {
       ? "about"
       : pathname.includes("/skills")
       ? "skills"
+      : pathname.includes("/progress")
+      ? "progress"
       : pathname.includes("/contact")
       ? "contact"
       : pathname.includes("/certifications") || pathname.includes("/credentials")
